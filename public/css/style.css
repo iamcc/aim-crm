@@ -1,8 +1,12 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.count ul li {
+  list-style: none;
+  float: left;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
 }
-
-a {
-  color: #00B7FF;
+.count ul li:hover {
+  color: #fff;
+  background-color: #428bca;
 }
