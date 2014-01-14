@@ -1,0 +1,234 @@
+<!-- navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">AIM.CRM</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ng-class="{active: curCountItem == 'area'}"><a href="javascript:void(0);" ng-click="showCount('area')">区域 <b class="caret"></b></a>
+      </li>
+      <li ng-class="{active: curCountItem == 'city'}"><a href="javascript:void(0);" ng-click="showCount('city')">分公司 <b class="caret"></b></a>
+      </li>
+      <li ng-class="{active: curCountItem == 'industry'}"><a href="javascript:void(0);" ng-click="showCount('industry')">行业 <b class="caret"></b></a>
+      </li>
+      <li ng-class="{active: curCountItem == 'proType'}"><a href="javascript:void(0);" ng-click="showCount('proType')">项目类型 <b class="caret"></b></a>
+      </li>
+      <li ng-class="{active: isShowFilter}"><a href="javascript:void(0);" ng-click="showFilter()">筛选 <b class="caret"></b></a>
+      </li>
+    </ul>
+    <!-- user -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">User <span class="badge">{{num}}</span> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a>
+          </li>
+          <li class="divider"></li>
+          <li><a href="">退出</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!-- user end -->
+  </div>
+</nav>
+
+<!-- navbar end -->
+
+<!-- container -->
+<div class="container">
+  <!-- count -->
+  <div class="well well-sm count" ng-show="isShowCount">
+    <ul>
+      <li>aaa
+        <span class="badge">3</span>
+      </li>
+      <li>aaa
+        <span class="badge">3</span>
+      </li>
+      <li>aaa
+        <span class="badge">3</span>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <!-- count end -->
+
+  <!-- filter -->
+  <div class="well well-sm filter" ng-show="isShowFilter">
+    <form class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="最低金额">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="最高金额">
+      </div>
+      <div class="form-group">
+        <select name="" id="" class="form-control">
+          <option value="">选项</option>
+        </select>
+      </div>
+      <br>
+      <br>
+      <button class="btn btn-default" type="button">重置</button>
+      <button class="btn btn-primary" type="button">筛选</button>
+    </form>
+  </div>
+  <!-- filter end -->
+
+  <!-- project panel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      项目
+      <span class="badge">100</span>
+      <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+      <div class="clearfix"></div>
+    </div>
+    <table class="table table-hover">
+      <tr>
+        <th>#</th>
+        <th>项目名</th>
+        <th>项目类型</th>
+        <th>分公司</th>
+        <th>销售</th>
+        <th>行业</th>
+        <th>当前状态</th>
+        <th>客服</th>
+        <th>标签</th>
+        <th>操作</th>
+      </tr>
+      <tr ng-repeat-start="p in projectData.list">
+        <td>
+          <button class="btn btn-xs" ng-click="p.isShowMore = !p.isShowMore">
+            <span class="glyphicon" ng-class="{'glyphicon-chevron-up': !p.isShowMore, 'glyphicon-chevron-down': p.isShowMore}"></span>
+          </button>
+        </td>
+        <td>{{p.projectName}}</td>
+        <td>{{p.projectType}}</td>
+        <td>{{p.companyName}}</td>
+        <td>{{p.salesName}}</td>
+        <td>{{p.industry}}</td>
+        <td>{{p.curStatus}}</td>
+        <td>{{p.supporterName}}</td>
+        <td>{{p.tags}}</td>
+        <td>
+          <button class="btn btn-xs" type="button" data-toggle="modal" data-target="#commentModal" data-backdrop="static">
+            <span class="glyphicon glyphicon-comment"></span>
+          </button>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-show="p.isShowMore">
+        <td colspan="10">
+          <div class="well well sm">
+            <table class="table table-hover">
+              <tr>
+                <th>代理商</th>
+                <th>价钱</th>
+                <th>区域</th>
+                <th>经理</th>
+                <th>购买/年</th>
+                <th>客户全称</th>
+              </tr>
+              <tr>
+                <td>{{p.agent}}</td>
+                <td>{{p.price}}</td>
+                <td>{{p.areaName}}</td>
+                <td>{{p.managerName}}</td>
+                <td>{{p.buyYear}}</td>
+                <td>{{p.client}}</td>
+              </tr>
+              <tr>
+                <th>下单日期</th>
+                <th>后台账号/密码</th>
+                <th>后台创建者</th>
+                <th>微信账号/密码</th>
+                <th>微信类型</th>
+                <th>EC企业ID</th>
+              </tr>
+              <tr>
+                <td>{{p.orderDate}}</td>
+                <td>{{p.maeAccount}} : {{p.maePwd}}</td>
+                <td>{{p.maeCreatorName}}</td>
+                <td>{{p.wxAccount}} : {{p.wxPwd}}</td>
+                <td>{{p.wxType}}</td>
+                <td>{{p.ecId}}</td>
+              </tr>
+              <tr>
+                <th>发送EC盒子日期</th>
+                <th>上线日期</th>
+                <th>上线审核者</th>
+                <th colspan="3">备注</th>
+              </tr>
+              <tr>
+                <td>{{p.sendEcBoxDate}}</td>
+                <td>{{p.onlineDate}}</td>
+                <td>{{p.onlineReviewer}}</td>
+                <td colspan="3"></td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <ul class="pagination">
+      <li ng-click="prePages()" ng-class="{disabled: projectData.minPage == 1}"><a href="javascript:void(0);">&laquo;</a>
+      </li>
+      <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a href="javascript:void(0);">{{p}}</a>
+      </li>
+      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage == projectData.totalPage}"><a href="javascript:void(0);">&raquo;</a>
+      </li>
+    </ul>
+  </div>
+  <!-- project panel end -->
+</div>
+
+<!-- container end -->
+
+<!-- add project modal -->
+<div id="addModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- end add project modal -->
+
+
+<!-- comment modal -->
+<div id="commentModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- end comment modal -->
