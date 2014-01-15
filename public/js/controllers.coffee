@@ -37,6 +37,21 @@ controller 'userCtrl', [
     $scope.goPage = (page)->
       $scope.projectData.curPage = page
 
+    $scope.editField = (event, project)->
+      if $(event.target).parent().hasClass 'edit' then return
+      $scope.oldProject = angular.copy project
+      $(event.target).find('.view, .edit').toggleClass 'hide'
+      $(event.target).find('.edit').children().first().focus()
+      return
+
+    $scope.save = (event, project, field)->
+      if $scope.oldProject[field] is project[field] then console.log 'unsave'
+      else console.log 'save'
+
+      $(event.target).parent().parent().find('.view, .edit').toggleClass 'hide'
+      console.log project[field]
+
+
     $timeout ->
       data = $scope.projectData = {}
       data.minPage = 1
@@ -72,6 +87,7 @@ controller 'userCtrl', [
           sendEcBoxDate: '1'
           onlineDate: '1'
           onlineReviewer: '1'
+          memo: '1'
         }
       ]
     , 3000

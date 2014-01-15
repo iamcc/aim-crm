@@ -53,6 +53,23 @@
       $scope.goPage = function(page) {
         return $scope.projectData.curPage = page;
       };
+      $scope.editField = function(event, project) {
+        if ($(event.target).parent().hasClass('edit')) {
+          return;
+        }
+        $scope.oldProject = angular.copy(project);
+        $(event.target).find('.view, .edit').toggleClass('hide');
+        $(event.target).find('.edit').children().first().focus();
+      };
+      $scope.save = function(event, project, field) {
+        if ($scope.oldProject[field] === project[field]) {
+          console.log('unsave');
+        } else {
+          console.log('save');
+        }
+        $(event.target).parent().parent().find('.view, .edit').toggleClass('hide');
+        return console.log(project[field]);
+      };
       return $timeout(function() {
         var data, _i, _ref, _ref1, _results;
         data = $scope.projectData = {};
@@ -92,7 +109,8 @@
             ecId: '1',
             sendEcBoxDate: '1',
             onlineDate: '1',
-            onlineReviewer: '1'
+            onlineReviewer: '1',
+            memo: '1'
           }
         ];
       }, 3000);

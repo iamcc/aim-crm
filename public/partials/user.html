@@ -24,10 +24,14 @@
           <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a>
           </li>
           <li class="divider"></li>
-          <li><a href="">退出</a>
-          </li>
+          <li><a href="">财务</a>
+            <li class="divider"></li>
+            <li><a href="">设置</a>
+              <li class="divider"></li>
+              <li><a href="">退出</a>
+              </li>
         </ul>
-      </li>
+        </li>
     </ul>
     <!-- user end -->
   </div>
@@ -105,14 +109,59 @@
             <span class="glyphicon" ng-class="{'glyphicon-chevron-up': !p.isShowMore, 'glyphicon-chevron-down': p.isShowMore}"></span>
           </button>
         </td>
-        <td>{{p.projectName}}</td>
-        <td>{{p.projectType}}</td>
-        <td>{{p.companyName}}</td>
-        <td>{{p.salesName}}</td>
-        <td>{{p.industry}}</td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.projectName}}</span>
+          <span class="edit hide">
+            <input type="text" class="form-control" ng-model="p.projectName" ng-blur="save($event, p, 'projectName')">
+          </span>
+        </td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.projectType}}</span>
+          <span class="edit hide">
+            <!-- <input type="text" class="form-control" ng-model="p.projectType" ng-blur="save($event, p, 'projectType')"> -->
+            <select class="form-control" ng-model="p.projectType" ng-blur="save($event, p, 'projectType')">
+              <option value="123">123</option>
+              <option value="222">222</option>
+            </select>
+          </span>
+        </td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.companyName}}</span>
+          <span class="edit hide">
+            <input type="text" class="form-control" ng-model="p.company" ng-blur="save($event, p, 'company')">
+          </span>
+        </td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.salesName}}</span>
+          <span class="edit hide">
+            <input type="text" class="form-control" ng-model="p.sales" ng-blur="save($event, p, 'sales')">
+          </span>
+        </td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.industry}}</span>
+          <span class="edit hide">
+            <select class="form-control" ng-model="p.industry" ng-blur="save($event, p, 'industry')">
+              <option value="123">123</option>
+              <option value="222">222</option>
+            </select>
+          </span>
+        </td>
         <td>{{p.curStatus}}</td>
-        <td>{{p.supporterName}}</td>
-        <td>{{p.tags}}</td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.supporterName}}</span>
+          <span class="edit hide">
+            <select class="form-control" ng-model="p.supporter" ng-blur="save($event, p, 'supporter')">
+              <option value="123">123</option>
+              <option value="222">222</option>
+            </select>
+          </span>
+        </td>
+        <td ng-click="editField($event, p)">
+          <span class="view">{{p.tags}}</span>
+          <span class="edit hide">
+            <input type="text" class="form-control" ng-model="p.tags" ng-blur="save($event, p, 'tags')">
+          </span>
+        </td>
         <td>
           <button class="btn btn-xs" type="button" data-toggle="modal" data-target="#commentModal" data-backdrop="static">
             <span class="glyphicon glyphicon-comment"></span>
@@ -132,12 +181,45 @@
                 <th>客户全称</th>
               </tr>
               <tr>
-                <td>{{p.agent}}</td>
-                <td>{{p.price}}</td>
-                <td>{{p.areaName}}</td>
-                <td>{{p.managerName}}</td>
-                <td>{{p.buyYear}}</td>
-                <td>{{p.client}}</td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.agent}}</span>
+                  <span class="edit hide">
+                    <select class="form-control" ng-model="p.agent" ng-blur="save($event, p, 'agent')">
+                      <option value="123">123</option>
+                      <option value="222">222</option>
+                    </select>
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.price}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.price" ng-blur="save($event, p, 'price')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.areaName}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.area" ng-blur="save($event, p, 'area')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.managerName}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.manager" ng-blur="save($event, p, 'manager')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.buyYear}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.buyYear" ng-blur="save($event, p, 'buyYear')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.client}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.client" ng-blur="save($event, p, 'client')">
+                  </span>
+                </td>
               </tr>
               <tr>
                 <th>下单日期</th>
@@ -148,12 +230,50 @@
                 <th>EC企业ID</th>
               </tr>
               <tr>
-                <td>{{p.orderDate}}</td>
-                <td>{{p.maeAccount}} : {{p.maePwd}}</td>
-                <td>{{p.maeCreatorName}}</td>
-                <td>{{p.wxAccount}} : {{p.wxPwd}}</td>
-                <td>{{p.wxType}}</td>
-                <td>{{p.ecId}}</td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.orderDate}}</span>
+                  <span class="edit hide">
+                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="save($event, p, 'orderDate')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.maeAccount}} : {{p.maePwd}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.maeAccount">
+                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maePwd')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.maeCreatorName}}</span>
+                  <span class="edit hide">
+                    <select class="form-control" ng-model="p.maeCreator" ng-blur="save($event, p, 'maeCreator')">
+                      <option value="123">123</option>
+                      <option value="222">222</option>
+                    </select>
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.wxAccount}} : {{p.wxPwd}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.wxAccount">
+                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxPwd')">
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.wxType}}</span>
+                  <span class="edit hide">
+                    <select class="form-control" ng-model="p.wxType" ng-blur="save($event, p, 'wxType')">
+                      <option value="123">123</option>
+                      <option value="222">222</option>
+                    </select>
+                  </span>
+                </td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.ecId}}</span>
+                  <span class="edit hide">
+                    <input type="text" class="form-control" ng-model="p.ecId" ng-blur="save($event, p, 'ecId')">
+                  </span>
+                </td>
               </tr>
               <tr>
                 <th>发送EC盒子日期</th>
@@ -162,10 +282,20 @@
                 <th colspan="3">备注</th>
               </tr>
               <tr>
-                <td>{{p.sendEcBoxDate}}</td>
+                <td ng-click="editField($event, p)">
+                  <span class="view">{{p.sendEcBoxDate}}</span>
+                  <span class="edit hide">
+                    <input type="date" class="form-control" ng-model="p.sendEcBoxDate" ng-blur="save($event, p, 'sendEcBoxDate')">
+                  </span>
+                </td>
                 <td>{{p.onlineDate}}</td>
                 <td>{{p.onlineReviewer}}</td>
-                <td colspan="3"></td>
+                <td ng-click="editField($event, p)" colspan="3">
+                  <span class="view">{{p.memo}}</span>
+                  <span class="edit hide">
+                    <textarea class="form-control" ng-model="p.memo" ng-blur="save($event, p, 'memo')" cols="30" rows="10"></textarea>
+                  </span>
+                </td>
               </tr>
             </table>
           </div>
