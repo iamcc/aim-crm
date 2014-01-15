@@ -2,7 +2,7 @@ User = require '../models/userModel'
 
 module.exports = (app)->
   auth = (req, res, next)->
-    return res.send 401 if not req.session.user
+    return res.send 401 if not (req.user = req.session.user)
     next()
 
   app.post '/login', (req, res)->

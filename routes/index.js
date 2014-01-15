@@ -7,7 +7,7 @@
   module.exports = function(app) {
     var auth;
     auth = function(req, res, next) {
-      if (!req.session.user) {
+      if (!(req.user = req.session.user)) {
         return res.send(401);
       }
       return next();

@@ -13,6 +13,9 @@ userSchema = new Schema
 
 md5 = (str)->crypto.createHash('md5').update(str).digest('hex')
 
+userSchema.path('pwd').set (str)->
+  @pwd = md5 str
+
 userSchema.statics.login = (uname, pwd, fn)->
   @findOne {uname: uname}, (err, doc)->
     if err

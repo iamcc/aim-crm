@@ -24,6 +24,10 @@
     return crypto.createHash('md5').update(str).digest('hex');
   };
 
+  userSchema.path('pwd').set(function(str) {
+    return this.pwd = md5(str);
+  });
+
   userSchema.statics.login = function(uname, pwd, fn) {
     return this.findOne({
       uname: uname

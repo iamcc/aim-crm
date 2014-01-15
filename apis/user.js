@@ -9,60 +9,144 @@
   method = {
     GET: function(req, res, next) {
       var condition, num, opts, page, query, user, _id, _ref;
-      user = req.session.user;
+      user = req.user;
       if ((_ref = user.role) !== 'leader' && _ref !== 'admin') {
         return res.send(403);
       }
-      switch (user.role) {
-        case 'leader':
-          if (_id = req.params._id) {
-            condition = {
-              _id: _id,
-              role: 'supporter'
-            };
-            return User.findOne(condition, function(err, doc) {
-              if (err) {
-                console.log(err);
-                return res.send(500);
-              }
-              return res.send(doc);
-            });
-          } else {
-            condition = (query = req.query).condition;
-            num = query.num || 10;
-            page = query.page || 1;
-            opts = {
-              skip: (page - 1) * num,
-              limit: num
-            };
-            return async.auto({
-              count: function(cb) {
-                return User.count(condition, cb);
-              },
-              list: function(cb) {
-                return User.find(condition, null, opts, cb);
-              }
-            }, function(err, rst) {
-              if (err) {
-                console.log(err);
-                return res.send(500);
-              }
-              return res.send({
-                totalPage: Math.ceil(rst.count / num),
-                list: rst.list
-              });
-            });
+      if (_id = req.params._id) {
+        return User.findById(_id, function(err, doc) {
+          if (err) {
+            console.log(err);
+            return res.send(500);
           }
-          break;
-        case 'admin':
-          break;
-        default:
-          return res.send(403);
+          if (user.role === 'leader' && doc && doc.role !== 'supporter') {
+            return res.send(null);
+          }
+          return res.send(doc);
+        });
+      } else {
+        condition = (query = req.query).condition;
+        if (user.role === 'leader') {
+          condition.role = 'supporter';
+        }
+        num = query.num || 10;
+        page = query.page || 1;
+        opts = {
+          skip: (page - 1) * num,
+          limit: num
+        };
+        return async.auto({
+          count: function(cb) {
+            return User.count(condition, cb);
+          },
+          list: function(cb) {
+            return User.find(condition, null, opts, cb);
+          }
+        }, function(err, rst) {
+          if (err) {
+            console.log(err);
+            return res.send(500);
+          }
+          return res.send({
+            totalPage: Math.ceil(rst.count / num),
+            list: rst.list
+          });
+        });
       }
     },
-    PUT: function(req, res, next) {},
-    POST: function(req, res, next) {},
-    DELETE: function(req, res, next) {}
+    PUT: function(req, res, next) {
+      var act, query, user, _id, _ref;
+      _id = req.params._id;
+      act = (query = req.query).act;
+      user = req.user;
+      switch (act) {
+        case 'setpwd':
+          return User.findById(user._id, function(err, doc) {
+            if (err) {
+              console.log(err);
+              return res.send(500);
+            }
+            if (!doc) {
+              return res.send(404);
+            }
+            doc.pwd = req.body.pwd;
+            return doc.save(function(err) {
+              if (err) {
+                console.log(err);
+                return res.send(500);
+              }
+              return res.send(200);
+            });
+          });
+        case 'resetpwd':
+          if (!_id) {
+            return res.send(400);
+          }
+          if ((_ref = user.role) !== 'leader' && _ref !== 'admin') {
+            return res.send(403);
+          }
+          return User.findById(_id, function(err, doc) {
+            if (err) {
+              console.log(err);
+              return res.send(500);
+            }
+            if (!doc) {
+              return res.send(404);
+            }
+            if (user.role === 'leader' && doc.role !== 'supporter') {
+              return res.send(400);
+            }
+            doc.pwd = '123456';
+            return doc.save(function(err) {
+              if (err) {
+                console.log(err);
+                return res.send(500);
+              }
+              return res.send(200);
+            });
+          });
+        case 'setrole':
+          if (user.role !== 'admin') {
+            return res.send(403);
+          }
+          return User.findById(_id, function(err, doc) {
+            if (err) {
+              console.log(err);
+              return res.send(500);
+            }
+            if (!doc) {
+              return res.send(404);
+            }
+            doc.role = req.body.role;
+            return doc.save(function(err) {
+              if (err) {
+                console.log(err);
+                return res.send(500);
+              }
+              return res.send(200);
+            });
+          });
+        default:
+          return res.send(400);
+      }
+    },
+    POST: function(req, res, next) {
+      var user, _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
+      user = new User(req.body);
+      if (req.user.role === 'leader' || !user.role) {
+        user.role = 'supporter';
+      }
+      return user.save(function(err) {
+        if (err) {
+          console.log(err);
+          return res.send(500);
+        }
+        return res.send(200);
+      });
+    }
   };
 
   module.exports = function(req, res, next) {
@@ -71,7 +155,6 @@
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;
-      return res.send(405);
     }
   };
 
