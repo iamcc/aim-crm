@@ -2,7 +2,7 @@
 (function() {
   var app;
 
-  app = angular.module('app', ['ngRoute', 'ngResource', 'app.controllers']);
+  app = angular.module('app', ['ngRoute', 'ngResource', 'app.controllers', 'app.filters']);
 
   app.config([
     '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {

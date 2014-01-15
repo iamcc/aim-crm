@@ -21,17 +21,17 @@
       <li class="dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">User <span class="badge">{{num}}</span> <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a>
-          </li>
+          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> </li>
           <li class="divider"></li>
-          <li><a href="">财务</a>
-            <li class="divider"></li>
-            <li><a href="">设置</a>
-              <li class="divider"></li>
-              <li><a href="">退出</a>
-              </li>
+          <li><a href="">财务</a> </li>
+          <li class="divider"></li>
+          <li><a href="">设置</a> </li>
+          <li class="divider"></li>
+          <li><a href="">修改密码</a> </li>
+          <li class="divider"></li>
+          <li><a href="">退出</a> </li>
         </ul>
-        </li>
+      </li>
     </ul>
     <!-- user end -->
   </div>
@@ -240,7 +240,7 @@
                   <span class="view">{{p.maeAccount}} : {{p.maePwd}}</span>
                   <span class="edit hide">
                     <input type="text" class="form-control" ng-model="p.maeAccount">
-                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maePwd')">
+                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maeAccount', 'maePwd')">
                   </span>
                 </td>
                 <td ng-click="editField($event, p)">
@@ -256,7 +256,7 @@
                   <span class="view">{{p.wxAccount}} : {{p.wxPwd}}</span>
                   <span class="edit hide">
                     <input type="text" class="form-control" ng-model="p.wxAccount">
-                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxPwd')">
+                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxAccount', 'wxPwd')">
                   </span>
                 </td>
                 <td ng-click="editField($event, p)">
@@ -291,7 +291,7 @@
                 <td>{{p.onlineDate}}</td>
                 <td>{{p.onlineReviewer}}</td>
                 <td ng-click="editField($event, p)" colspan="3">
-                  <span class="view">{{p.memo}}</span>
+                  <span class="view" ng-bind-html="p.memo | wrap"></span>
                   <span class="edit hide">
                     <textarea class="form-control" ng-model="p.memo" ng-blur="save($event, p, 'memo')" cols="30" rows="10"></textarea>
                   </span>

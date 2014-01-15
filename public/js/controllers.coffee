@@ -44,12 +44,14 @@ controller 'userCtrl', [
       $(event.target).find('.edit').children().first().focus()
       return
 
-    $scope.save = (event, project, field)->
-      if $scope.oldProject[field] is project[field] then console.log 'unsave'
-      else console.log 'save'
-
+    $scope.save = (event, project, fields...)->
+      isSave = false
+      obj = {}
+      for field in fields
+        if $scope.oldProject[field] isnt (obj[field] = project[field])
+          isSave = true
       $(event.target).parent().parent().find('.view, .edit').toggleClass 'hide'
-      console.log project[field]
+      if isSave then console.log 'save', obj
 
 
     $timeout ->
