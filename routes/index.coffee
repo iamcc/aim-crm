@@ -16,8 +16,8 @@ module.exports = (app)->
       res.send resDoc
 
   app.get '/logout', (req, res)->
-    req.session = null
-    res.send 200
+    req.session.destroy()
+    res.redirect '/'
 
   app.all '/api/:mod/:_id?', auth, (req, res, next)->
     try
@@ -25,4 +25,3 @@ module.exports = (app)->
     catch e
       console.log e
       res.send 404
-    

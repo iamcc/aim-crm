@@ -27,8 +27,8 @@
       });
     });
     app.get('/logout', function(req, res) {
-      req.session = null;
-      return res.send(200);
+      req.session.destroy();
+      return res.redirect('/');
     });
     return app.all('/api/:mod/:_id?', auth, function(req, res, next) {
       var e;

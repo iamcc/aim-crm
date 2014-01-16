@@ -1,0 +1,95 @@
+<!-- navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">AIM.CRM</a>
+    </div>
+    <!-- user -->
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
+          </li>
+          <li class="divider" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1"></li>
+          <li><a href="" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
+          </li>
+          <li class="divider" ng-show="['leader', 'admin'].indexOf(userinfo.role) != -1"></li>
+          <li ng-show="['leader', 'admin'].indexOf(userinfo.role) != -1"><a href="#/setting">设置</a> 
+          </li>
+          <li class="divider"></li>
+          <li><a href="/logout">退出</a> 
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!-- user end -->
+  </div>
+</nav>
+
+<!-- navbar end -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <ul class="list-group">
+        <a href="" class="list-group-item" ng-click="selectMenu(0)" ng-class="{active: selectedMenu == 0}">修改密码</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(1)" ng-class="{active: selectedMenu == 1}">重置密码</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(2)" ng-class="{active: selectedMenu == 2}">添加用户</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(3)" ng-class="{active: selectedMenu == 3}">销售管理</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(4)" ng-class="{active: selectedMenu == 4}">区域管理</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(5)" ng-class="{active: selectedMenu == 5}">行业管理</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(6)" ng-class="{active: selectedMenu == 6}">代理商管理</a>
+      </ul>
+    </div>
+    <div class="col-sm-9" ng-switch="selectedMenu">
+      <!-- 修改密码 -->
+      <div class="row" ng-switch-when="0" style="width:300px;">
+        <form name="form0">
+          <div class="alert alert-danger" ng-show="tabs[0].error">{{tabs[0].error}}</div>
+          <div class="alert alert-success" ng-show="tabs[0].success">{{tabs[0].success}}</div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="密码" required ng-model="tabs[0].pwd">
+            <input type="password" class="form-control" placeholder="确认密码" required ng-model="tabs[0].pwd2">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" ng-click="tabs[0].save($event, form0)">保存</button>
+          </div>
+        </form>
+      </div>
+      <!-- 重置密码 -->
+      <div class="row" ng-switch-when="1">1</div>
+      <!-- 添加用户 -->
+      <div class="row" ng-switch-when="2">
+        <form name="form2" style="width:300px;">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="用户名">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="昵称">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="密码">
+          </div>
+          <div class="form-group">
+            <select type="text" class="form-control">
+              <option value="supporter">客服</option>
+              <option value="leader" ng-show="userinfo.role == 'admin'">客服主管</option>
+              <option value="finance" ng-show="userinfo.role == 'admin'">财务</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">保存</button>
+          </div>
+        </form>
+      </div>
+      <!-- 销售管理 -->
+      <div class="row" ng-switch-when="3">3</div>
+      <!-- 区域管理 -->
+      <div class="row" ng-switch-when="4">4</div>
+      <!-- 行业管理 -->
+      <div class="row" ng-switch-when="5">5</div>
+      <!-- 代理商管理 -->
+      <div class="row" ng-switch-when="6">6</div>
+    </div>
+  </div>
+</div>

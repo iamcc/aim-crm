@@ -37,21 +37,21 @@ controller 'userCtrl', [
     $scope.goPage = (page)->
       $scope.projectData.curPage = page
 
-    $scope.editField = (event, project)->
+    $scope.showEdit = (event, project)->
       if $(event.target).parent().hasClass 'edit' then return
       $scope.oldProject = angular.copy project
-      $(event.target).find('.view, .edit').toggleClass 'hide'
+      # $('.edit').hide()
+      $(event.target).find('.view').hide()
+      $(event.target).find('.edit').show()
       $(event.target).find('.edit').children().first().focus()
       return
 
-    $scope.save = (event, project, fields...)->
-      isSave = false
-      obj = {}
-      for field in fields
-        if $scope.oldProject[field] isnt (obj[field] = project[field])
-          isSave = true
-      $(event.target).parent().parent().find('.view, .edit').toggleClass 'hide'
-      if isSave then console.log 'save', obj
+    $scope.save = (event, project, field)->
+      $(event.target).parent().parent().find('.view').show()
+      $(event.target).parent().parent().find('.edit').hide()
+      param = {}
+      param[field] = project[field]
+      if $scope.oldProject[field] isnt project[field] then console.log 'save', param
 
 
     $timeout ->
@@ -92,6 +92,72 @@ controller 'userCtrl', [
           memo: '1'
         }
       ]
-    , 3000
+    , 1000
 ]
 # userCtrl end
+
+# loginCtrl
+controller 'loginCtrl', [
+  '$scope', '$http', '$rootScope', '$location', 'User'
+  ($scope, $http, $rootScope, $location, User)->
+    $scope.login = (e, form)->
+      return if form.$invalid
+      $scope.isError = false
+      $btn = $ e.target
+      $btn.button 'loading'
+
+      User.login {uname: $scope.uname, pwd: $scope.pwd},
+        (data)->
+          $rootScope.userinfo = data
+          $location.path '/'
+        (err)->
+          $btn.button 'reset'
+          $scope.isError = true
+]
+# loginCtrl end
+
+# settingCtrl
+controller 'settingCtrl', [
+  '$scope', 'User'
+  ($scope, User)->
+    $tabs = $scope.tabs = []
+    $userinfo = $scope.userinfo
+
+    # 修改密码
+    $tabs[0] =
+      save: (e, form)->
+        return if form.$invalid
+        return @error = '两次密码不一样' if @pwd isnt @pwd2
+        @error = ''
+        self = @
+        $btn = $ e.target
+        $btn.button 'loading'
+
+        User.setPwd {_id: $userinfo._id, pwd: @pwd},
+          (data)->
+            self.success = '修改成功'
+            $btn.button 'reset'
+          (err)->
+            self.error = '修改失败'
+            $btn.button 'reset'
+            console.log err
+
+    $scope.selectMenu = (id)->
+      $scope.selectedMenu = id
+      switch id
+        when 0
+          console.log 
+        when 1
+          console.log 
+        when 2
+          console.log 
+        when 3
+          console.log 
+        when 4
+          console.log 
+        when 5
+          console.log 
+        when 6
+          console.log 
+]
+# settingCtrl end

@@ -4,7 +4,10 @@ async = require 'async'
 method =
   GET: (req, res, next) ->
     user = req.user
-    return res.send 403 if user.role not in ['leader', 'admin']
+    if req.params._id is 'me' or user.role not in ['leader', 'admin']
+      copyUser = JSON.parse JSON.stringify user
+      delete copyUser.pwd
+      return res.send copyUser
     if _id = req.params._id
       User.findById _id, (err, doc) ->
         if err

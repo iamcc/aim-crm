@@ -2,13 +2,19 @@
 (function() {
   var app;
 
-  app = angular.module('app', ['ngRoute', 'ngResource', 'app.controllers', 'app.filters']);
+  app = angular.module('app', ['ngRoute', 'app.controllers', 'app.filters', 'app.services']);
 
   app.config([
     '$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
       $routeProvider.when('/', {
         templateUrl: '/partials/user.html',
         controller: 'userCtrl'
+      }).when('/login', {
+        templateUrl: '/partials/login.html',
+        controller: 'loginCtrl'
+      }).when('/setting', {
+        templateUrl: '/partials/setting.html',
+        controller: 'settingCtrl'
       }).when('/finance', {
         templateUrl: '/partials/finance.html',
         controller: 'financeCtrl'
@@ -16,20 +22,46 @@
         redirectTo: '/'
       });
       return $httpProvider.responseInterceptors.push([
-        '$q', function($q) {
+        '$q', '$location', function($q, $location) {
           return function(promise) {
             var error, success;
             success = function(resp) {
               return resp;
             };
             error = function(resp) {
-              console.log(resp);
+              switch (resp.status) {
+                case 400:
+                  alert('params error');
+                  break;
+                case 401:
+                  $location.path('/login');
+                  break;
+                case 403:
+                  alert('no permission');
+                  break;
+                case 404:
+                  $location.path('/');
+                  break;
+                case 500:
+                  alert('server error');
+                  break;
+                default:
+                  console.log(resp);
+              }
               return $q.reject(resp);
             };
             return promise.then(success, error);
           };
         }
       ]);
+    }
+  ]);
+
+  app.run([
+    '$rootScope', '$http', function($rootScope, $http) {
+      return $http.get('/api/user/me').success(function(data) {
+        return $rootScope.userinfo = data;
+      });
     }
   ]);
 

@@ -25,7 +25,7 @@
   };
 
   userSchema.path('pwd').set(function(str) {
-    return this.pwd = md5(str);
+    return md5(str);
   });
 
   userSchema.statics.login = function(uname, pwd, fn) {

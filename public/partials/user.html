@@ -5,31 +5,33 @@
       <a class="navbar-brand" href="/">AIM.CRM</a>
     </div>
     <ul class="nav navbar-nav">
-      <li ng-class="{active: curCountItem == 'area'}"><a href="javascript:void(0);" ng-click="showCount('area')">区域 <b class="caret"></b></a>
+      <li ng-class="{active: curCountItem == 'area'}"><a href="" ng-click="showCount('area')">区域 <b class="caret"></b></a>
       </li>
-      <li ng-class="{active: curCountItem == 'city'}"><a href="javascript:void(0);" ng-click="showCount('city')">分公司 <b class="caret"></b></a>
+      <li ng-class="{active: curCountItem == 'city'}"><a href="" ng-click="showCount('city')">分公司 <b class="caret"></b></a>
       </li>
-      <li ng-class="{active: curCountItem == 'industry'}"><a href="javascript:void(0);" ng-click="showCount('industry')">行业 <b class="caret"></b></a>
+      <li ng-class="{active: curCountItem == 'industry'}"><a href="" ng-click="showCount('industry')">行业 <b class="caret"></b></a>
       </li>
-      <li ng-class="{active: curCountItem == 'proType'}"><a href="javascript:void(0);" ng-click="showCount('proType')">项目类型 <b class="caret"></b></a>
+      <li ng-class="{active: curCountItem == 'proType'}"><a href="" ng-click="showCount('proType')">项目类型 <b class="caret"></b></a>
       </li>
-      <li ng-class="{active: isShowFilter}"><a href="javascript:void(0);" ng-click="showFilter()">筛选 <b class="caret"></b></a>
+      <li ng-class="{active: isShowFilter}"><a href="" ng-click="showFilter()">筛选 <b class="caret"></b></a>
       </li>
     </ul>
     <!-- user -->
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">User <span class="badge">{{num}}</span> <b class="caret"></b></a>
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span> <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> </li>
+          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
+          </li>
+          <li class="divider" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1"></li>
+          <li><a href="" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
+          </li>
           <li class="divider"></li>
-          <li><a href="">财务</a> </li>
+          <li><a href="#/setting">设置</a> 
+          </li>
           <li class="divider"></li>
-          <li><a href="">设置</a> </li>
-          <li class="divider"></li>
-          <li><a href="">修改密码</a> </li>
-          <li class="divider"></li>
-          <li><a href="">退出</a> </li>
+          <li><a href="/logout">退出</a> 
+          </li>
         </ul>
       </li>
     </ul>
@@ -109,37 +111,36 @@
             <span class="glyphicon" ng-class="{'glyphicon-chevron-up': !p.isShowMore, 'glyphicon-chevron-down': p.isShowMore}"></span>
           </button>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.projectName}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.projectName" ng-blur="save($event, p, 'projectName')">
           </span>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.projectType}}</span>
-          <span class="edit hide">
-            <!-- <input type="text" class="form-control" ng-model="p.projectType" ng-blur="save($event, p, 'projectType')"> -->
+          <span class="edit" style="display:none;">
             <select class="form-control" ng-model="p.projectType" ng-blur="save($event, p, 'projectType')">
               <option value="123">123</option>
               <option value="222">222</option>
             </select>
           </span>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.companyName}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.company" ng-blur="save($event, p, 'company')">
           </span>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.salesName}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.sales" ng-blur="save($event, p, 'sales')">
           </span>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.industry}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <select class="form-control" ng-model="p.industry" ng-blur="save($event, p, 'industry')">
               <option value="123">123</option>
               <option value="222">222</option>
@@ -147,18 +148,18 @@
           </span>
         </td>
         <td>{{p.curStatus}}</td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.supporterName}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <select class="form-control" ng-model="p.supporter" ng-blur="save($event, p, 'supporter')">
               <option value="123">123</option>
               <option value="222">222</option>
             </select>
           </span>
         </td>
-        <td ng-click="editField($event, p)">
+        <td ng-click="showEdit($event, p)">
           <span class="view">{{p.tags}}</span>
-          <span class="edit hide">
+          <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.tags" ng-blur="save($event, p, 'tags')">
           </span>
         </td>
@@ -181,119 +182,131 @@
                 <th>客户全称</th>
               </tr>
               <tr>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.agent}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <select class="form-control" ng-model="p.agent" ng-blur="save($event, p, 'agent')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.price}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.price" ng-blur="save($event, p, 'price')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.areaName}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.area" ng-blur="save($event, p, 'area')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.managerName}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.manager" ng-blur="save($event, p, 'manager')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.buyYear}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.buyYear" ng-blur="save($event, p, 'buyYear')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.client}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.client" ng-blur="save($event, p, 'client')">
                   </span>
                 </td>
               </tr>
               <tr>
-                <th>下单日期</th>
-                <th>后台账号/密码</th>
+                <th>后台账号</th>
+                <th>密码</th>
                 <th>后台创建者</th>
-                <th>微信账号/密码</th>
+                <th>微信账号</th>
+                <th>密码</th>
                 <th>微信类型</th>
-                <th>EC企业ID</th>
               </tr>
               <tr>
-                <td ng-click="editField($event, p)">
-                  <span class="view">{{p.orderDate}}</span>
-                  <span class="edit hide">
-                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="save($event, p, 'orderDate')">
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.maeAccount}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="text" class="form-control" ng-model="p.maeAccount" ng-blur="save($event, p, 'maeAccount')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
-                  <span class="view">{{p.maeAccount}} : {{p.maePwd}}</span>
-                  <span class="edit hide">
-                    <input type="text" class="form-control" ng-model="p.maeAccount">
-                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maeAccount', 'maePwd')">
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.maePwd}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maePwd')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.maeCreatorName}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <select class="form-control" ng-model="p.maeCreator" ng-blur="save($event, p, 'maeCreator')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
-                  <span class="view">{{p.wxAccount}} : {{p.wxPwd}}</span>
-                  <span class="edit hide">
-                    <input type="text" class="form-control" ng-model="p.wxAccount">
-                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxAccount', 'wxPwd')">
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.wxAccount}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="text" class="form-control" ng-model="p.wxAccount" ng-blur="save($event, p, 'wxAccount')">
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.wxPwd}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxPwd')">
+                  </span>
+                </td>
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.wxType}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <select class="form-control" ng-model="p.wxType" ng-blur="save($event, p, 'wxType')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
                   </span>
                 </td>
-                <td ng-click="editField($event, p)">
-                  <span class="view">{{p.ecId}}</span>
-                  <span class="edit hide">
-                    <input type="text" class="form-control" ng-model="p.ecId" ng-blur="save($event, p, 'ecId')">
-                  </span>
-                </td>
               </tr>
               <tr>
+                <th>下单日期</th>
+                <th>EC企业ID</th>
                 <th>发送EC盒子日期</th>
                 <th>上线日期</th>
                 <th>上线审核者</th>
                 <th colspan="3">备注</th>
               </tr>
               <tr>
-                <td ng-click="editField($event, p)">
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.orderDate}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="save($event, p, 'orderDate')">
+                  </span>
+                </td>
+                <td ng-click="showEdit($event, p)">
+                  <span class="view">{{p.ecId}}</span>
+                  <span class="edit" style="display:none;">
+                    <input type="text" class="form-control" ng-model="p.ecId" ng-blur="save($event, p, 'ecId')">
+                  </span>
+                </td>
+                <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.sendEcBoxDate}}</span>
-                  <span class="edit hide">
+                  <span class="edit" style="display:none;">
                     <input type="date" class="form-control" ng-model="p.sendEcBoxDate" ng-blur="save($event, p, 'sendEcBoxDate')">
                   </span>
                 </td>
                 <td>{{p.onlineDate}}</td>
                 <td>{{p.onlineReviewer}}</td>
-                <td ng-click="editField($event, p)" colspan="3">
+                <td ng-click="showEdit($event, p)" colspan="3">
                   <span class="view" ng-bind-html="p.memo | wrap"></span>
-                  <span class="edit hide">
-                    <textarea class="form-control" ng-model="p.memo" ng-blur="save($event, p, 'memo')" cols="30" rows="10"></textarea>
+                  <span class="edit" style="display:none;">
+                    <textarea class="form-control" ng-model="p.memo" ng-blur="save($event, p, 'memo')"></textarea>
                   </span>
                 </td>
               </tr>
@@ -303,11 +316,11 @@
       </tr>
     </table>
     <ul class="pagination">
-      <li ng-click="prePages()" ng-class="{disabled: projectData.minPage == 1}"><a href="javascript:void(0);">&laquo;</a>
+      <li ng-click="prePages()" ng-class="{disabled: projectData.minPage == 1}"><a href="">&laquo;</a>
       </li>
-      <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a href="javascript:void(0);">{{p}}</a>
+      <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a href="">{{p}}</a>
       </li>
-      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage == projectData.totalPage}"><a href="javascript:void(0);">&raquo;</a>
+      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage == projectData.totalPage}"><a href="">&raquo;</a>
       </li>
     </ul>
   </div>

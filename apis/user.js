@@ -8,10 +8,12 @@
 
   method = {
     GET: function(req, res, next) {
-      var condition, num, opts, page, query, user, _id, _ref;
+      var condition, copyUser, num, opts, page, query, user, _id, _ref;
       user = req.user;
-      if ((_ref = user.role) !== 'leader' && _ref !== 'admin') {
-        return res.send(403);
+      if (req.params._id === 'me' || ((_ref = user.role) !== 'leader' && _ref !== 'admin')) {
+        copyUser = JSON.parse(JSON.stringify(user));
+        delete copyUser.pwd;
+        return res.send(copyUser);
       }
       if (_id = req.params._id) {
         return User.findById(_id, function(err, doc) {
