@@ -1,16 +1,20 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.Types.ObjectId
+salesSchema = require('./salesModel').salesSchema
+industrySchema = require('./industryModel').industrySchema
+userSchema = require('./userModel').userSchema
+agentSchema = require('./agentModel').agentSchema
 
 projectSchema = new Schema
   name: String
   type: String
-  sales: type: ObjectId, ref: 'Sales'
-  industry: type: ObjectId, ref: 'Industry'
+  sales: salesSchema
+  industry: industrySchema
   status: String
-  supporter: type: ObjectId, ref: 'User'
+  supporter: userSchema
   tags: [String]
-  agent: type: ObjectId, ref: 'Agent'
+  agent: agentSchema
   price: Number
   buyYear: Number
   client: String
@@ -18,7 +22,7 @@ projectSchema = new Schema
   mae:
     account: String
     pwd: String
-    creator: obj: type: ObjectId, ref: 'User'
+    creator: userSchema
   wx:
     account: String
     pwd: String
@@ -28,7 +32,8 @@ projectSchema = new Schema
     sendBoxDate: Date
   online:
     date: Date
-    reviewer: type: ObjectId, ref: 'User'
+    reviewer: userSchema
   memo: String
 
-module.exports = mongoose.model 'Project', projectSchema
+exports.Project = mongoose.model 'Project', projectSchema
+exports.projectSchema = projectSchema

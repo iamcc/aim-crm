@@ -13,6 +13,8 @@
     phone: String
   });
 
-  module.exports = mongoose.model('Sales', salesSchema);
+  exports.Sales = mongoose.model('Sales', salesSchema);
+
+  exports.salesSchema = salesSchema;
 
 }).call(this);

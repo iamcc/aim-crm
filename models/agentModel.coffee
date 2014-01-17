@@ -5,4 +5,5 @@ ObjectId = Schema.Types.ObjectId
 agentSchema = new Schema
   name: String
   
-module.exports = mongoose.model 'Agent', agentSchema
+exports.Agent = mongoose.model 'Agent', agentSchema
+exports.agentSchema = agentSchema

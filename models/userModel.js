@@ -44,6 +44,8 @@
     });
   };
 
-  module.exports = mongoose.model('User', userSchema);
+  exports.User = mongoose.model('User', userSchema);
+
+  exports.userSchema = userSchema;
 
 }).call(this);
