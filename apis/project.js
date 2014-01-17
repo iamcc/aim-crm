@@ -54,10 +54,15 @@
       if (res.body._id) {
         delete res.body._id;
       }
-      Project.update({
+      return Project.update({
         _id: _id
-      }, res.body, function() {});
-      return res.send(200);
+      }, res.body, function(err, doc) {
+        if (err) {
+          console.log(err);
+          return res.send(500);
+        }
+        return res.send(200);
+      });
     },
     POST: function(req, res, next) {
       var doc;
@@ -91,6 +96,8 @@
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;
+      console.log(e);
+      return res.send(405);
     }
   };
 
