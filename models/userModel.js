@@ -13,10 +13,11 @@
   userSchema = new Schema({
     uname: String,
     pwd: String,
-    realName: String,
+    realname: String,
     role: {
       type: String,
-      "enum": 'supporter leader finance admin'.split(' ')
+      "enum": 'supporter leader finance admin'.split(' '),
+      "default": 'supporter'
     }
   });
 
@@ -27,6 +28,14 @@
   userSchema.path('pwd').set(function(str) {
     return md5(str);
   });
+
+  userSchema.methods.exists = function(fn) {
+    return this.model('User').count({
+      uname: this.uname
+    }, function(err, num) {
+      return fn(err, !!num);
+    });
+  };
 
   userSchema.statics.login = function(uname, pwd, fn) {
     return this.findOne({

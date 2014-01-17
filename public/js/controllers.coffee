@@ -118,10 +118,13 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$scope', 'User'
-  ($scope, User)->
+  '$scope', 'User', '$routeParams', '$location', '$route'
+  ($scope, User, $routeParams, $location, $route)->
+    User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
+    lastRoute = $route.current
+    $scope.$on '$locationChangeSuccess', -> $route.current = lastRoute if $route.current.$$route.controller is 'settingCtrl'
 
     # 修改密码
     $tabs[0] =
@@ -136,11 +139,89 @@ controller 'settingCtrl', [
         User.setPwd {_id: $userinfo._id, pwd: @pwd},
           (data)->
             self.success = '修改成功'
+            self.error = ''
             $btn.button 'reset'
           (err)->
+            self.success = ''
             self.error = '修改失败'
             $btn.button 'reset'
             console.log err
+
+    # 修改用户
+    $tabs[1] =
+      selectUser: ->
+        _id = @user._id
+        @user = angular.copy @allUsers.list.filter((u)-> u._id is _id)[0]
+      updateRealname: (e)->
+        self = @
+        $btn = $ e.target
+        $btn.button 'loading'
+
+        User.setRealname @user,
+          ->
+            self.success = '操作成功'
+            self.error = ''
+            self.allUsers.list.filter((u)-> u._id is self.user._id)[0].realname = self.user.realname
+            $btn.button 'reset'
+          (err)->
+            self.success = ''
+            self.error = '操作失败'
+            console.log err
+            $btn.button 'reset'
+      updateRole: (e)->
+        self = @
+        $btn = $ e.target
+        $btn.button 'loading'
+
+        User.setRole @user,
+          ->
+            self.success = '操作成功'
+            self.error = ''
+            self.allUsers.list.filter((u)-> u._id is self.user._id)[0].role = self.user.role
+            $btn.button 'reset'
+          (err)->
+            self.success = ''
+            self.error = '操作失败'
+            console.log err
+            $btn.button 'reset'
+      resetPwd: (e)->
+        self = @
+        $btn = $ e.target
+
+        if confirm('密码将被重置为123456')
+          $btn.button 'loading'
+          User.resetPwd @user,
+            ->
+              self.success = '操作成功'
+              self.error = ''
+              $btn.button 'reset'
+            (err)->
+              self.success = ''
+              self.error = '操作失败'
+              console.log err
+              $btn.button 'reset'
+
+    # 添加用户
+    $tabs[2] =
+      save: (e, form)->
+        return if form.$invalid
+        self = @
+        $btn = $ e.target
+
+        $btn.button 'loading'
+
+        User.save @newUser,
+          (data)->
+            self.success = '添加成功'
+            self.error = ''
+            $btn.button 'reset'
+          (err)->
+            self.success = ''
+            self.error = err.data
+            $btn.button 'reset'
+
+    # 销售管理
+    $tabs[3] =
 
     $scope.selectMenu = (id)->
       $scope.selectedMenu = id
@@ -148,7 +229,8 @@ controller 'settingCtrl', [
         when 0
           console.log 
         when 1
-          console.log 
+          if not $tabs[1].allUsers
+            $tabs[1].allUsers = User.get num: 100
         when 2
           console.log 
         when 3
@@ -159,5 +241,7 @@ controller 'settingCtrl', [
           console.log 
         when 6
           console.log 
+    
+    $scope.selectMenu parseInt($routeParams.tab) or 0
 ]
 # settingCtrl end

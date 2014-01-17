@@ -60,3 +60,5 @@ module.exports = (req, res, next) ->
   try
     method[req.method] req, res, next
   catch e
+    console.log e
+    res.send 405

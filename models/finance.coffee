@@ -9,6 +9,7 @@ financeSchema = new Schema
     recvDate: Date
     attachments: [String]
     payType: String
+  projects: [{type: ObjectId, ref: 'Project'}]
   balance: Number
   memo: String
   payments: [{

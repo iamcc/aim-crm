@@ -144,10 +144,17 @@
   ]);
 
   controller('settingCtrl', [
-    '$scope', 'User', function($scope, User) {
-      var $tabs, $userinfo;
+    '$scope', 'User', '$routeParams', '$location', '$route', function($scope, User, $routeParams, $location, $route) {
+      var $tabs, $userinfo, lastRoute;
+      User.checkLogin();
       $tabs = $scope.tabs = [];
       $userinfo = $scope.userinfo;
+      lastRoute = $route.current;
+      $scope.$on('$locationChangeSuccess', function() {
+        if ($route.current.$$route.controller === 'settingCtrl') {
+          return $route.current = lastRoute;
+        }
+      });
       $tabs[0] = {
         save: function(e, form) {
           var $btn, self;
@@ -166,21 +173,113 @@
             pwd: this.pwd
           }, function(data) {
             self.success = '修改成功';
+            self.error = '';
             return $btn.button('reset');
           }, function(err) {
+            self.success = '';
             self.error = '修改失败';
             $btn.button('reset');
             return console.log(err);
           });
         }
       };
-      return $scope.selectMenu = function(id) {
+      $tabs[1] = {
+        selectUser: function() {
+          var _id;
+          _id = this.user._id;
+          return this.user = angular.copy(this.allUsers.list.filter(function(u) {
+            return u._id === _id;
+          })[0]);
+        },
+        updateRealname: function(e) {
+          var $btn, self;
+          self = this;
+          $btn = $(e.target);
+          $btn.button('loading');
+          return User.setRealname(this.user, function() {
+            self.success = '操作成功';
+            self.error = '';
+            self.allUsers.list.filter(function(u) {
+              return u._id === self.user._id;
+            })[0].realname = self.user.realname;
+            return $btn.button('reset');
+          }, function(err) {
+            self.success = '';
+            self.error = '操作失败';
+            console.log(err);
+            return $btn.button('reset');
+          });
+        },
+        updateRole: function(e) {
+          var $btn, self;
+          self = this;
+          $btn = $(e.target);
+          $btn.button('loading');
+          return User.setRole(this.user, function() {
+            self.success = '操作成功';
+            self.error = '';
+            self.allUsers.list.filter(function(u) {
+              return u._id === self.user._id;
+            })[0].role = self.user.role;
+            return $btn.button('reset');
+          }, function(err) {
+            self.success = '';
+            self.error = '操作失败';
+            console.log(err);
+            return $btn.button('reset');
+          });
+        },
+        resetPwd: function(e) {
+          var $btn, self;
+          self = this;
+          $btn = $(e.target);
+          if (confirm('密码将被重置为123456')) {
+            $btn.button('loading');
+            return User.resetPwd(this.user, function() {
+              self.success = '操作成功';
+              self.error = '';
+              return $btn.button('reset');
+            }, function(err) {
+              self.success = '';
+              self.error = '操作失败';
+              console.log(err);
+              return $btn.button('reset');
+            });
+          }
+        }
+      };
+      $tabs[2] = {
+        save: function(e, form) {
+          var $btn, self;
+          if (form.$invalid) {
+            return;
+          }
+          self = this;
+          $btn = $(e.target);
+          $btn.button('loading');
+          return User.save(this.newUser, function(data) {
+            self.success = '添加成功';
+            self.error = '';
+            return $btn.button('reset');
+          }, function(err) {
+            self.success = '';
+            self.error = err.data;
+            return $btn.button('reset');
+          });
+        }
+      };
+      $tabs[3] = $scope.selectMenu = function(id) {
         $scope.selectedMenu = id;
         switch (id) {
           case 0:
             return console.log;
           case 1:
-            return console.log;
+            if (!$tabs[1].allUsers) {
+              return $tabs[1].allUsers = User.get({
+                num: 100
+              });
+            }
+            break;
           case 2:
             return console.log;
           case 3:
@@ -193,6 +292,7 @@
             return console.log;
         }
       };
+      return $scope.selectMenu(parseInt($routeParams.tab) || 0);
     }
   ]);
 

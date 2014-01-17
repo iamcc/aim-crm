@@ -6,7 +6,7 @@ app.config [
     $routeProvider
       .when('/', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
       .when('/login', {templateUrl: '/partials/login.html', controller: 'loginCtrl'})
-      .when('/setting', {templateUrl: '/partials/setting.html', controller: 'settingCtrl'})
+      .when('/setting/:tab?', {templateUrl: '/partials/setting.html', controller: 'settingCtrl'})
       .when('/finance', {templateUrl: '/partials/finance.html', controller: 'financeCtrl'})
       .otherwise redirectTo: '/'
 
@@ -17,12 +17,12 @@ app.config [
           success = (resp)-> resp
           error = (resp)->
             switch resp.status
-              when 400 then alert 'params error'
+              when 400 then console.log resp.data
               when 401 then $location.path '/login'
-              when 403 then alert 'no permission'
+              when 403 then console.log resp.data
               when 404 then $location.path '/'
-              when 500 then alert 'server error'
-              else console.log resp
+              when 500 then console.log resp.data
+            console.log resp
             $q.reject resp
 
           promise.then success, error

@@ -27,10 +27,13 @@
           return res.send(doc);
         });
       } else {
-        condition = (query = req.query).condition;
+        condition = (query = req.query).condition || {};
         if (user.role === 'leader') {
           condition.role = 'supporter';
         }
+        condition.uname = {
+          $not: /admin/i
+        };
         num = query.num || 10;
         page = query.page || 1;
         opts = {
@@ -57,7 +60,7 @@
       }
     },
     PUT: function(req, res, next) {
-      var act, query, user, _id, _ref;
+      var act, query, realname, user, _id, _ref, _ref1;
       _id = req.params._id;
       act = (query = req.query).act;
       user = req.user;
@@ -72,9 +75,9 @@
               return res.send(404);
             }
             doc.pwd = req.body.pwd;
-            return doc.save(function(err) {
-              if (err) {
-                console.log(err);
+            return doc.save(function(err2) {
+              if (err2) {
+                console.log(err2);
                 return res.send(500);
               }
               return res.send(200);
@@ -99,9 +102,36 @@
               return res.send(400);
             }
             doc.pwd = '123456';
-            return doc.save(function(err) {
-              if (err) {
-                console.log(err);
+            return doc.save(function(err2) {
+              if (err2) {
+                console.log(err2);
+                return res.send(500);
+              }
+              return res.send(200);
+            });
+          });
+        case 'setrealname':
+          if (!_id || !(realname = req.body.realname)) {
+            return res.send(400);
+          }
+          if ((_ref1 = user.role) !== 'leader' && _ref1 !== 'admin') {
+            return res.send(403);
+          }
+          return User.findById(_id, function(err, u) {
+            if (err) {
+              console.log(err);
+              return res.send(500);
+            }
+            if (!u) {
+              return res.send(404);
+            }
+            if (user.role === 'leader' && u.role !== 'supporter') {
+              return res.send(400);
+            }
+            u.realname = req.body.realname;
+            return u.save(function(err2) {
+              if (err2) {
+                console.log(err2);
                 return res.send(500);
               }
               return res.send(200);
@@ -120,9 +150,9 @@
               return res.send(404);
             }
             doc.role = req.body.role;
-            return doc.save(function(err) {
-              if (err) {
-                console.log(err);
+            return doc.save(function(err2) {
+              if (err2) {
+                console.log(err2);
                 return res.send(500);
               }
               return res.send(200);
@@ -138,10 +168,19 @@
         return res.send(403);
       }
       user = new User(req.body);
-      if (req.user.role === 'leader' || !user.role) {
+      if (req.user.role === 'leader') {
         user.role = 'supporter';
       }
-      return user.save(function(err) {
+      return async.waterfall([
+        function(cb) {
+          return user.exists(cb);
+        }, function(existUser, cb) {
+          if (existUser) {
+            return res.send(400, 'username existed');
+          }
+          return user.save(cb);
+        }
+      ], function(err, rst) {
         if (err) {
           console.log(err);
           return res.send(500);
@@ -157,6 +196,8 @@
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;
+      console.log(e);
+      return res.send(405);
     }
   };
 

@@ -12,7 +12,7 @@
       }).when('/login', {
         templateUrl: '/partials/login.html',
         controller: 'loginCtrl'
-      }).when('/setting', {
+      }).when('/setting/:tab?', {
         templateUrl: '/partials/setting.html',
         controller: 'settingCtrl'
       }).when('/finance', {
@@ -31,23 +31,21 @@
             error = function(resp) {
               switch (resp.status) {
                 case 400:
-                  alert('params error');
+                  console.log(resp.data);
                   break;
                 case 401:
                   $location.path('/login');
                   break;
                 case 403:
-                  alert('no permission');
+                  console.log(resp.data);
                   break;
                 case 404:
                   $location.path('/');
                   break;
                 case 500:
-                  alert('server error');
-                  break;
-                default:
-                  console.log(resp);
+                  console.log(resp.data);
               }
+              console.log(resp);
               return $q.reject(resp);
             };
             return promise.then(success, error);
