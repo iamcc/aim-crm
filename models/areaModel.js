@@ -12,8 +12,7 @@
 
   teamSchema = new Schema({
     name: String,
-    leader: salesSchema,
-    sales: [salesSchema]
+    leader: salesSchema
   });
 
   companySchema = new Schema({
@@ -29,8 +28,6 @@
   });
 
   exports.Area = mongoose.model('Area', areaSchema);
-
-  exports.salesSchema = salesSchema;
 
   exports.teamSchema = teamSchema;
 
