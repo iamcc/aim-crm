@@ -6,6 +6,7 @@ salesSchema = require('./salesModel').salesSchema
 teamSchema = new Schema
   name: String
   leader: salesSchema
+  sales: [salesSchema]
 
 companySchema = new Schema
   name: String
@@ -18,6 +19,7 @@ areaSchema = new Schema
   companies: [companySchema]
 
 exports.Area = mongoose.model 'Area', areaSchema
+exports.salesSchema = salesSchema
 exports.teamSchema = teamSchema
 exports.companySchema = companySchema
 exports.areaSchema = areaSchema
