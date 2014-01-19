@@ -26,3 +26,11 @@ angular
             params: act: 'resetpwd'
     ]
   )
+  .factory(
+    'Area',
+    [
+      '$resource'
+      ($resource)->
+        $resource '/api/area/:id', _id: '@_id'
+    ]
+  )

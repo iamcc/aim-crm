@@ -1,5 +1,14 @@
 controller = angular.module('app.controllers', []).controller
 
+initPage = (data)->
+  data.curPage = 1
+  data.minPage = 1
+  data.pageNum = 5
+  data.maxPage = data.minPage + data.pageNum - 1
+  data.maxPage = data.totalPage if data.maxPage > data.totalPage
+  data.maxPage = data.minPage if data.maxPage < data.minPage
+  data.pageArr = [data.minPage..data.maxPage]
+
 # userCtrl
 controller 'userCtrl', [
   '$scope', '$timeout'
@@ -118,8 +127,8 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$scope', 'User', '$routeParams', '$location', '$route'
-  ($scope, User, $routeParams, $location, $route)->
+  '$scope', 'User', 'Area', '$routeParams', '$location', '$route'
+  ($scope, User, Area, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
@@ -223,8 +232,42 @@ controller 'settingCtrl', [
     # 销售管理
     $tabs[3] =
 
+    # 区域管理
+    $tabs[4] =
+      selectArea: (area)->
+        @selectedArea = angular.copy area
+        @companyData = Area.get {parent: area._id}, (data)-> initPage data
+      addManager: ->
+        @selectedArea.managers.push angular.copy(@newManager)
+        @newManager = null
+      prePages: (data)->
+        if data.minPage > 1
+          data.minPage -= data.pageNum
+          data.maxPage = data.minPage + data.pageNum - 1
+          data.pageArr = [data.minPage..data.maxPage]
+      nextPages: (data)->
+        if data.maxPage < data.totalPage
+          data.minPage += data.pageNum
+          data.maxPage = data.minPage + data.pageNum - 1
+          if data.maxPage > data.totalPage then data.maxPage = data.totalPage
+          data.pageArr = [data.minPage..data.maxPage]
+      goPage: (data, page)->
+        data = Area.get {}
+        data.curPage = page
+      save: ->
+        self = @
+        Area.save @selectedArea,
+          ->
+            self.areaData = Area.get {}, (data)-> initPage data
+            $('#areaModal').modal 'hide'
+            self.selectedArea = null
+          (err)->
+            console.log err
+            alert '错误'
+
     $scope.selectMenu = (id)->
       $scope.selectedMenu = id
+
       switch id
         when 0
           console.log 
@@ -236,7 +279,8 @@ controller 'settingCtrl', [
         when 3
           console.log 
         when 4
-          console.log 
+          if not $tabs[4].areaData
+            $tabs[4].areaData = Area.get {}, (data)-> initPage data
         when 5
           console.log 
         when 6

@@ -12,8 +12,6 @@
     name: String
   });
 
-  exports.Industry = mongoose.model('Industry', industrySchema);
-
-  exports.industrySchema = industrySchema;
+  module.exports = mongoose.model('Industry', industrySchema);
 
 }).call(this);

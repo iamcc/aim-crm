@@ -11,19 +11,16 @@
   salesSchema = new Schema({
     name: String,
     phone: String,
-    area: {
-      type: ObjectId,
-      ref: 'Area'
-    },
-    company: String,
-    leader: {
-      type: ObjectId,
-      ref: 'Sales'
+    company: {
+      _id: ObjectId,
+      name: String,
+      manager: {
+        _id: ObjectId,
+        name: String
+      }
     }
   });
 
-  exports.Sales = mongoose.model('Sales', salesSchema);
-
-  exports.salesSchema = salesSchema;
+  module.exports = mongoose.model('Sales', salesSchema);
 
 }).call(this);

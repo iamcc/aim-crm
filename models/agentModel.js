@@ -12,8 +12,6 @@
     name: String
   });
 
-  exports.Agent = mongoose.model('Agent', agentSchema);
-
-  exports.agentSchema = agentSchema;
+  module.exports = mongoose.model('Agent', agentSchema);
 
 }).call(this);

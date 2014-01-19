@@ -41,6 +41,12 @@
         }
       });
     }
+  ]).factory('Area', [
+    '$resource', function($resource) {
+      return $resource('/api/area/:id', {
+        _id: '@_id'
+      });
+    }
   ]);
 
 }).call(this);

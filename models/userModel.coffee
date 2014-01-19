@@ -28,5 +28,6 @@ userSchema.statics.login = (uname, pwd, fn)->
     if doc and doc.pwd is md5(pwd) then fn true, doc
     else fn false
   
-exports.User = mongoose.model 'User', userSchema
-exports.userSchema = userSchema
+# exports.User = mongoose.model 'User', userSchema
+# exports.userSchema = userSchema
+module.exports = mongoose.model 'User', userSchema
