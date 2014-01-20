@@ -47,6 +47,12 @@
         _id: '@_id'
       });
     }
+  ]).factory('Sales', [
+    '$resource', function($resource) {
+      return $resource('/api/sales/:id', {
+        _id: '@_id'
+      });
+    }
   ]);
 
 }).call(this);

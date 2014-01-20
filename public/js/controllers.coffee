@@ -135,8 +135,8 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$scope', 'User', 'Area', '$routeParams', '$location', '$route'
-  ($scope, User, Area, $routeParams, $location, $route)->
+  '$scope', 'User', 'Area', 'Sales', '$routeParams', '$location', '$route'
+  ($scope, User, Area, Sales, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
@@ -239,6 +239,25 @@ controller 'settingCtrl', [
 
     # 销售管理
     $tabs[3] =
+      changeArea: ->
+        @company = null
+        if not @area.companies
+          Area.get {parent: @area._id, num: 100}, (data)->
+            $tabs[3].area.companies = data.list
+      changeCompany: ->
+        @salesData = Sales.query {company: @company._id}
+      selectSales: (sales)->
+        @selectedSales = angular.copy sales
+      save: (form)->
+        return if form.$invalid
+        @selectedSales.company = @company
+        Sales.save @selectedSales,
+          ->
+            $('#salesModal').modal 'hide'
+            tabs[3].salesData = Sales.query {company: @company._id}
+          (err)->
+            console.log err
+            alert 'Error'
 
     # 区域管理
     $tabs[4] =
@@ -278,14 +297,15 @@ controller 'settingCtrl', [
       switch id
         when 0
           console.log 
-        when 1
+        when 1 #修改用户
           if not $tabs[1].allUsers
             $tabs[1].allUsers = User.get num: 100
         when 2
           console.log 
-        when 3
-          console.log 
-        when 4
+        when 3 #销售管理
+          if not $tabs[3].areaData
+            $tabs[3].areaData = Area.get {num: 100}, (data)-> initPage data
+        when 4 #区域管理
           if not $tabs[4].areaData
             $tabs[4].areaData = Area.get {}, (data)-> initPage data
         when 5

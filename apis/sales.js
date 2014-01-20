@@ -8,11 +8,11 @@
 
   method = {
     GET: function(req, res, next) {
-      var _id;
+      var query, _id;
       if ((_id = req.params._id)) {
         return console.log(_id);
       } else {
-        if (req.query.s) {
+        if ((query = req.query).s) {
           return Sales.find({
             name: new RegExp(req.query.s, 'i')
           }, '_id name company.name', {
@@ -24,11 +24,41 @@
             }
             return res.send(docs);
           });
+        } else if (query.company) {
+          return Sales.find({
+            'company._id': query.company
+          }, function(err, docs) {
+            if (err) {
+              console.log(err);
+              return res.send(500);
+            }
+            return res.send(docs);
+          });
         }
       }
     },
-    PUT: function(req, res, next) {},
-    POST: function(req, res, next) {}
+    POST: function(req, res, next) {
+      var _id;
+      _id = req.body._id;
+      delete req.body._id;
+      if (_id) {
+        return Sales.findByIdAndUpdate(_id, req.body, function(err) {
+          if (err) {
+            console.log(err);
+            return res.send(500);
+          }
+          return res.send(200);
+        });
+      } else {
+        return Sales.create(req.body, function(err) {
+          if (err) {
+            console.log(err);
+            return res.send(500);
+          }
+          return res.send(200);
+        });
+      }
+    }
   };
 
   module.exports = function(req, res, next) {

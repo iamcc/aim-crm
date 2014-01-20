@@ -1,7 +1,7 @@
 angular
   .module('app.services', ['ngResource'])
   .factory(
-    'User',
+    'User'
     [
       '$resource'
       ($resource)->
@@ -27,10 +27,18 @@ angular
     ]
   )
   .factory(
-    'Area',
+    'Area'
     [
       '$resource'
       ($resource)->
         $resource '/api/area/:id', _id: '@_id'
+    ]
+  )
+  .factory(
+    'Sales'
+    [
+      '$resource'
+      ($resource)->
+        $resource '/api/sales/:id', _id: '@_id'
     ]
   )

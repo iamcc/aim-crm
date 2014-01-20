@@ -17,9 +17,6 @@ method =
         skip: (page - 1) * num
         limit: num
 
-      console.log condition
-      console.log opts
-
       async.auto {
         count: (cb) ->
           Area.count condition, cb

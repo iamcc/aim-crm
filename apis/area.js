@@ -27,8 +27,6 @@
           skip: (page - 1) * num,
           limit: num
         };
-        console.log(condition);
-        console.log(opts);
         return async.auto({
           count: function(cb) {
             return Area.count(condition, cb);

@@ -182,7 +182,7 @@
   ]);
 
   controller('settingCtrl', [
-    '$scope', 'User', 'Area', '$routeParams', '$location', '$route', function($scope, User, Area, $routeParams, $location, $route) {
+    '$scope', 'User', 'Area', 'Sales', '$routeParams', '$location', '$route', function($scope, User, Area, Sales, $routeParams, $location, $route) {
       var $tabs, $userinfo, lastRoute;
       User.checkLogin();
       $tabs = $scope.tabs = [];
@@ -306,7 +306,43 @@
           });
         }
       };
-      $tabs[3] = $tabs[4] = {
+      $tabs[3] = {
+        changeArea: function() {
+          this.company = null;
+          if (!this.area.companies) {
+            return Area.get({
+              parent: this.area._id,
+              num: 100
+            }, function(data) {
+              return $tabs[3].area.companies = data.list;
+            });
+          }
+        },
+        changeCompany: function() {
+          return this.salesData = Sales.query({
+            company: this.company._id
+          });
+        },
+        selectSales: function(sales) {
+          return this.selectedSales = angular.copy(sales);
+        },
+        save: function(form) {
+          if (form.$invalid) {
+            return;
+          }
+          this.selectedSales.company = this.company;
+          return Sales.save(this.selectedSales, function() {
+            $('#salesModal').modal('hide');
+            return tabs[3].salesData = Sales.query({
+              company: this.company._id
+            });
+          }, function(err) {
+            console.log(err);
+            return alert('Error');
+          });
+        }
+      };
+      $tabs[4] = {
         selectArea: function(area) {
           this.selectedArea = angular.copy(area);
           return this.companyData = Area.get({
@@ -375,7 +411,14 @@
           case 2:
             return console.log;
           case 3:
-            return console.log;
+            if (!$tabs[3].areaData) {
+              return $tabs[3].areaData = Area.get({
+                num: 100
+              }, function(data) {
+                return initPage(data);
+              });
+            }
+            break;
           case 4:
             if (!$tabs[4].areaData) {
               return $tabs[4].areaData = Area.get({}, function(data) {
