@@ -6,6 +6,12 @@ method =
     if (_id = req.params._id)
       console.log _id
     else
+      if req.query.s
+        Sales.find name: new RegExp(req.query.s, 'i'), '_id name company.name', {limit: 10}, (err, docs)->
+          if err
+            console.log err
+            return res.send 500
+          res.send docs
 
   PUT: (req, res, next)->
   POST: (req, res, next)->

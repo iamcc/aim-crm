@@ -10,12 +10,15 @@ method =
           return res.send 500
         res.send doc
     else
-      condition = (query = req.query).condition
+      condition = parent: (query = req.query).parent
       num = query.num or 10
       page = query.page or 1
       opts =
         skip: (page - 1) * num
         limit: num
+
+      console.log condition
+      console.log opts
 
       async.auto {
         count: (cb) ->
@@ -40,9 +43,10 @@ method =
   #       return res.send 500
   #     res.send 200
   POST: (req, res, next)->
+    _id = req.body._id
     delete req.body._id
 
-    if (_id = req.params._id)
+    if _id
       Area.findByIdAndUpdate _id, req.body, (err, doc)->
         if err
           console.log err

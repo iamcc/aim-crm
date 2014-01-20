@@ -1,6 +1,7 @@
 controller = angular.module('app.controllers', []).controller
 
 initPage = (data)->
+  return unless data
   data.curPage = 1
   data.minPage = 1
   data.pageNum = 5
@@ -8,6 +9,20 @@ initPage = (data)->
   data.maxPage = data.totalPage if data.maxPage > data.totalPage
   data.maxPage = data.minPage if data.maxPage < data.minPage
   data.pageArr = [data.minPage..data.maxPage]
+
+prePages = (data)->
+  return unless data
+  if data.minPage > 1
+    data.minPage -= data.pageNum
+    data.maxPage = data.minPage + data.pageNum - 1
+    data.pageArr = [data.minPage..data.maxPage]
+nextPages = (data)->
+  return unless data
+  if data.maxPage < data.totalPage
+    data.minPage += data.pageNum
+    data.maxPage = data.minPage + data.pageNum - 1
+    if data.maxPage > data.totalPage then data.maxPage = data.totalPage
+    data.pageArr = [data.minPage..data.maxPage]
 
 # userCtrl
 controller 'userCtrl', [
@@ -30,18 +45,11 @@ controller 'userCtrl', [
 
     $scope.prePages = ->
       data = $scope.projectData
-      if data.minPage > 1
-        data.minPage -= data.pageNum
-        data.maxPage = data.minPage + data.pageNum - 1
-        data.pageArr = [data.minPage..data.maxPage]
+      prePages data
 
     $scope.nextPages = ->
       data = $scope.projectData
-      if data.maxPage < data.totalPage
-        data.minPage += data.pageNum
-        data.maxPage = data.minPage + data.pageNum - 1
-        if data.maxPage > data.totalPage then data.maxPage = data.totalPage
-        data.pageArr = [data.minPage..data.maxPage]
+      nextPages data
 
     $scope.goPage = (page)->
       $scope.projectData.curPage = page
@@ -236,21 +244,19 @@ controller 'settingCtrl', [
     $tabs[4] =
       selectArea: (area)->
         @selectedArea = angular.copy area
-        @companyData = Area.get {parent: area._id}, (data)-> initPage data
+        @companyData = Area.get parent: area._id, (data)-> initPage data
+      addArea: (parent)->
+        @selectedArea =
+          parent: parent
+          managers: []
+      editArea: (area)->
+        @selectedArea = angular.copy area
       addManager: ->
+        return unless @newManager and @newManager._id
         @selectedArea.managers.push angular.copy(@newManager)
         @newManager = null
-      prePages: (data)->
-        if data.minPage > 1
-          data.minPage -= data.pageNum
-          data.maxPage = data.minPage + data.pageNum - 1
-          data.pageArr = [data.minPage..data.maxPage]
-      nextPages: (data)->
-        if data.maxPage < data.totalPage
-          data.minPage += data.pageNum
-          data.maxPage = data.minPage + data.pageNum - 1
-          if data.maxPage > data.totalPage then data.maxPage = data.totalPage
-          data.pageArr = [data.minPage..data.maxPage]
+      prePages: prePages
+      nextPages: nextPages
       goPage: (data, page)->
         data = Area.get {}
         data.curPage = page
@@ -258,7 +264,8 @@ controller 'settingCtrl', [
         self = @
         Area.save @selectedArea,
           ->
-            self.areaData = Area.get {}, (data)-> initPage data
+            if self.selectedArea.parent then self.companyData = Area.get parent: self.selectedArea.parent, (data)-> initPage data
+            else self.areaData = Area.get {}, (data)-> initPage data
             $('#areaModal').modal 'hide'
             self.selectedArea = null
           (err)->

@@ -18,13 +18,17 @@
           return res.send(doc);
         });
       } else {
-        condition = (query = req.query).condition;
+        condition = {
+          parent: (query = req.query).parent
+        };
         num = query.num || 10;
         page = query.page || 1;
         opts = {
           skip: (page - 1) * num,
           limit: num
         };
+        console.log(condition);
+        console.log(opts);
         return async.auto({
           count: function(cb) {
             return Area.count(condition, cb);
@@ -46,8 +50,9 @@
     },
     POST: function(req, res, next) {
       var _id;
+      _id = req.body._id;
       delete req.body._id;
-      if ((_id = req.params._id)) {
+      if (_id) {
         return Area.findByIdAndUpdate(_id, req.body, function(err, doc) {
           if (err) {
             console.log(err);

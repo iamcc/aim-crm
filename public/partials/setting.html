@@ -184,7 +184,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             区域管理
-            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].selectedArea = {managers:[]}">
+            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
             <div class="clearfix"></div>
@@ -195,31 +195,31 @@
               <th>经理</th>
               <th></th>
             </tr>
-            <tr ng-repeat="area in tabs[4].areaData.list">
+            <tr ng-repeat="area in tabs[4].areaData.list" ng-click="tabs[4].selectArea(area)">
               <td>{{area.name}}</td>
               <td>
-                <span ng-repeat="m in area.managers">{{m.name}}, </span>
+                <span ng-repeat="m in area.managers">{{m.name}},</span>
               </td>
               <td>
-                <button class="btn btn-default btn-xs">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].editArea(area)">
                   <span class="glyphicon glyphicon-edit"></span>
                 </button>
               </td>
             </tr>
           </table>
           <ul class="pagination">
-            <li ng-class="{disabled: tabs[4].areaData.minPage == 1}" ng-click="tabs[4].prePages(tabs[4].areaData)"><a href="">&laquo;</a>
+            <li ng-class="{disabled: !tabs[4].areaData.minPage || tabs[4].areaData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].areaData)"><a href="">&laquo;</a>
             </li>
             <li ng-repeat="p in tabs[4].areaData.pageArr" ng-class="{active: p == tabs[4].areaData.curPage}" ng-click="tabs[4].goPage(tabs[4].areaData, p)"><a href="">{{p}}</a>
             </li>
-            <li ng-class="{disabled: tabs[4].areaData.maxPage == areaData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].areaData)"><a href="">&raquo;</a>
+            <li ng-class="{disabled: !tabs[4].areaData.maxPage || tabs[4].areaData.maxPage >= tabs[4].areaData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].areaData)"><a href="">&raquo;</a>
             </li>
           </ul>
         </div>
         <div class="panel panel-default">
           <div class="panel-heading">
             分公司管理
-            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static">
+            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea(tabs[4].selectedArea._id)">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
             <div class="clearfix"></div>
@@ -230,18 +230,11 @@
               <th>经理</th>
               <th></th>
             </tr>
-            <tr>
-              <td>123</td>
-              <td>123</td>
+            <tr ng-repeat="c in tabs[4].companyData.list">
+              <td>{{c.name}}</td>
               <td>
-                <button class="btn btn-default btn-xs">
-                  <span class="glyphicon glyphicon-edit"></span>
-                </button>
+                <span ng-repeat="m in c.managers">{{m.name}},</span>
               </td>
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>123</td>
               <td>
                 <button class="btn btn-default btn-xs">
                   <span class="glyphicon glyphicon-edit"></span>
@@ -250,19 +243,11 @@
             </tr>
           </table>
           <ul class="pagination">
-            <li class="disabled"><a href="">&laquo;</a>
+            <li ng-class="{disabled: !tabs[4].companyData.minPage || tabs[4].companyData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].companyData)"><a href="">&laquo;</a>
             </li>
-            <li class="active"><a href="">1</a>
+            <li ng-repeat="p in tabs[4].companyData.pageArr" ng-class="{active: p == tabs[4].companyData.curPage}" ng-click="tabs[4].goPage(tabs[4].companyData, p)"><a href="">{{p}}</a>
             </li>
-            <li><a href="">2</a>
-            </li>
-            <li><a href="">3</a>
-            </li>
-            <li><a href="">4</a>
-            </li>
-            <li><a href="">5</a>
-            </li>
-            <li><a href="">&raquo;</a>
+            <li ng-class="{disabled: !tabs[4].companyData.maxPage || tabs[4].companyData.maxPage >= tabs[4].companyData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].companyData)"><a href="">&raquo;</a>
             </li>
           </ul>
         </div>
@@ -343,7 +328,7 @@
           <div class="form-group">
             <label class="control-label col-sm-2">名称</label>
             <div class="col-sm-10">
-              <input class="form-control" ng-model="tabs[4].selectedArea.name"></input>
+              <input class="form-control" ng-model="tabs[4].selectedArea.name" required></input>
             </div>
           </div>
           <div class="form-group">
@@ -356,9 +341,10 @@
                 </li>
               </ul>
               <div class="input-group">
-                <input class="form-control" ng-model="tabs[4].newManager.name"></input>
+                <!-- <input id="newManager" type="text"></input> -->
+                <typeahead id="newManager" name="newManager" value-key="name" remote="/api/sales?s=%QUERY" model="tabs[4].newManager.name" datum="tabs[4].newManager"></typeahead>
                 <span class="input-group-btn">
-                  <button class="btn btn-default" ng-click="tabs[4].addManager()">
+                  <button type="button" class="btn btn-default" ng-click="tabs[4].addManager()">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
                 </span>
@@ -377,7 +363,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="tabs[4].save()">保存</button>
+        <button type="button" class="btn btn-primary" ng-click="tabs[4].save()" ng-class="{disabled: !tabs[4].selectedArea.name}">保存</button>
       </div>
     </div>
     <!-- /.modal-content -->
