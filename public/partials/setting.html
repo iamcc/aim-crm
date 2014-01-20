@@ -125,8 +125,8 @@
       <div class="row" ng-switch-when="3">
         <div class="panel panel-default">
           <div class="panel-heading">
-            销售(111)
-            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-disabled="!tabs[3].company">
+            销售({{tabs[3].salesData.length}})
+            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#salesModal" data-backdrop="static">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
@@ -152,13 +152,13 @@
               <td>{{s.phone}}</td>
               <td>{{s.company.name}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#salesModal" data-backdrop="static">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="selectSales(s)">
                   <span class="glyphicon glyphicon-edit"></span>
                 </button>
               </td>
             </tr>
           </table>
-         <!--  <ul class="pagination">
+          <!--  <ul class="pagination">
             <li ng-class="{disabled: !tabs[3].salesData.minPage || tabs[3].salesData.minPage <= 1}" ng-click="tabs[3].prePages(tabs[3].salesData)"><a href="">&laquo;</a>
             </li>
             <li ng-repeat="p in tabs[3].salesData.pageArr" ng-class="{active: p == tabs[3].salesData.curPage}" ng-click="tabs[3].goPage(tabs[3].salesData, p)"><a href="">{{p}}</a>
@@ -173,7 +173,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             区域管理
-            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea()">
+            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
             <div class="clearfix"></div>
@@ -199,7 +199,7 @@
           <ul class="pagination">
             <li ng-class="{disabled: !tabs[4].areaData.minPage || tabs[4].areaData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].areaData)"><a href="">&laquo;</a>
             </li>
-            <li ng-repeat="p in tabs[4].areaData.pageArr" ng-class="{active: p == tabs[4].areaData.curPage}" ng-click="tabs[4].goPage(tabs[4].areaData, p)"><a href="">{{p}}</a>
+            <li ng-repeat="p in tabs[4].areaData.pageArr" ng-class="{active: p == tabs[4].areaData.curPage}" ng-click="tabs[4].goAreaPage(tabs[4].areaData, p)"><a href="">{{p}}</a>
             </li>
             <li ng-class="{disabled: !tabs[4].areaData.maxPage || tabs[4].areaData.maxPage >= tabs[4].areaData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].areaData)"><a href="">&raquo;</a>
             </li>
@@ -208,7 +208,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             分公司管理
-            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea(tabs[4].selectedArea._id)">
+            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea(tabs[4].selectedArea._id)">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
             <div class="clearfix"></div>
@@ -225,7 +225,7 @@
                 <span ng-repeat="m in c.managers">{{m.name}},</span>
               </td>
               <td>
-                <button class="btn btn-default btn-xs">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].editArea(c)">
                   <span class="glyphicon glyphicon-edit"></span>
                 </button>
               </td>
@@ -234,7 +234,7 @@
           <ul class="pagination">
             <li ng-class="{disabled: !tabs[4].companyData.minPage || tabs[4].companyData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].companyData)"><a href="">&laquo;</a>
             </li>
-            <li ng-repeat="p in tabs[4].companyData.pageArr" ng-class="{active: p == tabs[4].companyData.curPage}" ng-click="tabs[4].goPage(tabs[4].companyData, p)"><a href="">{{p}}</a>
+            <li ng-repeat="p in tabs[4].companyData.pageArr" ng-class="{active: p == tabs[4].companyData.curPage}" ng-click="tabs[4].goCompanyPage(tabs[4].companyData, p)"><a href="">{{p}}</a>
             </li>
             <li ng-class="{disabled: !tabs[4].companyData.maxPage || tabs[4].companyData.maxPage >= tabs[4].companyData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].companyData)"><a href="">&raquo;</a>
             </li>
@@ -273,20 +273,25 @@
               <input type="text" class="form-control" ng-model="tabs[3].selectedSales.phone"></input>
             </div>
           </div>
-          <!--   
           <div class="form-group">
             <label class="control-label col-sm-2">区域</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].selectedSales.name"></select>
+              <select class="form-control" ng-model="tabs[3].area" ng-options="a as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
+              </select>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">分公司</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].selectedSales.company"></select>
-            </div> 
+              <select class="form-control" ng-model="tabs[3].company" ng-options="c as c.name for c in tabs[3].area.companies" ng-change="tabs[3].changeCompany()"></select>
+            </div>
           </div>
-          -->
+          <div class="form-group">
+            <label class="control-label col-sm-2">经理</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="tabs[3].company.manager" ng-options="m as m.name for m in tabs[3].company.managers"></select>
+            </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -322,7 +327,7 @@
               <ul class="list-unstyled">
                 <li ng-repeat="m in tabs[4].selectedArea.managers">
                   {{m.name}}
-                  <button class="btn btn-default btn-xs" ng-click="tabs[4].selectedArea.managers.splice($index, 1)">x</button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="tabs[4].selectedArea.managers.splice($index, 1)">x</button>
                 </li>
               </ul>
               <div class="input-group">
@@ -339,7 +344,7 @@
           <div class="form-group">
             <label class="control-label col-sm-2">所属区域</label>
             <div class="col-sm-10">
-              <select class="form-control">
+              <select class="form-control" ng-model="tabs[4].selectedArea.parent" ng-options="a._id as a.name for a in tabs[4].allAreas">
                 <option value=""></option>
               </select>
             </div>

@@ -323,6 +323,9 @@
             company: this.company._id
           });
         },
+        changeManager: function() {
+          return console.log(this.selectedSales);
+        },
         selectSales: function(sales) {
           return this.selectedSales = angular.copy(sales);
         },
@@ -333,8 +336,8 @@
           this.selectedSales.company = this.company;
           return Sales.save(this.selectedSales, function() {
             $('#salesModal').modal('hide');
-            return tabs[3].salesData = Sales.query({
-              company: this.company._id
+            return $tabs[3].salesData = Sales.query({
+              company: $tabs[3].company._id
             });
           }, function(err) {
             console.log(err);
@@ -369,9 +372,22 @@
         },
         prePages: prePages,
         nextPages: nextPages,
-        goPage: function(data, page) {
-          data = Area.get({});
-          return data.curPage = page;
+        goAreaPage: function(data, page) {
+          data.curPage = page;
+          return Area.get({
+            page: page
+          }, function(docs) {
+            return data.list = docs.list;
+          });
+        },
+        goCompanyPage: function(data, page) {
+          data.curPage = page;
+          return Area.get({
+            parent: this.selectedArea._id,
+            page: page
+          }, function(docs) {
+            return data.list = docs.list;
+          });
         },
         save: function() {
           var self;
@@ -421,8 +437,13 @@
             break;
           case 4:
             if (!$tabs[4].areaData) {
-              return $tabs[4].areaData = Area.get({}, function(data) {
+              $tabs[4].areaData = Area.get({}, function(data) {
                 return initPage(data);
+              });
+              return Area.get({
+                num: 100
+              }, function(data) {
+                return $tabs[4].allAreas = data.list;
               });
             }
             break;

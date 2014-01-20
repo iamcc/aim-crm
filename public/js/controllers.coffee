@@ -250,11 +250,12 @@ controller 'settingCtrl', [
         @selectedSales = angular.copy sales
       save: (form)->
         return if form.$invalid
+
         @selectedSales.company = @company
         Sales.save @selectedSales,
           ->
             $('#salesModal').modal 'hide'
-            tabs[3].salesData = Sales.query {company: @company._id}
+            $tabs[3].salesData = Sales.query {company: $tabs[3].company._id}
           (err)->
             console.log err
             alert 'Error'
@@ -276,9 +277,14 @@ controller 'settingCtrl', [
         @newManager = null
       prePages: prePages
       nextPages: nextPages
-      goPage: (data, page)->
-        data = Area.get {}
+      goAreaPage: (data, page)->
         data.curPage = page
+        Area.get {page: page}, (docs)->
+          data.list = docs.list
+      goCompanyPage: (data, page)->
+        data.curPage = page
+        Area.get {parent: @selectedArea._id, page: page}, (docs)->
+          data.list = docs.list
       save: ->
         self = @
         Area.save @selectedArea,
@@ -308,6 +314,7 @@ controller 'settingCtrl', [
         when 4 #区域管理
           if not $tabs[4].areaData
             $tabs[4].areaData = Area.get {}, (data)-> initPage data
+            Area.get {num: 100}, (data)-> $tabs[4].allAreas = data.list
         when 5
           console.log 
         when 6
