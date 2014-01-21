@@ -15,6 +15,13 @@
             _id: 'me'
           }
         },
+        getSupporters: {
+          method: 'GET',
+          params: {
+            _id: 'supporters'
+          },
+          isArray: true
+        },
         setRealname: {
           method: 'PUT',
           params: {
@@ -41,15 +48,57 @@
         }
       });
     }
+  ]).factory('Project', [
+    '$resource', function($resource) {
+      return $resource('/api/project/:_id', {
+        _id: '@_id'
+      }, {
+        search: {
+          method: 'GET',
+          params: {
+            act: 'search'
+          }
+        },
+        update: {
+          method: 'PUT'
+        }
+      });
+    }
   ]).factory('Area', [
     '$resource', function($resource) {
-      return $resource('/api/area/:id', {
+      return $resource('/api/area/:_id', {
         _id: '@_id'
+      }, {
+        all: {
+          method: 'GET',
+          params: {
+            _id: 'all'
+          },
+          isArray: true
+        }
       });
     }
   ]).factory('Sales', [
     '$resource', function($resource) {
-      return $resource('/api/sales/:id', {
+      return $resource('/api/sales/:_id', {
+        _id: '@_id'
+      });
+    }
+  ]).factory('Industry', [
+    '$resource', function($resource) {
+      return $resource('/api/industry/:_id', {
+        _id: '@_id'
+      });
+    }
+  ]).factory('Agent', [
+    '$resource', function($resource) {
+      return $resource('/api/agent/:_id', {
+        _id: '@_id'
+      });
+    }
+  ]).factory('ProjectType', [
+    '$resource', function($resource) {
+      return $resource('/api/projectType/:_id', {
         _id: '@_id'
       });
     }

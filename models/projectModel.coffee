@@ -18,6 +18,9 @@ projectSchema = new Schema
   company:
     _id: ObjectId
     name: String
+    manager:
+      _id: ObjectId
+      name: String
   industry:
     _id: ObjectId
     name: String

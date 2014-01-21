@@ -9,7 +9,11 @@
   ObjectId = Schema.Types.ObjectId;
 
   industrySchema = new Schema({
-    name: String
+    name: String,
+    projects: {
+      type: Number,
+      "default": 0
+    }
   });
 
   module.exports = mongoose.model('Industry', industrySchema);

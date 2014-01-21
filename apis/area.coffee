@@ -4,6 +4,7 @@ async = require 'async'
 method =
   GET: (req, res, next)->
     if (_id = req.params._id)
+      if _id is 'all' then return Area.find {parent: req.query.parent}, (err, docs)->res.send docs
       Area.findById _id, (err, doc)->
         if err
           console.log err

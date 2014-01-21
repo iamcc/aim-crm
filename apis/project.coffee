@@ -35,13 +35,14 @@ method =
 
   PUT: (req, res, next) ->
     return res.send 400 if not (_id = req.params._id)
-    delete res.body._id if res.body._id
-    Project.update {_id: _id} , res.body, (err, doc)->
+    delete req.body._id
+    Project.update {_id: _id} , req.body, (err, doc)->
       if err
         console.log err
         return res.send 500
       res.send 200
   POST: (req, res, next) ->
+    delete req.body._id
     doc = new Project req.body
     doc.save (err, doc) ->
       if err

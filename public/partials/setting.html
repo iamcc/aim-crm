@@ -126,16 +126,16 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             销售({{tabs[3].salesData.length}})
-            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#salesModal" data-backdrop="static">
+            <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="tabs[3].addSales()">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
           <div class="panel-body">
             <form class="form-inline">
-              <select class="form-control" ng-model="tabs[3].area" ng-options="a as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
+              <select class="form-control" ng-model="tabs[3].selectedSales.area._id" ng-options="a._id as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
                 <option value="">区域</option>
               </select>
-              <select class="form-control" ng-model="tabs[3].company" ng-options="c as c.name for c in tabs[3].area.companies" ng-change="tabs[3].changeCompany()">
+              <select class="form-control" ng-model="tabs[3].selectedSales.company._id" ng-options="c._id as c.name for c in tabs[3].selectedSales.companies" ng-change="tabs[3].changeCompany()">
                 <option value="">分公司</option>
               </select>
             </form>
@@ -152,7 +152,7 @@
               <td>{{s.phone}}</td>
               <td>{{s.company.name}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="selectSales(s)">
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="tabs[3].selectSales(s)">
                   <span class="glyphicon glyphicon-edit"></span>
                 </button>
               </td>
@@ -242,11 +242,72 @@
         </div>
       </div>
       <!-- 行业管理 -->
-      <div class="row" ng-switch-when="5">5</div>
+      <div class="row" ng-switch-when="5">
+        <ul class="list-group" style="width: 300px;">
+          <li class="list-group-item" ng-repeat="i in tabs[5].industries">{{i.name}}
+            <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="tabs[5].del(i)">X</button>
+          </li>
+          <li class="list-group-item">
+            <form name="industryForm">
+              <div class="alert alert-danger" ng-if="tabs[5].error">{{tabs[5].error}}</div>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model="tabs[5].newIndustry.name" required>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" ng-click="tabs[5].save(industryForm)">+</button>
+                </span>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
       <!-- 代理商管理 -->
-      <div class="row" ng-switch-when="6">6</div>
+      <div class="row" ng-switch-when="6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#agentModal" data-backdrop="static" ng-click="tabs[6].add()">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <span class="clearfix"></span>
+          </div>
+          <table class="table table-hover">
+            <tr>
+              <th>代理商</th>
+              <th>联系人</th>
+              <th>电话</th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="a in tabs[6].agentData.list">
+              <td>{{a.name}}</td>
+              <td>{{a.people}}</td>
+              <td>{{a.phone}}</td>
+              <td>
+                <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#agentModal" data-backdrop="static" ng-click="tabs[6].edit(a)">
+                  <span class="glyphicon glyphicon-edit"></span>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <!-- 项目类型管理 -->
-      <div class="row" ng-switch-when="7">7</div>
+      <div class="row" ng-switch-when="7">
+        <ul class="list-group" style="width: 300px;">
+          <li class="list-group-item" ng-repeat="p in tabs[7].projectTypes">{{p.name}}
+            <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="tabs[7].del(p)">X</button>
+          </li>
+          <li class="list-group-item">
+            <form name="typeForm">
+              <div class="alert alert-danger" ng-if="tabs[7].error">{{tabs[7].error}}</div>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model="tabs[7].newType.name" required>
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" ng-click="tabs[7].save(typeForm)">+</button>
+                </span>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -276,20 +337,20 @@
           <div class="form-group">
             <label class="control-label col-sm-2">区域</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].area" ng-options="a as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
+              <select class="form-control" ng-model="tabs[3].selectedSales.area._id" ng-options="a._id as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
               </select>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">分公司</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].company" ng-options="c as c.name for c in tabs[3].area.companies" ng-change="tabs[3].changeCompany()"></select>
+              <select class="form-control" ng-model="tabs[3].selectedSales.company._id" ng-options="c._id as c.name for c in tabs[3].selectedSales.companies" ng-change="tabs[3].changeCompany()"></select>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-2">经理</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].company.manager" ng-options="m as m.name for m in tabs[3].company.managers"></select>
+              <select class="form-control" ng-model="tabs[3].selectedSales.company.manager._id" ng-options="m._id as m.name for m in tabs[3].selectedSales.company.managers"></select>
             </div>
           </div>
         </form>
@@ -355,6 +416,46 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary" ng-click="tabs[4].save()" ng-class="{disabled: !tabs[4].selectedArea.name}">保存</button>
       </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 添加代理商 -->
+<div id="agentModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">代理商管理</h4>
+      </div>
+      <form name="agentForm" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label col-sm-2">名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="tabs[6].newAgent.name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">联系人</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="tabs[6].newAgent.people">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">电话</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="tabs[6].newAgent.phone">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button class="btn btn-primary" ng-click="tabs[6].save(agentForm)">保存</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>

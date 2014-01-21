@@ -22,6 +22,7 @@ areaSchema = new Schema
   # companies: [companySchema]
   # children: [areaSchema]
   parent: ObjectId
+  projects: type: Number, default: 0
 
 # exports.Area = mongoose.model 'Area', areaSchema
 # exports.salesSchema = salesSchema

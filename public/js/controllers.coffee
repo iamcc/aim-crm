@@ -9,7 +9,6 @@ initPage = (data)->
   data.maxPage = data.totalPage if data.maxPage > data.totalPage
   data.maxPage = data.minPage if data.maxPage < data.minPage
   data.pageArr = [data.minPage..data.maxPage]
-
 prePages = (data)->
   return unless data
   if data.minPage > 1
@@ -26,8 +25,8 @@ nextPages = (data)->
 
 # userCtrl
 controller 'userCtrl', [
-  '$scope', '$timeout'
-  ($scope, $timeout)->
+  '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales'
+  ($scope, Project, ProjectType, Industry, Agent, User, Area, Sales)->
     $scope.showCount = (item)->
       $scope.isShowFilter = false
 
@@ -43,73 +42,51 @@ controller 'userCtrl', [
       $scope.curCountItem = null
       $scope.isShowFilter = not $scope.isShowFilter
 
-    $scope.prePages = ->
-      data = $scope.projectData
-      prePages data
-
-    $scope.nextPages = ->
-      data = $scope.projectData
-      nextPages data
-
+    $scope.prePages = -> prePages @projectData
+    $scope.nextPages = -> nextPages @projectData
     $scope.goPage = (page)->
-      $scope.projectData.curPage = page
+      self = @
+      if page then Project.get {page: page}, (data)-> self.projectData.list = data.list
+      else self.projectData = Project.get {}, (data)-> initPage data
 
     $scope.showEdit = (event, project)->
       if $(event.target).parent().hasClass 'edit' then return
       $scope.oldProject = angular.copy project
-      # $('.edit').hide()
       $(event.target).find('.view').hide()
       $(event.target).find('.edit').show()
       $(event.target).find('.edit').children().first().focus()
       return
 
-    $scope.save = (event, project, field)->
+    $scope.saveProject = ->
+      p = JSON.parse angular.toJson @newProject
+      p.company = p.sales.company
+      Project.save p,
+        ->
+          $scope.newProject = null
+          $scope.goPage()
+        (err)->
+          alert err.data
+
+    $scope.update = (event, project, field)->
       $(event.target).parent().parent().find('.view').show()
       $(event.target).parent().parent().find('.edit').hide()
       param = {}
       param[field] = project[field]
-      if $scope.oldProject[field] isnt project[field] then console.log 'save', param
+      if $scope.oldProject[field] isnt project[field] then console.log 'update', param
 
+    $scope.goPage()
+    $scope.projectTypes = ProjectType.query()
+    $scope.industries = Industry.query()
+    $scope.agents = Agent.query({_id: 'all'})
+    $scope.supporters = User.getSupporters()
+    $scope.areas = Area.all()
 
-    $timeout ->
-      data = $scope.projectData = {}
-      data.minPage = 1
-      data.pageNum = 5
-      data.maxPage = data.minPage + data.pageNum - 1
-      data.curPage = 1
-      data.totalPage = 11
-      data.pageArr = [data.minPage..data.maxPage]
-      data.list = [
-        {
-          projectName: '1'
-          projectType: '1'
-          companyName: '1'
-          salesName: '1'
-          industry: '1'
-          curStatus: '1'
-          supporterName: '1'
-          tags: '1'
-          agent: '1'
-          price: '1'
-          areaName: '1'
-          managerName: '1'
-          buyYear: '1'
-          client: '1'
-          orderDate: '1'
-          maeAccount: '1'
-          maePwd: '1'
-          maeCreatorName: '1'
-          wxAccount: '1'
-          wxPwd: '1'
-          wxType: '1'
-          ecId: '1'
-          sendEcBoxDate: '1'
-          onlineDate: '1'
-          onlineReviewer: '1'
-          memo: '1'
-        }
-      ]
-    , 1000
+    $scope.$watch 'newProject.area', ->
+      if $scope.newProject
+        $scope.companies = Area.all parent: $scope.newProject.area._id
+        $scope.saleses = null
+    $scope.$watch 'newProject.company', ->
+      if $scope.newProject then $scope.saleses = Sales.query company: $scope.newProject.company._id
 ]
 # userCtrl end
 
@@ -135,8 +112,8 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$scope', 'User', 'Area', 'Sales', '$routeParams', '$location', '$route'
-  ($scope, User, Area, Sales, $routeParams, $location, $route)->
+  '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', '$routeParams', '$location', '$route'
+  ($scope, User, Area, Sales, Industry, Agent, ProjectType, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
@@ -240,22 +217,30 @@ controller 'settingCtrl', [
     # 销售管理
     $tabs[3] =
       changeArea: ->
-        @company = null
-        if not @area.companies
-          Area.get {parent: @area._id, num: 100}, (data)->
-            $tabs[3].area.companies = data.list
+        @selectedSales.company = null
+        @salesData = null
+        Area.get {parent: @selectedSales.area._id, num: 100}, (data)->
+          $tabs[3].selectedSales.companies = data.list
       changeCompany: ->
-        @salesData = Sales.query {company: @company._id}
+        @salesData = Sales.query {company: @selectedSales.company._id}
+        @selectedSales.company = @selectedSales.companies.filter((obj)-> obj._id is $tabs[3].selectedSales.company._id)[0]
+      addSales: ->
+        @selectedSales =
+          area: angular.copy (@selectedSales and @selectedSales.area)
+          company: angular.copy (@selectedSales and @selectedSales.company)
+          companies: angular.copy (@selectedSales and @selectedSales.companies)
       selectSales: (sales)->
+        sales.companies = @selectedSales.companies
+        sales.company.managers = @selectedSales.company.managers
+        sales.area = @selectedSales.area
         @selectedSales = angular.copy sales
       save: (form)->
         return if form.$invalid
 
-        @selectedSales.company = @company
         Sales.save @selectedSales,
           ->
             $('#salesModal').modal 'hide'
-            $tabs[3].salesData = Sales.query {company: $tabs[3].company._id}
+            $tabs[3].salesData = Sales.query {company: $tabs[3].selectedSales.company._id}
           (err)->
             console.log err
             alert 'Error'
@@ -297,28 +282,90 @@ controller 'settingCtrl', [
             console.log err
             alert '错误'
 
+    # 行业管理
+    $tabs[5] =
+      del: (i)->
+        $tabs[5].error = ''
+        if confirm '确定删除？'
+          Industry.delete i,
+            ->
+              $tabs[5].industries = Industry.query()
+            (err)->
+              $tabs[5].error = err.data
+      save: (form)->
+        $tabs[5].error = ''
+        return if form.$invalid
+        Industry.save @newIndustry,
+          ->
+            $tabs[5].industries = Industry.query()
+            $tabs[5].newIndustry = null
+          (err)->
+            $tabs[5].error = err.data
+
+    $tabs[6] =
+      prePages: prePages
+      nextPages: nextPages
+      goPage: (page)->
+        if page then Agent.get {page: page}, (data)-> $tabs[6].agentData.list = data.list
+        else @agentData = Agent.get {}, (data)-> initPage data
+      add: ->
+        @newAgent = null
+      edit: (agent)->
+        @newAgent = angular.copy agent
+      save: (form)->
+        return if form.$invalid
+        Agent.save @newAgent,
+          ->
+            $('#agentModal').modal 'hide'
+            $tabs[6].newAgent = null
+            $tabs[6].goPage()
+          (err)->
+            alert err.data
+
+    $tabs[7] =
+      load: ->
+        @projectTypes = ProjectType.query()
+      del: (p)->
+        if confirm '确定删除？'
+          $tabs[7].error = ''
+          ProjectType.delete p,
+            ->
+              $tabs[7].newType = null
+              $tabs[7].load()
+            (err)->
+              $tabs[7].error = err.data
+      save: (form)->
+        return if form.$invalid
+        $tabs[7].error = ''
+        ProjectType.save @newType,
+          ->
+            $tabs[7].newType = null
+            $tabs[7].load()
+          (err)->
+            $tabs[7].error = err.data
+
     $scope.selectMenu = (id)->
+      $location.path '/setting/'+id
       $scope.selectedMenu = id
 
       switch id
         when 0
           console.log 
         when 1 #修改用户
-          if not $tabs[1].allUsers
-            $tabs[1].allUsers = User.get num: 100
+          $tabs[1].allUsers = User.get num: 100
         when 2
           console.log 
         when 3 #销售管理
-          if not $tabs[3].areaData
-            $tabs[3].areaData = Area.get {num: 100}, (data)-> initPage data
+          $tabs[3].areaData = Area.get {num: 100}, (data)-> initPage data
         when 4 #区域管理
-          if not $tabs[4].areaData
-            $tabs[4].areaData = Area.get {}, (data)-> initPage data
-            Area.get {num: 100}, (data)-> $tabs[4].allAreas = data.list
+          $tabs[4].areaData = Area.get {}, (data)-> initPage data
+          Area.get {num: 100}, (data)-> $tabs[4].allAreas = data.list
         when 5
-          console.log 
+          $tabs[5].industries = Industry.query()
         when 6
-          console.log 
+          $tabs[6].goPage()
+        when 7
+          $tabs[7].load()
     
     $scope.selectMenu parseInt($routeParams.tab) or 0
 ]

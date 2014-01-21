@@ -9,6 +9,8 @@ method =
       delete copyUser.pwd
       return res.send copyUser
     if _id = req.params._id
+      if _id is 'supporters'
+        return User.find {role: 'supporter'}, '_id realname', (err, docs)->res.send docs
       User.findById _id, (err, doc) ->
         if err
           console.log err

@@ -20,7 +20,7 @@ app.config [
               when 400 then console.log resp.data
               when 401 then $location.path '/login'
               when 403 then console.log resp.data
-              when 404 then $location.path '/'
+              when 404 then console.log resp.data
               when 500 then console.log resp.data
             console.log resp
             $q.reject resp

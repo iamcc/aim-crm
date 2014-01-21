@@ -16,7 +16,11 @@
         name: String
       }
     ],
-    parent: ObjectId
+    parent: ObjectId,
+    projects: {
+      type: Number,
+      "default": 0
+    }
   });
 
   module.exports = mongoose.model('Area', areaSchema);

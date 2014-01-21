@@ -62,7 +62,7 @@
   };
 
   controller('userCtrl', [
-    '$scope', '$timeout', function($scope, $timeout) {
+    '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', function($scope, Project, ProjectType, Industry, Agent, User, Area, Sales) {
       $scope.showCount = function(item) {
         $scope.isShowFilter = false;
         if (item === $scope.curCountItem) {
@@ -79,17 +79,25 @@
         return $scope.isShowFilter = !$scope.isShowFilter;
       };
       $scope.prePages = function() {
-        var data;
-        data = $scope.projectData;
-        return prePages(data);
+        return prePages(this.projectData);
       };
       $scope.nextPages = function() {
-        var data;
-        data = $scope.projectData;
-        return nextPages(data);
+        return nextPages(this.projectData);
       };
       $scope.goPage = function(page) {
-        return $scope.projectData.curPage = page;
+        var self;
+        self = this;
+        if (page) {
+          return Project.get({
+            page: page
+          }, function(data) {
+            return self.projectData.list = data.list;
+          });
+        } else {
+          return self.projectData = Project.get({}, function(data) {
+            return initPage(data);
+          });
+        }
       };
       $scope.showEdit = function(event, project) {
         if ($(event.target).parent().hasClass('edit')) {
@@ -100,60 +108,50 @@
         $(event.target).find('.edit').show();
         $(event.target).find('.edit').children().first().focus();
       };
-      $scope.save = function(event, project, field) {
+      $scope.saveProject = function() {
+        var p;
+        p = JSON.parse(angular.toJson(this.newProject));
+        p.company = p.sales.company;
+        return Project.save(p, function() {
+          $scope.newProject = null;
+          return $scope.goPage();
+        }, function(err) {
+          return alert(err.data);
+        });
+      };
+      $scope.update = function(event, project, field) {
         var param;
         $(event.target).parent().parent().find('.view').show();
         $(event.target).parent().parent().find('.edit').hide();
         param = {};
         param[field] = project[field];
         if ($scope.oldProject[field] !== project[field]) {
-          return console.log('save', param);
+          return console.log('update', param);
         }
       };
-      return $timeout(function() {
-        var data, _i, _ref, _ref1, _results;
-        data = $scope.projectData = {};
-        data.minPage = 1;
-        data.pageNum = 5;
-        data.maxPage = data.minPage + data.pageNum - 1;
-        data.curPage = 1;
-        data.totalPage = 11;
-        data.pageArr = (function() {
-          _results = [];
-          for (var _i = _ref = data.minPage, _ref1 = data.maxPage; _ref <= _ref1 ? _i <= _ref1 : _i >= _ref1; _ref <= _ref1 ? _i++ : _i--){ _results.push(_i); }
-          return _results;
-        }).apply(this);
-        return data.list = [
-          {
-            projectName: '1',
-            projectType: '1',
-            companyName: '1',
-            salesName: '1',
-            industry: '1',
-            curStatus: '1',
-            supporterName: '1',
-            tags: '1',
-            agent: '1',
-            price: '1',
-            areaName: '1',
-            managerName: '1',
-            buyYear: '1',
-            client: '1',
-            orderDate: '1',
-            maeAccount: '1',
-            maePwd: '1',
-            maeCreatorName: '1',
-            wxAccount: '1',
-            wxPwd: '1',
-            wxType: '1',
-            ecId: '1',
-            sendEcBoxDate: '1',
-            onlineDate: '1',
-            onlineReviewer: '1',
-            memo: '1'
-          }
-        ];
-      }, 1000);
+      $scope.goPage();
+      $scope.projectTypes = ProjectType.query();
+      $scope.industries = Industry.query();
+      $scope.agents = Agent.query({
+        _id: 'all'
+      });
+      $scope.supporters = User.getSupporters();
+      $scope.areas = Area.all();
+      $scope.$watch('newProject.area', function() {
+        if ($scope.newProject) {
+          $scope.companies = Area.all({
+            parent: $scope.newProject.area._id
+          });
+          return $scope.saleses = null;
+        }
+      });
+      return $scope.$watch('newProject.company', function() {
+        if ($scope.newProject) {
+          return $scope.saleses = Sales.query({
+            company: $scope.newProject.company._id
+          });
+        }
+      });
     }
   ]);
 
@@ -182,7 +180,7 @@
   ]);
 
   controller('settingCtrl', [
-    '$scope', 'User', 'Area', 'Sales', '$routeParams', '$location', '$route', function($scope, User, Area, Sales, $routeParams, $location, $route) {
+    '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', '$routeParams', '$location', '$route', function($scope, User, Area, Sales, Industry, Agent, ProjectType, $routeParams, $location, $route) {
       var $tabs, $userinfo, lastRoute;
       User.checkLogin();
       $tabs = $scope.tabs = [];
@@ -308,36 +306,44 @@
       };
       $tabs[3] = {
         changeArea: function() {
-          this.company = null;
-          if (!this.area.companies) {
-            return Area.get({
-              parent: this.area._id,
-              num: 100
-            }, function(data) {
-              return $tabs[3].area.companies = data.list;
-            });
-          }
-        },
-        changeCompany: function() {
-          return this.salesData = Sales.query({
-            company: this.company._id
+          this.selectedSales.company = null;
+          this.salesData = null;
+          return Area.get({
+            parent: this.selectedSales.area._id,
+            num: 100
+          }, function(data) {
+            return $tabs[3].selectedSales.companies = data.list;
           });
         },
-        changeManager: function() {
-          return console.log(this.selectedSales);
+        changeCompany: function() {
+          this.salesData = Sales.query({
+            company: this.selectedSales.company._id
+          });
+          return this.selectedSales.company = this.selectedSales.companies.filter(function(obj) {
+            return obj._id === $tabs[3].selectedSales.company._id;
+          })[0];
+        },
+        addSales: function() {
+          return this.selectedSales = {
+            area: angular.copy(this.selectedSales && this.selectedSales.area),
+            company: angular.copy(this.selectedSales && this.selectedSales.company),
+            companies: angular.copy(this.selectedSales && this.selectedSales.companies)
+          };
         },
         selectSales: function(sales) {
+          sales.companies = this.selectedSales.companies;
+          sales.company.managers = this.selectedSales.company.managers;
+          sales.area = this.selectedSales.area;
           return this.selectedSales = angular.copy(sales);
         },
         save: function(form) {
           if (form.$invalid) {
             return;
           }
-          this.selectedSales.company = this.company;
           return Sales.save(this.selectedSales, function() {
             $('#salesModal').modal('hide');
             return $tabs[3].salesData = Sales.query({
-              company: $tabs[3].company._id
+              company: $tabs[3].selectedSales.company._id
             });
           }, function(err) {
             console.log(err);
@@ -412,45 +418,126 @@
           });
         }
       };
+      $tabs[5] = {
+        del: function(i) {
+          $tabs[5].error = '';
+          if (confirm('确定删除？')) {
+            return Industry["delete"](i, function() {
+              return $tabs[5].industries = Industry.query();
+            }, function(err) {
+              return $tabs[5].error = err.data;
+            });
+          }
+        },
+        save: function(form) {
+          $tabs[5].error = '';
+          if (form.$invalid) {
+            return;
+          }
+          return Industry.save(this.newIndustry, function() {
+            $tabs[5].industries = Industry.query();
+            return $tabs[5].newIndustry = null;
+          }, function(err) {
+            return $tabs[5].error = err.data;
+          });
+        }
+      };
+      $tabs[6] = {
+        prePages: prePages,
+        nextPages: nextPages,
+        goPage: function(page) {
+          if (page) {
+            return Agent.get({
+              page: page
+            }, function(data) {
+              return $tabs[6].agentData.list = data.list;
+            });
+          } else {
+            return this.agentData = Agent.get({}, function(data) {
+              return initPage(data);
+            });
+          }
+        },
+        add: function() {
+          return this.newAgent = null;
+        },
+        edit: function(agent) {
+          return this.newAgent = angular.copy(agent);
+        },
+        save: function(form) {
+          if (form.$invalid) {
+            return;
+          }
+          return Agent.save(this.newAgent, function() {
+            $('#agentModal').modal('hide');
+            $tabs[6].newAgent = null;
+            return $tabs[6].goPage();
+          }, function(err) {
+            return alert(err.data);
+          });
+        }
+      };
+      $tabs[7] = {
+        load: function() {
+          return this.projectTypes = ProjectType.query();
+        },
+        del: function(p) {
+          if (confirm('确定删除？')) {
+            $tabs[7].error = '';
+            return ProjectType["delete"](p, function() {
+              $tabs[7].newType = null;
+              return $tabs[7].load();
+            }, function(err) {
+              return $tabs[7].error = err.data;
+            });
+          }
+        },
+        save: function(form) {
+          if (form.$invalid) {
+            return;
+          }
+          $tabs[7].error = '';
+          return ProjectType.save(this.newType, function() {
+            $tabs[7].newType = null;
+            return $tabs[7].load();
+          }, function(err) {
+            return $tabs[7].error = err.data;
+          });
+        }
+      };
       $scope.selectMenu = function(id) {
+        $location.path('/setting/' + id);
         $scope.selectedMenu = id;
         switch (id) {
           case 0:
             return console.log;
           case 1:
-            if (!$tabs[1].allUsers) {
-              return $tabs[1].allUsers = User.get({
-                num: 100
-              });
-            }
-            break;
+            return $tabs[1].allUsers = User.get({
+              num: 100
+            });
           case 2:
             return console.log;
           case 3:
-            if (!$tabs[3].areaData) {
-              return $tabs[3].areaData = Area.get({
-                num: 100
-              }, function(data) {
-                return initPage(data);
-              });
-            }
-            break;
+            return $tabs[3].areaData = Area.get({
+              num: 100
+            }, function(data) {
+              return initPage(data);
+            });
           case 4:
-            if (!$tabs[4].areaData) {
-              $tabs[4].areaData = Area.get({}, function(data) {
-                return initPage(data);
-              });
-              return Area.get({
-                num: 100
-              }, function(data) {
-                return $tabs[4].allAreas = data.list;
-              });
-            }
-            break;
+            $tabs[4].areaData = Area.get({}, function(data) {
+              return initPage(data);
+            });
+            return Area.get({
+              num: 100
+            }, function(data) {
+              return $tabs[4].allAreas = data.list;
+            });
           case 5:
-            return console.log;
+            return $tabs[5].industries = Industry.query();
           case 6:
-            return console.log;
+            return $tabs[6].goPage();
+          case 7:
+            return $tabs[7].load();
         }
       };
       return $scope.selectMenu(parseInt($routeParams.tab) || 0);

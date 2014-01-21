@@ -87,7 +87,7 @@
     <div class="panel-heading">
       项目
       <span class="badge">100</span>
-      <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static">
+      <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="newProject = null">
         <span class="glyphicon glyphicon-plus"></span>
       </button>
       <div class="clearfix"></div>
@@ -103,7 +103,7 @@
         <th>当前状态</th>
         <th>客服</th>
         <th>标签</th>
-        <th>操作</th>
+        <th></th>
       </tr>
       <tr ng-repeat-start="p in projectData.list">
         <td>
@@ -112,46 +112,46 @@
           </button>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.projectName}}</span>
+          <span class="view">{{p.name}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.projectName" ng-blur="save($event, p, 'projectName')">
+            <input type="text" class="form-control" ng-model="p.name" ng-blur="update($event, p, 'name')">
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.projectType}}</span>
+          <span class="view">{{p.type}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.projectType" ng-blur="save($event, p, 'projectType')">
+            <select class="form-control" ng-model="p.type" ng-blur="update($event, p, 'type')">
               <option value="123">123</option>
               <option value="222">222</option>
             </select>
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.companyName}}</span>
+          <span class="view">{{p.company.name}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.company" ng-blur="save($event, p, 'company')">
+            <input type="text" class="form-control" ng-model="p.company" ng-blur="update($event, p, 'company')">
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.salesName}}</span>
+          <span class="view">{{p.sales.name}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.sales" ng-blur="save($event, p, 'sales')">
+            <input type="text" class="form-control" ng-model="p.sales" ng-blur="update($event, p, 'sales')">
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.industry}}</span>
+          <span class="view">{{p.industry.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.industry" ng-blur="save($event, p, 'industry')">
+            <select class="form-control" ng-model="p.industry" ng-blur="update($event, p, 'industry')">
               <option value="123">123</option>
               <option value="222">222</option>
             </select>
           </span>
         </td>
-        <td>{{p.curStatus}}</td>
+        <td>{{p.status}}</td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.supporterName}}</span>
+          <span class="view">{{p.supporter.realname}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.supporter" ng-blur="save($event, p, 'supporter')">
+            <select class="form-control" ng-model="p.supporter" ng-blur="update($event, p, 'supporter')">
               <option value="123">123</option>
               <option value="222">222</option>
             </select>
@@ -160,7 +160,7 @@
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.tags}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.tags" ng-blur="save($event, p, 'tags')">
+            <input type="text" class="form-control" ng-model="p.tags" ng-blur="update($event, p, 'tags')">
           </span>
         </td>
         <td>
@@ -183,9 +183,9 @@
               </tr>
               <tr>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.agent}}</span>
+                  <span class="view">{{p.agent.name}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.agent" ng-blur="save($event, p, 'agent')">
+                    <select class="form-control" ng-model="p.agent" ng-blur="update($event, p, 'agent')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
@@ -194,31 +194,31 @@
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.price}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.price" ng-blur="save($event, p, 'price')">
+                    <input type="text" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.areaName}}</span>
+                  <span class="view">{{p.area.name}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.area" ng-blur="save($event, p, 'area')">
+                    <input type="text" class="form-control" ng-model="p.area" ng-blur="update($event, p, 'area')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.managerName}}</span>
+                  <span class="view">{{p.company.manager.name}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.manager" ng-blur="save($event, p, 'manager')">
+                    <input type="text" class="form-control" ng-model="p.company.manager" ng-blur="update($event, p, 'manager')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.buyYear}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.buyYear" ng-blur="save($event, p, 'buyYear')">
+                    <input type="text" class="form-control" ng-model="p.buyYear" ng-blur="update($event, p, 'buyYear')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.client}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.client" ng-blur="save($event, p, 'client')">
+                    <input type="text" class="form-control" ng-model="p.client" ng-blur="update($event, p, 'client')">
                   </span>
                 </td>
               </tr>
@@ -232,42 +232,42 @@
               </tr>
               <tr>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.maeAccount}}</span>
+                  <span class="view">{{p.mae.account}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.maeAccount" ng-blur="save($event, p, 'maeAccount')">
+                    <input type="text" class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.maePwd}}</span>
+                  <span class="view">{{p.mae.pwd}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.maePwd" ng-blur="save($event, p, 'maePwd')">
+                    <input type="text" class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.maeCreatorName}}</span>
+                  <span class="view">{{p.mae.creator.realname}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.maeCreator" ng-blur="save($event, p, 'maeCreator')">
+                    <select class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wxAccount}}</span>
+                  <span class="view">{{p.wx.account}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.wxAccount" ng-blur="save($event, p, 'wxAccount')">
+                    <input type="text" class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wxPwd}}</span>
+                  <span class="view">{{p.wx.pwd}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.wxPwd" ng-blur="save($event, p, 'wxPwd')">
+                    <input type="text" class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wxType}}</span>
+                  <span class="view">{{p.wx.type}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.wxType" ng-blur="save($event, p, 'wxType')">
+                    <select class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
                       <option value="123">123</option>
                       <option value="222">222</option>
                     </select>
@@ -286,27 +286,27 @@
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.orderDate}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="save($event, p, 'orderDate')">
+                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="update($event, p, 'orderDate')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.ecId}}</span>
+                  <span class="view">{{p.ec.id}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.ecId" ng-blur="save($event, p, 'ecId')">
+                    <input type="text" class="form-control" ng-model="p.ec" ng-blur="update($event, p, 'ec')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.sendEcBoxDate}}</span>
+                  <span class="view">{{p.ec.sendBoxDate}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="date" class="form-control" ng-model="p.sendEcBoxDate" ng-blur="save($event, p, 'sendEcBoxDate')">
+                    <input type="date" class="form-control" ng-model="p.ec" ng-blur="update($event, p, 'ec')">
                   </span>
                 </td>
-                <td>{{p.onlineDate}}</td>
-                <td>{{p.onlineReviewer}}</td>
+                <td>{{p.online.date}}</td>
+                <td>{{p.online.reviewer.name}}</td>
                 <td ng-click="showEdit($event, p)" colspan="3">
                   <span class="view" ng-bind-html="p.memo | wrap"></span>
                   <span class="edit" style="display:none;">
-                    <textarea class="form-control" ng-model="p.memo" ng-blur="save($event, p, 'memo')"></textarea>
+                    <textarea class="form-control" ng-model="p.memo" ng-blur="update($event, p, 'memo')"></textarea>
                   </span>
                 </td>
               </tr>
@@ -320,7 +320,7 @@
       </li>
       <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a href="">{{p}}</a>
       </li>
-      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage == projectData.totalPage}"><a href="">&raquo;</a>
+      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage >= projectData.totalPage}"><a href="">&raquo;</a>
       </li>
     </ul>
   </div>
@@ -335,15 +335,161 @@
     <div class="modal-content">
       <div class="modal-header">
         <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">添加项目</h4>
       </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form name="projectForm" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label col-sm-2">项目名</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">项目类型</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.type" ng-options="t as t.name for t in projectTypes" required>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">区域</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.area" ng-options="a as a.name for a in areas">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">分公司</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.company" ng-options="c as c.name for c in companies">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">销售</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.sales" ng-options="s as s.name for s in saleses">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">行业</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.industry" ng-options="i as i.name for i in industries">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">客户全称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.client">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">下单日期</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" ng-model="newProject.orderDate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">价格</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" ng-model="newProject.price">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">购买/年</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" ng-model="newProject.buyYear">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">代理商</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.agent" ng-options="a as a.name for a in agents">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">后台账号</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.mae.account">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">后台密码</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.mae.pwd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">后台创建者</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.mae.creator">
+                <option value="CC">CC</option>
+                <option value="DC">DC</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">微信账号</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.wx.account">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">微信密码</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.wx.pwd">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">微信类型</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.wx.type">
+                <option value="订阅号">订阅号</option>
+                <option value="服务号">服务号</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">EC企业ID</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.ec.id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">发送盒子时间</label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" ng-model="newProject.ec.sendBoxDate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">标签</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="newProject.tags" ng-list>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">客服</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="newProject.supporter" ng-options="s as s.realname for s in supporters">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">备注</label>
+            <div class="col-sm-10">
+              <textarea cols="30" rows="10" class="form-control" ng-model="newProject.memo"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button class="btn btn-primary" ng-click="saveProject(projectForm)">保存</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>

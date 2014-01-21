@@ -40,7 +40,7 @@
                   console.log(resp.data);
                   break;
                 case 404:
-                  $location.path('/');
+                  console.log(resp.data);
                   break;
                 case 500:
                   console.log(resp.data);

@@ -51,12 +51,10 @@
       if (!(_id = req.params._id)) {
         return res.send(400);
       }
-      if (res.body._id) {
-        delete res.body._id;
-      }
+      delete req.body._id;
       return Project.update({
         _id: _id
-      }, res.body, function(err, doc) {
+      }, req.body, function(err, doc) {
         if (err) {
           console.log(err);
           return res.send(500);
@@ -66,6 +64,7 @@
     },
     POST: function(req, res, next) {
       var doc;
+      delete req.body._id;
       doc = new Project(req.body);
       return doc.save(function(err, doc) {
         if (err) {

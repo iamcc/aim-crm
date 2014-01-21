@@ -16,6 +16,13 @@
         return res.send(copyUser);
       }
       if (_id = req.params._id) {
+        if (_id === 'supporters') {
+          return User.find({
+            role: 'supporter'
+          }, '_id realname', function(err, docs) {
+            return res.send(docs);
+          });
+        }
         return User.findById(_id, function(err, doc) {
           if (err) {
             console.log(err);

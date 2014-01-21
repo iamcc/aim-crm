@@ -1,0 +1,2004 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Proje",
+				"ProjectType"
+			],
+			[
+				"ng-key",
+				"ng-keypress	AngularJS"
+			],
+			[
+				"projectty",
+				"ProjectType"
+			],
+			[
+				"webkit-backgrou",
+				"-webkit-background-size:   (property)"
+			],
+			[
+				"webkit-back",
+				"-webkit-background-size:   (property)"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"back",
+				"background-image"
+			],
+			[
+				"ng-switch",
+				"ng-switch-when	AngularJS"
+			],
+			[
+				"ng-mouse",
+				"ng-mouseleave	AngularJS"
+			],
+			[
+				"sales",
+				"Sales"
+			],
+			[
+				"ng-bind",
+				"ng-bind-html	AngularJS"
+			],
+			[
+				"ng-repea",
+				"ng-repeat-end	AngularJS"
+			],
+			[
+				"ng-rep",
+				"ng-repeat-start	AngularJS"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"tank",
+				"tank2"
+			],
+			[
+				"Contain",
+				"Container_initialize"
+			],
+			[
+				"style",
+				"style	Attr"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"webkit-backgr",
+				"-webkit-background-size:   (property)"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"rotate",
+				"rotateX"
+			],
+			[
+				"ro",
+				"rotateX"
+			],
+			[
+				"transla",
+				"translateX"
+			],
+			[
+				"webkit-transform",
+				"-webkit-transform:   (property)"
+			],
+			[
+				"webkit-pers",
+				"-webkit-perspective-origin:   (property)"
+			],
+			[
+				"webkit-transf",
+				"-webkit-transform:   (property)"
+			],
+			[
+				"webkit-transform-origin-",
+				"-webkit-transform-origin-y:   (property)"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"po",
+				"position"
+			],
+			[
+				"webkit-tran",
+				"-webkit-transform-style:   (property)"
+			],
+			[
+				"webkit-ani",
+				"-webkit-animation-name:   (property)"
+			],
+			[
+				"webkit-per",
+				"-webkit-perspective-origin:   (property)"
+			],
+			[
+				"rota",
+				"rotateZ"
+			],
+			[
+				"wecar",
+				"wecards"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"preview",
+				"preview_1"
+			],
+			[
+				"weixin",
+				"Weixin"
+			],
+			[
+				"nex",
+				"nextVerifier"
+			],
+			[
+				"veri",
+				"verifier"
+			],
+			[
+				"User",
+				"UserSchema"
+			],
+			[
+				"def",
+				"deferred"
+			],
+			[
+				"dump",
+				"var_dump"
+			],
+			[
+				"replace",
+				"str_replace"
+			],
+			[
+				"list",
+				"list-style"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"onmou",
+				"onmouseout	Attr"
+			],
+			[
+				"onmouse",
+				"onmouseover	Attr"
+			],
+			[
+				"base64",
+				"base64_encode"
+			],
+			[
+				"base_",
+				"base64_encode"
+			],
+			[
+				"clp",
+				"controllerProvider"
+			],
+			[
+				"gmu",
+				"GMU_2"
+			],
+			[
+				"Contract",
+				"ContractPath"
+			],
+			[
+				"payme",
+				"payment"
+			],
+			[
+				"editsale",
+				"editSalesObj"
+			],
+			[
+				"editarea",
+				"editAreaObj"
+			],
+			[
+				"copy",
+				"copyProject"
+			],
+			[
+				"精准",
+				"精准集团"
+			],
+			[
+				"EVENT_",
+				"EVENT_PRODUCT_INTRO"
+			],
+			[
+				"detai",
+				"detailView"
+			],
+			[
+				"proje",
+				"projectCtrl"
+			],
+			[
+				"pro",
+				"projectCtrl"
+			],
+			[
+				"proj",
+				"projectCtrl"
+			],
+			[
+				"contr",
+				"controllerProvider"
+			],
+			[
+				"cont",
+				"container"
+			],
+			[
+				"navbar",
+				"navbar-inner"
+			],
+			[
+				"b",
+				"Backbone"
+			],
+			[
+				"create",
+				"createUser"
+			],
+			[
+				"sw",
+				"switch"
+			],
+			[
+				"user",
+				"userSchema"
+			],
+			[
+				"con",
+				"condition"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "public/js/controllers.coffee",
+			"settings":
+			{
+				"buffer_size": 11628,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "apis/agent.coffee",
+			"settings":
+			{
+				"buffer_size": 1582,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/js/services.coffee",
+			"settings":
+			{
+				"buffer_size": 1774,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "apis/sales.coffee",
+			"settings":
+			{
+				"buffer_size": 1147,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "apis/area.coffee",
+			"settings":
+			{
+				"buffer_size": 1746,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "apis/user.coffee",
+			"settings":
+			{
+				"buffer_size": 3988,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "apis/project.coffee",
+			"settings":
+			{
+				"buffer_size": 1592,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst	",
+				"Package Control: Install Package"
+			],
+			[
+				"alignment",
+				"Preferences: Alignment File Settings – Default"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package→删除程序包"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 153.0,
+		"history":
+		[
+			"import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print 'Please restart Sublime Text to finish installation'"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": true,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/CC/Desktop/aim-crm/apis/agent.coffee",
+		"/C/Users/CC/Desktop/aim-crm/project.sublime-project",
+		"/C/Users/CC/Desktop/aim-crm/apis/project.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/setting.html",
+		"/C/Users/CC/Desktop/aim-crm/public/js/app.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/js/services.coffee",
+		"/C/Users/CC/Desktop/aim-crm/apis/projectType.coffee",
+		"/C/Users/CC/Desktop/aim-crm/apis/industry.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/agentModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/projectTypeModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/industryModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/areaModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/setting.html",
+		"/C/Users/CC/Desktop/aim-crm/public/finance.html",
+		"/C/Users/CC/Desktop/aim-crm/public/js/controllers.coffee",
+		"/C/Users/CC/Desktop/aim-crm/apis/sales.coffee",
+		"/C/Users/CC/Desktop/aim-crm/apis/area.coffee",
+		"/C/Program Files (x86)/Sublime Text3/Data/Packages/Git/Git.sublime-settings",
+		"/C/Users/CC/Desktop/we-card/index.html",
+		"/C/Users/CC/Desktop/aim-crm/index.html",
+		"/C/Users/CC/Desktop/aim-crm/.tags",
+		"/C/Users/CC/Desktop/aim-crm/node_modules/mongoose/examples/aggregate/aggregate.js",
+		"/C/Users/CC/Desktop/aim-crm/node_modules/express/node_modules/connect/lib/middleware/query.js",
+		"/C/Users/CC/AppData/Local/Temp/7zO0528B25D/使用说明.txt",
+		"/C/Users/CC/Desktop/aim-crm/public/js/controllers.js",
+		"/C/Users/CC/Desktop/aim-crm/public/js/directives.coffee",
+		"/C/Program Files (x86)/Sublime Text3/Data/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
+		"/C/Users/CC/Desktop/aim-crm/apis/sales.js",
+		"/C/Users/CC/Desktop/aim-crm/public/js/libs/directives.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/index.html",
+		"/C/Users/CC/Desktop/aim-crm/public/css/style.css",
+		"/C/Users/CC/Desktop/aim-crm/models/salesModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/finance.coffee",
+		"/C/Users/CC/Desktop/aim-crm/models/projectModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/apis/user.coffee",
+		"/C/Users/CC/Desktop/融侨城样板间360全景看房照片/融侨城103平米样板间360全景看房照片/vtour/tour.xml",
+		"/C/Users/CC/Desktop/融侨城样板间360全景看房照片/融侨城103平米样板间360全景看房照片/vtour/index.html",
+		"/C/Users/CC/Desktop/融侨城样板间360全景看房照片/融侨城81平米样板间360全景看房照片/vtour/tour.xml",
+		"/C/Users/CC/Desktop/融侨城样板间360全景看房照片/融侨城81平米样板间360全景看房照片/vtour/index.html",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/user.html",
+		"/C/Users/CC/Desktop/aim-crm/models/userModel.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/login.html",
+		"/C/Users/CC/Desktop/aim-crm/routes/index.coffee",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-1/app.plist",
+		"/C/Users/CC/Desktop/aim-crm/apis/user.js",
+		"/C/Users/CC/Desktop/aim-crm/routes/index.js",
+		"/C/Users/CC/Desktop/aim-crm/app.js",
+		"/C/Users/CC/Desktop/123/app.js",
+		"/C/Users/CC/Desktop/aim-crm/apis/project.js",
+		"/C/Users/CC/Desktop/aim-crm/apis/test.js",
+		"/C/Users/CC/Desktop/aim-crm/public/js/filters.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/finance.html",
+		"/C/Users/CC/Desktop/aim-crm/public/js/main.coffee",
+		"/C/Users/CC/Desktop/aim-crm/public/__admin.html",
+		"/C/Users/CC/Desktop/aim-crm/public/__finance.html",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/projectList.html",
+		"/C/Users/CC/Desktop/aim-crm/public/partials/navbar.html",
+		"/C/Users/CC/Desktop/aim-crm/public/js/main.js",
+		"/E/Code/AIM.APP/AIM.APP.WAP/AIM.APP.WAP/Data/AimAnalysis/app.plist",
+		"/E/Code/AIM.APP/AIM.APP.WAP/AIM.APP.WAP/Data/GuangZhouShiMaoFuZhuangCheng/app.plist",
+		"/C/Users/CC/Desktop/aim-crm/.gitignore",
+		"/C/Users/CC/AppData/Local/GitHub/nkbdoajs.kah/etc/ssh/ssh_config",
+		"/C/Users/CC/Desktop/ssh.ppk",
+		"/C/Users/CC/Desktop/AIM.CRM/.gitignore",
+		"/C/Users/CC/Desktop/AIM.CRM/.git/config",
+		"/C/Users/CC/Desktop/G_古北香堤艺墅B1-1++3568/vtour/tour.xml",
+		"/C/Users/CC/Desktop/G_古北香堤艺墅B1-1++3568/vtour/index.html",
+		"/C/Users/CC/Desktop/lucky-bag/public/vtour/tour.js",
+		"/C/Users/CC/Desktop/G_古北香堤艺墅B1-1  3568/G_古北香堤艺墅B1-1  3568/vtour/tour.js",
+		"/D/Program Files/krpano-1.17.pr/krpano.license",
+		"/D/Program Files/krpanotools-1.16.8-win64/swfkrpano.js",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/DT/vtour/tour.xml",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/DT/vtour/index.html",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/C3户型/vtour/tour.xml",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/C3户型/vtour/index.html",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/C1户型/vtour/tour.xml",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/C1户型/vtour/index.html",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/B2户型/vtour/tour.xml",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/B2户型/vtour/index.html",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/B1全景/vtour/tour.xml",
+		"/C/Users/CC/Desktop/2014-1-9全景修改/B1全景/vtour/index.html",
+		"/C/Users/CC/Desktop/G_古北香堤艺墅B1-1  3568/G_古北香堤艺墅B1-1  3568/vtour/tour.xml",
+		"/C/Users/CC/Desktop/G_古北香堤艺墅B1-1  3568/G_古北香堤艺墅B1-1  3568/vtour/index.html",
+		"/D/Program Files/nginx-1.4.3/html/createjs/index.html",
+		"/D/Program Files/nginx-1.4.3/html/createjs/css/main.css",
+		"/D/Program Files/nginx-1.4.3/html/createjs/js/main.coffee",
+		"/D/Program Files/nginx-1.4.3/html/createjs/js/sprites/boomSprite.coffee",
+		"/D/Program Files/nginx-1.4.3/html/createjs/js/sprites/tankSprit.coffee",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/DT/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/DT/vtour/index.html",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/C3/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/C3/vtour/index.html",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/C1/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/C1/vtour/index.html",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/B2/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/B2/vtour/index.html",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/B1/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/B1/vtour/index.html",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/A2/vtour/tour.xml",
+		"/C/Users/CC/Desktop/船长de海寓全景照片/A2/vtour/index.html",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-2/tour 2.xml",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-2/tour.xml",
+		"/E/SVN/Dev/Backend/MAE2Project/turnk/res/modules/game/hamster/js/hamster_s_r_c.js",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/94㎡LOFT/vtour/tour.xml",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/94㎡LOFT/vtour/index.html",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/45㎡LOFT/vtour/tour.xml",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/45㎡LOFT/vtour/index.html",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/45+45㎡LOFT/vtour/tour.xml",
+		"/C/Users/CC/Desktop/龙江国际华美达广场/45+45㎡LOFT/vtour/index.html",
+		"/C/Users/CC/Desktop/佛山天安数码城/vtour/tour.xml",
+		"/C/Users/CC/Desktop/佛山天安数码城/vtour/index.html",
+		"/E/SVN/Dev/Backend/MAE2Project/turnk/res/modules/game/hamster/js/hamster.js",
+		"/E/SVN/Dev/Backend/MAE2Project/turnk/res/modules/game/hamster/js/require.js",
+		"/C/Users/CC/Desktop/New folder/public/main.js",
+		"/C/Users/CC/Desktop/New folder/routes/index.js",
+		"/C/Users/CC/Desktop/New folder/app.js",
+		"/C/Users/CC/Desktop/1.html",
+		"/C/Users/CC/Desktop/main.coffee",
+		"/C/Users/CC/Desktop/main.js",
+		"/C/Users/CC/Desktop/牧龙原墅全景成图/牧龙原墅全景成图/vtour/tour.xml",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-1/tour.xml",
+		"/C/Users/CC/Desktop/蓝郡西堤全景图片房间位置/C座C户型/vtour/tour.xml",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-1/tour 3.xml",
+		"/C/Users/CC/AppData/Local/Temp/fz3temp-1/tour 2.xml",
+		"/C/Users/CC/Desktop/蓝郡西堤全景图片房间位置/C座C户型/vtour/index.html",
+		"/C/Users/CC/Desktop/蓝郡西堤全景图片房间位置/B座D户型/vtour/tour.xml",
+		"/C/Users/CC/Desktop/蓝郡西堤全景图片房间位置/B座D户型/vtour/index.html",
+		"/C/Users/CC/Desktop/蓝郡西堤全景图片房间位置/B座A1户型/vtour/tour.xml"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk",
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk\\application",
+			"C:\\Users\\CC\\Desktop\\New folder (2)",
+			"E:\\SVN\\Dev\\Backend\\GarwonProject\\trunk",
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk\\application",
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk",
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk\\application",
+			"C:\\Users\\CC\\Desktop\\bootstrap angular seajs",
+			"E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk\\application\\modules",
+			"E:\\SVN\\Dev\\Backend\\MAEProject\\trunk\\application,E:\\SVN\\Dev\\Backend\\MAE2Project\\turnk",
+			"E:\\SVN\\Dev\\Backend\\MAEProject\\trunk\\application"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"res.body",
+			"sales",
+			"save",
+			"5",
+			"industryForm",
+			"i",
+			"industries",
+			"5",
+			"Agent",
+			"agentSchema",
+			"id",
+			"div",
+			"name",
+			"areaData",
+			"tabs[4]",
+			"tabs[4].areaData",
+			"4",
+			"320px",
+			"sbg",
+			"href=\"\"",
+			"span",
+			"companyData",
+			"areaData",
+			"scope",
+			"prePages",
+			"\n      ",
+			"prePages",
+			"onSelect",
+			"\"indent_size\": 4",
+			"$(elem)",
+			"id",
+			"          ",
+			"          '",
+			"settingCtrl",
+			"initPage ",
+			"ng-click=\"selectMenu",
+			"href=\"\"",
+			"ng-click=\"selectMenu(",
+			"href=\"\"",
+			"User.",
+			"User.get",
+			"User",
+			"ng-click=\"selectMenu(",
+			"href=\"\"",
+			"2",
+			"doc",
+			"!tabs[1].user",
+			"2",
+			"ng-show",
+			"console",
+			"alert",
+			"\">",
+			"\">\n",
+			"[0]",
+			"$('.btn')",
+			"Menu = ",
+			"selectedMenu =",
+			"selectedMenu",
+			"\">",
+			"0",
+			"\">",
+			"login",
+			"leader",
+			"href=\"javascript:void(0);\"",
+			"ng-keypress=\"save($event, p, '",
+			"ng-keypress=\"save($ev",
+			"ng-keypress=\"save($event, p, '",
+			" ng-mouseleave=\"hideEdit($event)\"",
+			"edit hide",
+			"ng-keypress=\"save($event, p, 'ecId')\"",
+			"ng-click=\"editField($event, p)",
+			"ng-blur",
+			"editing",
+			" ng-blur=\"",
+			" ng-blur=",
+			"class=\"edit hide\"",
+			"btn",
+			"copyDoc",
+			"Type",
+			"ref",
+			"salesSchema",
+			"industrySchema",
+			"agentSchema",
+			"Obj",
+			"Name",
+			"event",
+			"editField($event, p)",
+			"<option value=\"\">123</option>\n                      <option value=\"\">222</option>",
+			"<option value=\"\">123</option>\n              <option value=\"\">222</option>",
+			"maeCreator",
+			"agent",
+			"supporter",
+			"industry",
+			"projectType",
+			"editField($event)",
+			"\">",
+			"</span>",
+			">{{",
+			"<input type=\"text\" class=\"form-control\">",
+			"<td ng-click=\"editField($event)\">",
+			" ng-click=\"editField($event)\"",
+			"class=\"edit\"",
+			"class=\"form-control\"",
+			"e",
+			"save(",
+			"{}",
+			"edit</span>",
+			"edit",
+			"{{",
+			"<td>",
+			"active",
+			"disabled",
+			"project",
+			"></",
+			"><",
+			"{}",
+			"><",
+			"'\"",
+			"ng-class=\"",
+			"<li",
+			"li>",
+			"li",
+			");\">",
+			"444",
+			"333",
+			"222",
+			"111",
+			"href=\"#\""
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": true,
+		"replace_history":
+		[
+			"192.168.100.141",
+			"__________etf.tiles",
+			"____kt2_sphere",
+			"scene_____kt2_sphere",
+			"楼",
+			"UserSchema",
+			">",
+			"<",
+			">",
+			"<",
+			"e703",
+			"li",
+			"5px",
+			"margin-left: 10px;",
+			"margin-left: 0px;",
+			"太古仓",
+			"琶洲",
+			"navbar-collapse-menu",
+			"GuangZhouShiMaoFuZhuangCheng",
+			"d.aimapp.net/Data/HaiKouChangxin",
+			"http://d.aimapp.net/Data/FuTaiXinDuCheng/icon.png",
+			"http://d.aimapp.net/Data/FuTaiXinDuCheng/app.ipa",
+			"代申请账号",
+			"</div>",
+			"<div>",
+			"HomeIndex",
+			"default"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "public/js/controllers.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11628,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2280,
+								2280
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "UTF-8",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 480.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "apis/agent.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								212,
+								212
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "UTF-8",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/js/services.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1774,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1238,
+								1238
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "ASCII",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 660.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "apis/sales.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1147,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "ASCII",
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "apis/area.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1746,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								225
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "ASCII",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "apis/user.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3988,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								409,
+								409
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "ASCII",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 300.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "apis/project.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1592,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1118,
+								1118
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"encoding_helper_encoding": "UTF-8",
+							"incomplete_sync": null,
+							"origin_encoding": "ASCII",
+							"remote_loading": false,
+							"sublime_auto_complete": true,
+							"synced": false,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 36.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 124.0
+	},
+	"output.git":
+	{
+		"height": 130.0
+	},
+	"output.sftp":
+	{
+		"height": 130.0
+	},
+	"project": "project.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"elements",
+				"turnk\\res\\tenant_v2\\assets\\js\\ace-elements.min.js"
+			],
+			[
+				"1.php",
+				"youku\\1.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 309.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
