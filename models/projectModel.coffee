@@ -8,7 +8,9 @@ ObjectId = Schema.Types.ObjectId
 
 projectSchema = new Schema
   name: String
-  type: String
+  type:
+    _id: ObjectId
+    name: String
   sales:
     _id: ObjectId
     name: String

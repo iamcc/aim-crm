@@ -62,6 +62,7 @@ controller 'userCtrl', [
       p.company = p.sales.company
       Project.save p,
         ->
+          $('#addModal').modal 'hide'
           $scope.newProject = null
           $scope.goPage()
         (err)->

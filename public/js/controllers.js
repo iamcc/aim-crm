@@ -113,6 +113,7 @@
         p = JSON.parse(angular.toJson(this.newProject));
         p.company = p.sales.company;
         return Project.save(p, function() {
+          $('#addModal').modal('hide');
           $scope.newProject = null;
           return $scope.goPage();
         }, function(err) {

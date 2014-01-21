@@ -118,32 +118,31 @@
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.type}}</span>
+          <span class="view">{{p.type.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.type" ng-blur="update($event, p, 'type')">
-              <option value="123">123</option>
-              <option value="222">222</option>
+            <select class="form-control" ng-model="p.type" ng-options="t as t.name for t in projectTypes" ng-blur="update($event, p, 'type')">
             </select>
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.company.name}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.company" ng-blur="update($event, p, 'company')">
+            <select class="form-control" ng-model="p.company" ng-options="c as c.name for c in companies">
+            </select>
+            <!-- <input type="text" class="form-control" ng-model="p.company" ng-blur="update($event, p, 'company')"> -->
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.sales.name}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.sales" ng-blur="update($event, p, 'sales')">
+            <select class="form-control" ng-model="p.sales" ng-options="s as s.name for s in saleses"></select>
+            <!-- <input type="text" class="form-control" ng-model="p.sales" ng-blur="update($event, p, 'sales')"> -->
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.industry.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.industry" ng-blur="update($event, p, 'industry')">
-              <option value="123">123</option>
-              <option value="222">222</option>
+            <select class="form-control" ng-model="p.industry" ng-options="i as i.name for i in industries" ng-blur="update($event, p, 'industry')">
             </select>
           </span>
         </td>
@@ -151,16 +150,14 @@
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.supporter.realname}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.supporter" ng-blur="update($event, p, 'supporter')">
-              <option value="123">123</option>
-              <option value="222">222</option>
+            <select class="form-control" ng-model="p.supporter" ng-options="s as s.realname for s in supporters" ng-blur="update($event, p, 'supporter')">
             </select>
           </span>
         </td>
         <td ng-click="showEdit($event, p)">
           <span class="view">{{p.tags}}</span>
           <span class="edit" style="display:none;">
-            <input type="text" class="form-control" ng-model="p.tags" ng-blur="update($event, p, 'tags')">
+            <input type="text" class="form-control" ng-model="p.tags" ng-list ng-blur="update($event, p, 'tags')">
           </span>
         </td>
         <td>
@@ -185,30 +182,29 @@
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.agent.name}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.agent" ng-blur="update($event, p, 'agent')">
-                      <option value="123">123</option>
-                      <option value="222">222</option>
+                    <select class="form-control" ng-model="p.agent" ng-options="a as a.name for a in agents" ng-blur="update($event, p, 'agent')">
                     </select>
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.price}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">
+                    <input type="number" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.area.name}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.area" ng-blur="update($event, p, 'area')">
+                    <select class="form-control" ng-model="p.area" ng-options="a as a.name for a in areas" ng-blur="update($event, p, 'area')"></select>
                   </span>
                 </td>
-                <td ng-click="showEdit($event, p)">
+                <!--  <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.company.manager.name}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.company.manager" ng-blur="update($event, p, 'manager')">
                   </span>
-                </td>
+                </td> -->
+                <td>{{p.company.manager.name}}</td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.buyYear}}</span>
                   <span class="edit" style="display:none;">
@@ -234,42 +230,42 @@
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.mae.account}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
+                    <input type="text" class="form-control" ng-model="p.mae.account" ng-blur="update($event, p, 'mae')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.mae.pwd}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
+                    <input type="text" class="form-control" ng-model="p.mae.pwd" ng-blur="update($event, p, 'mae')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.mae.creator.realname}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.mae" ng-blur="update($event, p, 'mae')">
-                      <option value="123">123</option>
-                      <option value="222">222</option>
+                    <select class="form-control" ng-model="p.mae.creator.realname" ng-blur="update($event, p, 'mae')">
+                      <option value="CC">CC</option>
+                      <option value="DC">DC</option>
                     </select>
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.wx.account}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
+                    <input type="text" class="form-control" ng-model="p.wx.account" ng-blur="update($event, p, 'wx')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.wx.pwd}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
+                    <input type="text" class="form-control" ng-model="p.wx.pwd" ng-blur="update($event, p, 'wx')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.wx.type}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.wx" ng-blur="update($event, p, 'wx')">
-                      <option value="123">123</option>
-                      <option value="222">222</option>
+                    <select class="form-control" ng-model="p.wx.type" ng-blur="update($event, p, 'wx')">
+                      <option value="订阅号">订阅号</option>
+                      <option value="服务号">服务号</option>
                     </select>
                   </span>
                 </td>
@@ -292,13 +288,13 @@
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.ec.id}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="text" class="form-control" ng-model="p.ec" ng-blur="update($event, p, 'ec')">
+                    <input type="text" class="form-control" ng-model="p.ec.id" ng-blur="update($event, p, 'ec')">
                   </span>
                 </td>
                 <td ng-click="showEdit($event, p)">
                   <span class="view">{{p.ec.sendBoxDate}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="date" class="form-control" ng-model="p.ec" ng-blur="update($event, p, 'ec')">
+                    <input type="date" class="form-control" ng-model="p.ec.sendBoxDate" ng-blur="update($event, p, 'ec')">
                   </span>
                 </td>
                 <td>{{p.online.date}}</td>
