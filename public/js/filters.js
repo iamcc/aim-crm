@@ -3,6 +3,9 @@
   angular.module('app.filters', ['ngSanitize']).filter('wrap', [
     function() {
       return function(text) {
+        if (!text) {
+          return '';
+        }
         return String(text).replace(/\n/ig, '<br>');
       };
     }

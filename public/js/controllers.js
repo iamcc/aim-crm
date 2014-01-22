@@ -122,12 +122,14 @@
       };
       $scope.update = function(event, project, field) {
         var param;
-        $(event.target).parent().parent().find('.view').show();
-        $(event.target).parent().parent().find('.edit').hide();
-        param = {};
+        $(event.target).closest('.edit').prev().show();
+        $(event.target).closest('.edit').hide();
+        param = {
+          _id: project._id
+        };
         param[field] = project[field];
         if ($scope.oldProject[field] !== project[field]) {
-          return console.log('update', param);
+          return Project.update(param);
         }
       };
       $scope.goPage();

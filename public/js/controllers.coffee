@@ -69,11 +69,13 @@ controller 'userCtrl', [
           alert err.data
 
     $scope.update = (event, project, field)->
-      $(event.target).parent().parent().find('.view').show()
-      $(event.target).parent().parent().find('.edit').hide()
-      param = {}
+      $(event.target).closest('.edit').prev().show()
+      $(event.target).closest('.edit').hide()
+      param = {_id: project._id}
       param[field] = project[field]
-      if $scope.oldProject[field] isnt project[field] then console.log 'update', param
+      if $scope.oldProject[field] isnt project[field]
+        # console.log 'update', param, project
+        Project.update param
 
     $scope.goPage()
     $scope.projectTypes = ProjectType.query()

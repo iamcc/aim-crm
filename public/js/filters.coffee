@@ -5,6 +5,7 @@ angular
     [
       ->
         (text)->
+          return '' unless text
           String(text).replace /\n/ig, '<br>'
     ]
   )
