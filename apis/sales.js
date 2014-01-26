@@ -15,7 +15,7 @@
         if ((query = req.query).s) {
           return Sales.find({
             name: new RegExp(req.query.s, 'i')
-          }, '_id name company.name', {
+          }, null, {
             limit: 10
           }, function(err, docs) {
             if (err) {
@@ -27,6 +27,8 @@
         } else if (query.company) {
           return Sales.find({
             'company._id': query.company
+          }, null, {
+            sort: '-_id'
           }, function(err, docs) {
             if (err) {
               console.log(err);

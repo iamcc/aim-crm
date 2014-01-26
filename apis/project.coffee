@@ -1,4 +1,7 @@
+Area = require '../models/areaModel'
+Industry = require '../models/industryModel'
 Project = require '../models/projectModel'
+ProjectType = require '../models/projectTypeModel'
 _ = require 'underscore'
 async = require 'async'
 
@@ -11,12 +14,24 @@ method =
           return res.send 500
         res.send doc
     else
-      condition = (query = req.query).condition
+      condition = JSON.parse (query = req.query).condition
+      if condition.sOrderDate
+        condition.orderDate = condition.orderDate or {}
+        condition.orderDate.$gte = condition.sOrderDate
+        delete condition.sOrderDate
+      if condition.eOrderDate
+        condition.orderDate = condition.orderDate or {}
+        condition.orderDate.$lte = condition.eOrderDate
+        delete condition.eOrderDate
+
+      console.log condition
+
       num = query.num or 10
       page = query.page or 1
       opts =
         skip: (page - 1) * num
         limit: num
+        sort: '-_id'
 
       async.auto {
         count: (cb) ->
@@ -35,12 +50,41 @@ method =
 
   PUT: (req, res, next) ->
     return res.send 400 if not (_id = req.params._id)
+    _id = req.body._id
     delete req.body._id
-    Project.update {_id: _id} , req.body, (err, doc)->
-      if err
-        console.log err
-        return res.send 500
-      res.send 200
+    if req.body.comment
+      comment =
+        content: req.body.content
+        creator: req.user.realname
+        date: new Date()
+        status: req.body.status
+      Project.update {_id: _id}, {$push: {comments: comment}}, (err, num)->
+        return res.send 500 if err
+        res.send comment
+    else
+      Project.findById _id, (err, doc)->
+        return res.send 404 unless doc
+        if req.body.area
+          Area.findByIdAndUpdate req.body.area._id, {$inc: projects: 1}, ->
+          Area.findByIdAndUpdate doc.area._id, {$inc: projects: -1}, ->
+        if req.body.company
+          Area.findByIdAndUpdate req.body.company._id, {$inc: projects: 1}, ->
+          Area.findByIdAndUpdate doc.company._id, {$inc: projects: -1}, ->
+        if req.body.industry
+          Industry.findByIdAndUpdate req.body.industry._id, {$inc: projects: 1}, ->
+          Industry.findByIdAndUpdate doc.industry._id, {$inc: projects: -1}, ->
+        if req.body.type
+          ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
+          ProjectType.findByIdAndUpdate doc.type._id, {$inc: projects: -1}, ->
+        _.extend doc, req.body
+        doc.save (err)->
+          return res.send 500 if err
+          res.send 200
+      # Project.update {_id: _id} , req.body, (err, doc)->
+      #   if err
+      #     console.log err
+      #     return res.send 500
+      #   res.send 200
   POST: (req, res, next) ->
     delete req.body._id
     doc = new Project req.body
@@ -48,6 +92,14 @@ method =
       if err
         console.log err
         return res.send 500
+      if req.body.area
+        Area.findByIdAndUpdate req.body.area._id, {$inc: projects: 1}, ->
+      if req.body.company
+        Area.findByIdAndUpdate req.body.company._id, {$inc: projects: 1}, ->
+      if req.body.industry
+        Industry.findByIdAndUpdate req.body.industry._id, {$inc: projects: 1}, ->
+      if req.body.type
+        ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
       res.send 200
   DELETE: (req, res, next) ->
     res.send 400 if not (_id = req.params._id)

@@ -320,8 +320,8 @@
       <div class="modal-header">
         <h4 class="modal-title">销售管理</h4>
       </div>
-      <div class="modal-body">
-        <form name="formSales" class="form-horizontal">
+      <form name="formSales" class="form-horizontal">
+        <div class="modal-body">
           <div class="form-group">
             <label class="control-label col-sm-2">名称</label>
             <div class="col-sm-10">
@@ -350,15 +350,15 @@
           <div class="form-group">
             <label class="control-label col-sm-2">经理</label>
             <div class="col-sm-10">
-              <select class="form-control" ng-model="tabs[3].selectedSales.company.manager._id" ng-options="m._id as m.name for m in tabs[3].selectedSales.company.managers"></select>
+              <select class="form-control" ng-model="tabs[3].selectedSales.company.manager._id" ng-options="m._id as m.name for m in tabs[3].selectedSales.company.managers" ng-change="tabs[3].changeManager()"></select>
             </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="submit" class="btn btn-primary" ng-click="tabs[3].save(formSales)">保存</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary" ng-click="tabs[3].save(formSales)">保存</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>
@@ -374,8 +374,8 @@
       <div class="modal-header">
         <h4 class="modal-title">区域/分公司 管理</h4>
       </div>
-      <div class="modal-body">
-        <form name="areaForm" class="form-horizontal">
+      <form name="areaForm" class="form-horizontal">
+        <div class="modal-body">
           <div class="form-group">
             <label class="control-label col-sm-2">名称</label>
             <div class="col-sm-10">
@@ -410,12 +410,12 @@
               </select>
             </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="tabs[4].save()" ng-class="{disabled: !tabs[4].selectedArea.name}">保存</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button class="btn btn-primary" ng-click="tabs[4].save()" ng-class="{disabled: !tabs[4].selectedArea.name}">保存</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>

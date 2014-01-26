@@ -4,7 +4,7 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
-    Industry.find {}, (err, docs)->
+    Industry.find {}, null, {sort: '-_id'}, (err, docs)->
       if err
         console.log err
         return res.send 500

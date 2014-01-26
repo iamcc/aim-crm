@@ -75,6 +75,13 @@
             _id: 'all'
           },
           isArray: true
+        },
+        allCompanies: {
+          method: 'GET',
+          params: {
+            _id: 'allCompanies'
+          },
+          isArray: true
         }
       });
     }

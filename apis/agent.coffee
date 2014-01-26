@@ -17,6 +17,7 @@ method =
       opts =
         skip: (page-1)*num
         limit: num
+        sort: '-_id'
 
       async.auto {
         count: (cb)->

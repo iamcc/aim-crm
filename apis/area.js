@@ -16,6 +16,14 @@
           }, function(err, docs) {
             return res.send(docs);
           });
+        } else if (_id === 'allCompanies') {
+          return Area.find({
+            parent: {
+              $ne: null
+            }
+          }, function(err, docs) {
+            return res.send(docs);
+          });
         }
         return Area.findById(_id, function(err, doc) {
           if (err) {
@@ -32,7 +40,8 @@
         page = query.page || 1;
         opts = {
           skip: (page - 1) * num,
-          limit: num
+          limit: num,
+          sort: '-_id'
         };
         return async.auto({
           count: function(cb) {

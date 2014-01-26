@@ -7,13 +7,13 @@ method =
       console.log _id
     else
       if (query = req.query).s
-        Sales.find name: new RegExp(req.query.s, 'i'), '_id name company.name', {limit: 10}, (err, docs)->
+        Sales.find name: new RegExp(req.query.s, 'i'), null, {limit: 10}, (err, docs)->
           if err
             console.log err
             return res.send 500
           res.send docs
       else if query.company
-        Sales.find 'company._id': query.company, (err, docs)->
+        Sales.find 'company._id': query.company, null, {sort: '-_id'}, (err, docs)->
           if err
             console.log err
             return res.send 500

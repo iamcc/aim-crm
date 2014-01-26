@@ -5,6 +5,10 @@ app.config [
   ($routeProvider, $httpProvider)->
     $routeProvider
       .when('/', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
+      .when('/area/:area', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
+      .when('/company/:company', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
+      .when('/industry/:industry', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
+      .when('/type/:type', {templateUrl: '/partials/user.html', controller: 'userCtrl'})
       .when('/login', {templateUrl: '/partials/login.html', controller: 'loginCtrl'})
       .when('/setting/:tab?', {templateUrl: '/partials/setting.html', controller: 'settingCtrl'})
       .when('/finance', {templateUrl: '/partials/finance.html', controller: 'financeCtrl'})

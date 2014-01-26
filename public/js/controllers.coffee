@@ -25,8 +25,8 @@ nextPages = (data)->
 
 # userCtrl
 controller 'userCtrl', [
-  '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales'
-  ($scope, Project, ProjectType, Industry, Agent, User, Area, Sales)->
+  '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', '$routeParams', '$location'
+  ($scope, Project, ProjectType, Industry, Agent, User, Area, Sales, $routeParams, $location)->
     $scope.showCount = (item)->
       $scope.isShowFilter = false
 
@@ -36,30 +36,61 @@ controller 'userCtrl', [
       else
         $scope.isShowCount = true
         $scope.curCountItem = item
+        switch item
+          when 'area' then $scope.counts = $scope.areas
+          when 'company' then $scope.counts = $scope.companies
+          when 'industry' then $scope.counts = $scope.industries
+          when 'type' then $scope.counts = $scope.projectTypes
+    $scope.goUrl = (url)->
+      $location.path url
 
     $scope.showFilter = ->
       $scope.isShowCount = false
       $scope.curCountItem = null
       $scope.isShowFilter = not $scope.isShowFilter
 
+    $scope.condition = {}
+
     $scope.prePages = -> prePages @projectData
     $scope.nextPages = -> nextPages @projectData
     $scope.goPage = (page)->
       self = @
-      if page then Project.get {page: page}, (data)-> self.projectData.list = data.list
-      else self.projectData = Project.get {}, (data)-> initPage data
+      for k, v of $scope.condition
+        delete $scope.condition[k] unless v
+      param = {condition: $scope.condition or {}}
+      if $routeParams.area then param.condition['area._id'] = $routeParams.area
+      if $routeParams.company then param.condition['company._id'] = $routeParams.company
+      if $routeParams.industry then param.condition['industry._id'] = $routeParams.industry
+      if $routeParams.type then param.condition['type._id'] = $routeParams.type
+      if page
+        param.page = page
+        Project.get param, (data)->
+          self.projectData.curPage = page
+          self.projectData.list = data.list
+      else self.projectData = Project.get param, (data)-> initPage data
 
     $scope.showEdit = (event, project)->
       if $(event.target).parent().hasClass 'edit' then return
       $scope.oldProject = angular.copy project
       $(event.target).find('.view').hide()
       $(event.target).find('.edit').show()
-      $(event.target).find('.edit').children().first().focus()
+      $(event.target).find('.edit').children().focus()
       return
+
+    $scope.addComment = (project)->
+      $scope.comments = project.comments
+      $scope.newComment = _id: project._id, status: project.status, comment: 1
+
+    $scope.saveComment = (form)->
+      return if form.$invalid or not $scope.newComment.content.trim()
+      Project.update $scope.newComment, (data)->
+        $scope.comments.push data
+        $scope.newComment.content = ''
 
     $scope.saveProject = ->
       p = JSON.parse angular.toJson @newProject
       p.company = p.sales.company
+      p.area = $scope.areas.filter((a)->a._id is p.company.parent)[0]
       Project.save p,
         ->
           $('#addModal').modal 'hide'
@@ -73,23 +104,22 @@ controller 'userCtrl', [
       $(event.target).closest('.edit').hide()
       param = {_id: project._id}
       param[field] = project[field]
-      if $scope.oldProject[field] isnt project[field]
-        # console.log 'update', param, project
+      if project[field] and project[field].hasOwnProperty('_id')
+        if not $scope.oldProject[field] or $scope.oldProject[field]._id isnt project[field]._id
+          if field is 'sales'
+            param.company = project[field].company
+            param.area = $scope.areas.filter((a)->a._id is param.company.parent)[0]
+          Project.update param
+      else if $scope.oldProject[field] isnt project[field]
         Project.update param
 
     $scope.goPage()
-    $scope.projectTypes = ProjectType.query()
-    $scope.industries = Industry.query()
+    $scope.projectTypes = ProjectType.query({}, -> t.url = '/type/'+t._id for t in $scope.projectTypes)
+    $scope.industries = Industry.query({}, -> i.url = '/industry/'+i._id for i in $scope.industries)
     $scope.agents = Agent.query({_id: 'all'})
     $scope.supporters = User.getSupporters()
-    $scope.areas = Area.all()
-
-    $scope.$watch 'newProject.area', ->
-      if $scope.newProject
-        $scope.companies = Area.all parent: $scope.newProject.area._id
-        $scope.saleses = null
-    $scope.$watch 'newProject.company', ->
-      if $scope.newProject then $scope.saleses = Sales.query company: $scope.newProject.company._id
+    $scope.areas = Area.all({}, -> a.url = '/area/'+a._id for a in $scope.areas)
+    $scope.companies = Area.allCompanies({}, -> c.url = '/company/'+c._id for c in $scope.companies)
 ]
 # userCtrl end
 
@@ -226,16 +256,21 @@ controller 'settingCtrl', [
           $tabs[3].selectedSales.companies = data.list
       changeCompany: ->
         @salesData = Sales.query {company: @selectedSales.company._id}
-        @selectedSales.company = @selectedSales.companies.filter((obj)-> obj._id is $tabs[3].selectedSales.company._id)[0]
+        @selectedSales.company = angular.copy @selectedSales.companies.filter((obj)-> obj._id is $tabs[3].selectedSales.company._id)[0]
+      changeManager: ->
+        self = @
+        @selectedSales.company.manager = angular.copy @selectedSales.company.managers.filter((m)->m._id is self.selectedSales.company.manager._id)[0]
       addSales: ->
         @selectedSales =
           area: angular.copy (@selectedSales and @selectedSales.area)
           company: angular.copy (@selectedSales and @selectedSales.company)
           companies: angular.copy (@selectedSales and @selectedSales.companies)
       selectSales: (sales)->
-        sales.companies = @selectedSales.companies
-        sales.company.managers = @selectedSales.company.managers
         sales.area = @selectedSales.area
+        sales.companies = @selectedSales.companies
+        mid = sales.company.manager._id
+        sales.company = sales.companies.filter((c)->c._id is sales.company._id)[0]
+        sales.company.manager = sales.company.managers.filter((m)->m._id is mid)[0]
         @selectedSales = angular.copy sales
       save: (form)->
         return if form.$invalid
@@ -277,8 +312,11 @@ controller 'settingCtrl', [
         self = @
         Area.save @selectedArea,
           ->
-            if self.selectedArea.parent then self.companyData = Area.get parent: self.selectedArea.parent, (data)-> initPage data
-            else self.areaData = Area.get {}, (data)-> initPage data
+            # if self.selectedArea.parent then self.companyData = Area.get parent: self.selectedArea.parent, (data)-> initPage data
+            # else self.areaData = Area.get {}, (data)-> initPage data
+            # Area.get {num: 100}, (data)-> $tabs[4].allAreas = data.list
+            $scope.selectMenu 4
+
             $('#areaModal').modal 'hide'
             self.selectedArea = null
           (err)->

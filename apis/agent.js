@@ -27,7 +27,8 @@
         num = query.num || 10;
         opts = {
           skip: (page - 1) * num,
-          limit: num
+          limit: num,
+          sort: '-_id'
         };
         return async.auto({
           count: function(cb) {

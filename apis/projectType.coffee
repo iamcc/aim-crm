@@ -3,7 +3,7 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
-    ProjectType.find {}, (err, docs)->
+    ProjectType.find {}, null, {sort:'-_id'}, (err, docs)->
       if err
         console.log err
         return res.send 500

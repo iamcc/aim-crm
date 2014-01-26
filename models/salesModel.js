@@ -17,7 +17,8 @@
       manager: {
         _id: ObjectId,
         name: String
-      }
+      },
+      parent: ObjectId
     }
   });
 

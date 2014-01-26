@@ -53,6 +53,10 @@ angular
             method: 'GET'
             params: _id: 'all'
             isArray: true
+          allCompanies:
+            method: 'GET'
+            params: _id: 'allCompanies'
+            isArray: true
     ]
   )
   .factory(

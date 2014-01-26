@@ -1,10 +1,6 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.Types.ObjectId
-# salesSchema = require('./salesModel').salesSchema
-# industrySchema = require('./industryModel').industrySchema
-# userSchema = require('./userModel').userSchema
-# agentSchema = require('./agentModel').agentSchema
 
 projectSchema = new Schema
   name: String
@@ -47,7 +43,7 @@ projectSchema = new Schema
   wx:
     account: String
     pwd: String
-    type: String
+    wxType: String
   ec:
     id: Number
     sendBoxDate: Date
@@ -57,6 +53,12 @@ projectSchema = new Schema
       _id: ObjectId
       name: String
   memo: String
+  comments: [{
+    content: String
+    creator: String
+    date: type: Date, default: Date.now
+    status: String
+  }]
 
 # exports.Project = mongoose.model 'Project', projectSchema
 # exports.projectSchema = projectSchema

@@ -62,7 +62,7 @@
   };
 
   controller('userCtrl', [
-    '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', function($scope, Project, ProjectType, Industry, Agent, User, Area, Sales) {
+    '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', '$routeParams', '$location', function($scope, Project, ProjectType, Industry, Agent, User, Area, Sales, $routeParams, $location) {
       $scope.showCount = function(item) {
         $scope.isShowFilter = false;
         if (item === $scope.curCountItem) {
@@ -70,14 +70,28 @@
           return $scope.curCountItem = null;
         } else {
           $scope.isShowCount = true;
-          return $scope.curCountItem = item;
+          $scope.curCountItem = item;
+          switch (item) {
+            case 'area':
+              return $scope.counts = $scope.areas;
+            case 'company':
+              return $scope.counts = $scope.companies;
+            case 'industry':
+              return $scope.counts = $scope.industries;
+            case 'type':
+              return $scope.counts = $scope.projectTypes;
+          }
         }
+      };
+      $scope.goUrl = function(url) {
+        return $location.path(url);
       };
       $scope.showFilter = function() {
         $scope.isShowCount = false;
         $scope.curCountItem = null;
         return $scope.isShowFilter = !$scope.isShowFilter;
       };
+      $scope.condition = {};
       $scope.prePages = function() {
         return prePages(this.projectData);
       };
@@ -85,16 +99,38 @@
         return nextPages(this.projectData);
       };
       $scope.goPage = function(page) {
-        var self;
+        var k, param, self, v, _ref;
         self = this;
+        _ref = $scope.condition;
+        for (k in _ref) {
+          v = _ref[k];
+          if (!v) {
+            delete $scope.condition[k];
+          }
+        }
+        param = {
+          condition: $scope.condition || {}
+        };
+        if ($routeParams.area) {
+          param.condition['area._id'] = $routeParams.area;
+        }
+        if ($routeParams.company) {
+          param.condition['company._id'] = $routeParams.company;
+        }
+        if ($routeParams.industry) {
+          param.condition['industry._id'] = $routeParams.industry;
+        }
+        if ($routeParams.type) {
+          param.condition['type._id'] = $routeParams.type;
+        }
         if (page) {
-          return Project.get({
-            page: page
-          }, function(data) {
+          param.page = page;
+          return Project.get(param, function(data) {
+            self.projectData.curPage = page;
             return self.projectData.list = data.list;
           });
         } else {
-          return self.projectData = Project.get({}, function(data) {
+          return self.projectData = Project.get(param, function(data) {
             return initPage(data);
           });
         }
@@ -106,12 +142,32 @@
         $scope.oldProject = angular.copy(project);
         $(event.target).find('.view').hide();
         $(event.target).find('.edit').show();
-        $(event.target).find('.edit').children().first().focus();
+        $(event.target).find('.edit').children().focus();
+      };
+      $scope.addComment = function(project) {
+        $scope.comments = project.comments;
+        return $scope.newComment = {
+          _id: project._id,
+          status: project.status,
+          comment: 1
+        };
+      };
+      $scope.saveComment = function(form) {
+        if (form.$invalid || !$scope.newComment.content.trim()) {
+          return;
+        }
+        return Project.update($scope.newComment, function(data) {
+          $scope.comments.push(data);
+          return $scope.newComment.content = '';
+        });
       };
       $scope.saveProject = function() {
         var p;
         p = JSON.parse(angular.toJson(this.newProject));
         p.company = p.sales.company;
+        p.area = $scope.areas.filter(function(a) {
+          return a._id === p.company.parent;
+        })[0];
         return Project.save(p, function() {
           $('#addModal').modal('hide');
           $scope.newProject = null;
@@ -128,32 +184,64 @@
           _id: project._id
         };
         param[field] = project[field];
-        if ($scope.oldProject[field] !== project[field]) {
+        if (project[field] && project[field].hasOwnProperty('_id')) {
+          if (!$scope.oldProject[field] || $scope.oldProject[field]._id !== project[field]._id) {
+            if (field === 'sales') {
+              param.company = project[field].company;
+              param.area = $scope.areas.filter(function(a) {
+                return a._id === param.company.parent;
+              })[0];
+            }
+            return Project.update(param);
+          }
+        } else if ($scope.oldProject[field] !== project[field]) {
           return Project.update(param);
         }
       };
       $scope.goPage();
-      $scope.projectTypes = ProjectType.query();
-      $scope.industries = Industry.query();
+      $scope.projectTypes = ProjectType.query({}, function() {
+        var t, _i, _len, _ref, _results;
+        _ref = $scope.projectTypes;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          t = _ref[_i];
+          _results.push(t.url = '/type/' + t._id);
+        }
+        return _results;
+      });
+      $scope.industries = Industry.query({}, function() {
+        var i, _i, _len, _ref, _results;
+        _ref = $scope.industries;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          i = _ref[_i];
+          _results.push(i.url = '/industry/' + i._id);
+        }
+        return _results;
+      });
       $scope.agents = Agent.query({
         _id: 'all'
       });
       $scope.supporters = User.getSupporters();
-      $scope.areas = Area.all();
-      $scope.$watch('newProject.area', function() {
-        if ($scope.newProject) {
-          $scope.companies = Area.all({
-            parent: $scope.newProject.area._id
-          });
-          return $scope.saleses = null;
+      $scope.areas = Area.all({}, function() {
+        var a, _i, _len, _ref, _results;
+        _ref = $scope.areas;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          a = _ref[_i];
+          _results.push(a.url = '/area/' + a._id);
         }
+        return _results;
       });
-      return $scope.$watch('newProject.company', function() {
-        if ($scope.newProject) {
-          return $scope.saleses = Sales.query({
-            company: $scope.newProject.company._id
-          });
+      return $scope.companies = Area.allCompanies({}, function() {
+        var c, _i, _len, _ref, _results;
+        _ref = $scope.companies;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          c = _ref[_i];
+          _results.push(c.url = '/company/' + c._id);
         }
+        return _results;
       });
     }
   ]);
@@ -322,9 +410,16 @@
           this.salesData = Sales.query({
             company: this.selectedSales.company._id
           });
-          return this.selectedSales.company = this.selectedSales.companies.filter(function(obj) {
+          return this.selectedSales.company = angular.copy(this.selectedSales.companies.filter(function(obj) {
             return obj._id === $tabs[3].selectedSales.company._id;
-          })[0];
+          })[0]);
+        },
+        changeManager: function() {
+          var self;
+          self = this;
+          return this.selectedSales.company.manager = angular.copy(this.selectedSales.company.managers.filter(function(m) {
+            return m._id === self.selectedSales.company.manager._id;
+          })[0]);
         },
         addSales: function() {
           return this.selectedSales = {
@@ -334,9 +429,16 @@
           };
         },
         selectSales: function(sales) {
-          sales.companies = this.selectedSales.companies;
-          sales.company.managers = this.selectedSales.company.managers;
+          var mid;
           sales.area = this.selectedSales.area;
+          sales.companies = this.selectedSales.companies;
+          mid = sales.company.manager._id;
+          sales.company = sales.companies.filter(function(c) {
+            return c._id === sales.company._id;
+          })[0];
+          sales.company.manager = sales.company.managers.filter(function(m) {
+            return m._id === mid;
+          })[0];
           return this.selectedSales = angular.copy(sales);
         },
         save: function(form) {
@@ -402,17 +504,7 @@
           var self;
           self = this;
           return Area.save(this.selectedArea, function() {
-            if (self.selectedArea.parent) {
-              self.companyData = Area.get({
-                parent: self.selectedArea.parent
-              }, function(data) {
-                return initPage(data);
-              });
-            } else {
-              self.areaData = Area.get({}, function(data) {
-                return initPage(data);
-              });
-            }
+            $scope.selectMenu(4);
             $('#areaModal').modal('hide');
             return self.selectedArea = null;
           }, function(err) {

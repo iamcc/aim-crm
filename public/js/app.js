@@ -9,6 +9,18 @@
       $routeProvider.when('/', {
         templateUrl: '/partials/user.html',
         controller: 'userCtrl'
+      }).when('/area/:area', {
+        templateUrl: '/partials/user.html',
+        controller: 'userCtrl'
+      }).when('/company/:company', {
+        templateUrl: '/partials/user.html',
+        controller: 'userCtrl'
+      }).when('/industry/:industry', {
+        templateUrl: '/partials/user.html',
+        controller: 'userCtrl'
+      }).when('/type/:type', {
+        templateUrl: '/partials/user.html',
+        controller: 'userCtrl'
       }).when('/login', {
         templateUrl: '/partials/login.html',
         controller: 'loginCtrl'

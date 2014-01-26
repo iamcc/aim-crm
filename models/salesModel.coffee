@@ -11,6 +11,7 @@ salesSchema = new Schema
     manager:
       _id: ObjectId
       name: String
+    parent: ObjectId
   
 # exports.Sales = mongoose.model 'Sales', salesSchema
 # exports.salesSchema = salesSchema

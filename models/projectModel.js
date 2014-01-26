@@ -59,7 +59,7 @@
     wx: {
       account: String,
       pwd: String,
-      type: String
+      wxType: String
     },
     ec: {
       id: Number,
@@ -72,7 +72,18 @@
         name: String
       }
     },
-    memo: String
+    memo: String,
+    comments: [
+      {
+        content: String,
+        creator: String,
+        date: {
+          type: Date,
+          "default": Date.now
+        },
+        status: String
+      }
+    ]
   });
 
   module.exports = mongoose.model('Project', projectSchema);

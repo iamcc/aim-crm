@@ -8,7 +8,9 @@
 
   method = {
     GET: function(req, res, next) {
-      return ProjectType.find({}, function(err, docs) {
+      return ProjectType.find({}, null, {
+        sort: '-_id'
+      }, function(err, docs) {
         if (err) {
           console.log(err);
           return res.send(500);

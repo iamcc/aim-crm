@@ -10,7 +10,9 @@
 
   method = {
     GET: function(req, res, next) {
-      return Industry.find({}, function(err, docs) {
+      return Industry.find({}, null, {
+        sort: '-_id'
+      }, function(err, docs) {
         if (err) {
           console.log(err);
           return res.send(500);
