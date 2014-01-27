@@ -58,6 +58,7 @@
             return res.send(500);
           }
           return res.send({
+            count: rst.count,
             totalPage: Math.ceil(rst.count / num),
             list: rst.list
           });
@@ -143,6 +144,17 @@
               }
             }, function() {});
           }
+          if (req.body.status) {
+            if (req.body.status === '上线') {
+              doc.online.date = new Date();
+              doc.online.reviewer = req.user;
+            }
+            doc.comments.push({
+              content: req.body.status,
+              creator: req.user.realname,
+              status: doc.status
+            });
+          }
           _.extend(doc, req.body);
           return doc.save(function(err) {
             if (err) {
@@ -157,6 +169,11 @@
       var doc;
       delete req.body._id;
       doc = new Project(req.body);
+      doc.comments.push({
+        content: '创建项目',
+        creator: req.user.realname,
+        status: doc.status
+      });
       return doc.save(function(err, doc) {
         if (err) {
           console.log(err);

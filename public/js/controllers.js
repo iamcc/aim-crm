@@ -63,6 +63,25 @@
 
   controller('userCtrl', [
     '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', '$routeParams', '$location', function($scope, Project, ProjectType, Industry, Agent, User, Area, Sales, $routeParams, $location) {
+      var getStatusLabel;
+      getStatusLabel = function(status) {
+        switch (status) {
+          case '初始资料':
+          case '首次催单':
+          case '二次催单':
+            return 'label-info';
+          case '搁置':
+            return 'label-danger';
+          case '录入':
+            return 'label-warning';
+          case '完成':
+            return 'label-primary';
+          case '上线':
+            return 'label-success';
+          default:
+            return 'label-default';
+        }
+      };
       $scope.showCount = function(item) {
         $scope.isShowFilter = false;
         if (item === $scope.curCountItem) {
@@ -126,12 +145,28 @@
         if (page) {
           param.page = page;
           return Project.get(param, function(data) {
+            var p, _i, _len, _ref1, _results;
             self.projectData.curPage = page;
-            return self.projectData.list = data.list;
+            self.projectData.list = data.list;
+            _ref1 = data.list;
+            _results = [];
+            for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+              p = _ref1[_i];
+              _results.push(p.statusLabel = getStatusLabel(p.status));
+            }
+            return _results;
           });
         } else {
           return self.projectData = Project.get(param, function(data) {
-            return initPage(data);
+            var p, _i, _len, _ref1, _results;
+            initPage(data);
+            _ref1 = data.list;
+            _results = [];
+            for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+              p = _ref1[_i];
+              _results.push(p.statusLabel = getStatusLabel(p.status));
+            }
+            return _results;
           });
         }
       };
@@ -174,6 +209,27 @@
           return $scope.goPage();
         }, function(err) {
           return alert(err.data);
+        });
+      };
+      $scope.updateStatus = function(p, status) {
+        return Project.update({
+          _id: p._id,
+          status: status
+        }, function() {
+          p.comments.push({
+            content: status,
+            creator: $scope.userinfo.realname,
+            date: new Date(),
+            status: p.status
+          });
+          p.status = status;
+          p.statusLabel = getStatusLabel(status);
+          if (status === '上线') {
+            return p.online = {
+              date: new Date(),
+              reviewer: $scope.userinfo
+            };
+          }
         });
       };
       $scope.update = function(event, project, field) {

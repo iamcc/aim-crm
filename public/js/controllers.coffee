@@ -27,6 +27,15 @@ nextPages = (data)->
 controller 'userCtrl', [
   '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', '$routeParams', '$location'
   ($scope, Project, ProjectType, Industry, Agent, User, Area, Sales, $routeParams, $location)->
+    getStatusLabel = (status)->
+      switch status
+        when '初始资料', '首次催单', '二次催单' then 'label-info'
+        when '搁置' then 'label-danger'
+        when '录入' then 'label-warning'
+        when '完成' then 'label-primary'
+        when '上线' then 'label-success'
+        else 'label-default'
+
     $scope.showCount = (item)->
       $scope.isShowFilter = false
 
@@ -67,7 +76,12 @@ controller 'userCtrl', [
         Project.get param, (data)->
           self.projectData.curPage = page
           self.projectData.list = data.list
-      else self.projectData = Project.get param, (data)-> initPage data
+          for p in data.list
+            p.statusLabel = getStatusLabel p.status
+      else self.projectData = Project.get param, (data)->
+        initPage data
+        for p in data.list
+          p.statusLabel = getStatusLabel p.status
 
     $scope.showEdit = (event, project)->
       if $(event.target).parent().hasClass 'edit' then return
@@ -98,6 +112,21 @@ controller 'userCtrl', [
           $scope.goPage()
         (err)->
           alert err.data
+
+    $scope.updateStatus = (p, status)->
+      Project.update {_id: p._id, status: status}, ->
+        p.comments.push {
+          content: status
+          creator: $scope.userinfo.realname
+          date: new Date()
+          status: p.status
+        }
+        p.status = status
+        p.statusLabel = getStatusLabel status
+        if status is '上线'
+          p.online =
+            date: new Date()
+            reviewer: $scope.userinfo
 
     $scope.update = (event, project, field)->
       $(event.target).closest('.edit').prev().show()

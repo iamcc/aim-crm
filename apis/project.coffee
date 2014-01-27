@@ -44,6 +44,7 @@ method =
           console.log err
           return res.send 500
         res.send {
+          count: rst.count
           totalPage: Math.ceil rst.count / num
           list: rst.list
         }
@@ -76,18 +77,27 @@ method =
         if req.body.type
           ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
           ProjectType.findByIdAndUpdate doc.type._id, {$inc: projects: -1}, ->
+        if(req.body.status)
+          if req.body.status is '上线'
+            doc.online.date = new Date()
+            doc.online.reviewer = req.user
+          doc.comments.push {
+            content: req.body.status
+            creator: req.user.realname
+            status: doc.status
+          }
         _.extend doc, req.body
         doc.save (err)->
           return res.send 500 if err
           res.send 200
-      # Project.update {_id: _id} , req.body, (err, doc)->
-      #   if err
-      #     console.log err
-      #     return res.send 500
-      #   res.send 200
   POST: (req, res, next) ->
     delete req.body._id
     doc = new Project req.body
+    doc.comments.push {
+      content: '创建项目'
+      creator: req.user.realname
+      status: doc.status
+    }
     doc.save (err, doc) ->
       if err
         console.log err
