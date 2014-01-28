@@ -15,6 +15,7 @@ method =
         res.send doc
     else
       condition = JSON.parse (query = req.query).condition
+      condition['supporter._id'] = req.user._id if req.user.role is 'supporter'
       if condition.sOrderDate
         condition.orderDate = condition.orderDate or {}
         condition.orderDate.$gte = condition.sOrderDate
@@ -23,8 +24,6 @@ method =
         condition.orderDate = condition.orderDate or {}
         condition.orderDate.$lte = condition.eOrderDate
         delete condition.eOrderDate
-
-      console.log condition
 
       num = query.num or 10
       page = query.page or 1
@@ -86,6 +85,12 @@ method =
             creator: req.user.realname
             status: doc.status
           }
+        if(req.body.supporter)
+          doc.comments.push {
+            content: '客服更改为：'+req.body.supporter.realname
+            creator: req.user.realname
+            status: doc.status
+          }
         _.extend doc, req.body
         doc.save (err)->
           return res.send 500 if err
@@ -94,7 +99,7 @@ method =
     delete req.body._id
     doc = new Project req.body
     doc.comments.push {
-      content: '创建项目'
+      content: '创建项目, 客服：'+(doc.supporter and doc.supporter.realname or '')
       creator: req.user.realname
       status: doc.status
     }

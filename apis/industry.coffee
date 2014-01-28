@@ -10,6 +10,7 @@ method =
         return res.send 500
       res.send docs
   POST: (req, res, next)->
+    return res.send 403 if req.user.role not in ['leader', 'admin']
     async.auto {
       count: (cb)->
         Industry.count {name: req.body.name}, cb
@@ -26,6 +27,7 @@ method =
         return res.send 500
       res.send 200
   DELETE: (req, res, next)->
+    return res.send 403 if req.user.role not in ['leader', 'admin']
     return res.send 400 unless (_id = req.params._id)
 
     Industry.findById _id, (err, doc)->
@@ -39,7 +41,7 @@ method =
 
 module.exports = (req, res, next)->
   try
-    return res.send 403 if req.user.role not in ['leader', 'admin']
+    # return res.send 403 if req.user.role not in ['leader', 'admin']
     method[req.method] req, res, next
   catch e
     console.log e

@@ -43,6 +43,7 @@ method =
   #       return res.send 500
   #     res.send 200
   POST: (req, res, next)->
+    return res.send 403 if req.user.role not in ['leader', 'admin']
     _id = req.body._id
     delete req.body._id
 
@@ -62,7 +63,7 @@ method =
 
 module.exports = (req, res, next)->
   try
-    return res.send 403 if req.user.role not in ['leader', 'admin']
+    # return res.send 403 if req.user.role not in ['leader', 'admin']
     method[req.method] req, res, next
   catch e
     console.log e

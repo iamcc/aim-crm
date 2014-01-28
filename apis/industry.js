@@ -21,6 +21,10 @@
       });
     },
     POST: function(req, res, next) {
+      var _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
       return async.auto({
         count: function(cb) {
           return Industry.count({
@@ -46,7 +50,10 @@
       });
     },
     DELETE: function(req, res, next) {
-      var _id;
+      var _id, _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
       if (!(_id = req.params._id)) {
         return res.send(400);
       }
@@ -68,11 +75,8 @@
   };
 
   module.exports = function(req, res, next) {
-    var e, _ref;
+    var e;
     try {
-      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
-        return res.send(403);
-      }
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;

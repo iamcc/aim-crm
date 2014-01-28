@@ -63,7 +63,7 @@
 
   controller('userCtrl', [
     '$scope', 'Project', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'Sales', '$routeParams', '$location', function($scope, Project, ProjectType, Industry, Agent, User, Area, Sales, $routeParams, $location) {
-      var getStatusLabel;
+      var getStatusLabel, _ref;
       getStatusLabel = function(status) {
         switch (status) {
           case '初始资料':
@@ -71,6 +71,7 @@
           case '二次催单':
             return 'label-info';
           case '搁置':
+          case '毁约':
             return 'label-danger';
           case '录入':
             return 'label-warning';
@@ -171,6 +172,9 @@
         }
       };
       $scope.showEdit = function(event, project) {
+        if ($scope.userinfo.role === 'finance') {
+          return;
+        }
         if ($(event.target).parent().hasClass('edit')) {
           return;
         }
@@ -255,50 +259,54 @@
         }
       };
       $scope.goPage();
-      $scope.projectTypes = ProjectType.query({}, function() {
-        var t, _i, _len, _ref, _results;
-        _ref = $scope.projectTypes;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          t = _ref[_i];
-          _results.push(t.url = '/type/' + t._id);
+      if ((_ref = $scope.userinfo.role) === 'supporter' || _ref === 'leader' || _ref === 'admin') {
+        $scope.projectTypes = ProjectType.query({}, function() {
+          var t, _i, _len, _ref1, _results;
+          _ref1 = $scope.projectTypes;
+          _results = [];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            t = _ref1[_i];
+            _results.push(t.url = '/type/' + t._id);
+          }
+          return _results;
+        });
+        $scope.industries = Industry.query({}, function() {
+          var i, _i, _len, _ref1, _results;
+          _ref1 = $scope.industries;
+          _results = [];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            i = _ref1[_i];
+            _results.push(i.url = '/industry/' + i._id);
+          }
+          return _results;
+        });
+        $scope.agents = Agent.query({
+          _id: 'all'
+        });
+        if ($scope.userinfo.role !== 'supporter') {
+          $scope.supporters = User.getSupporters();
         }
-        return _results;
-      });
-      $scope.industries = Industry.query({}, function() {
-        var i, _i, _len, _ref, _results;
-        _ref = $scope.industries;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          i = _ref[_i];
-          _results.push(i.url = '/industry/' + i._id);
-        }
-        return _results;
-      });
-      $scope.agents = Agent.query({
-        _id: 'all'
-      });
-      $scope.supporters = User.getSupporters();
-      $scope.areas = Area.all({}, function() {
-        var a, _i, _len, _ref, _results;
-        _ref = $scope.areas;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          a = _ref[_i];
-          _results.push(a.url = '/area/' + a._id);
-        }
-        return _results;
-      });
-      return $scope.companies = Area.allCompanies({}, function() {
-        var c, _i, _len, _ref, _results;
-        _ref = $scope.companies;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          c = _ref[_i];
-          _results.push(c.url = '/company/' + c._id);
-        }
-        return _results;
-      });
+        $scope.areas = Area.all({}, function() {
+          var a, _i, _len, _ref1, _results;
+          _ref1 = $scope.areas;
+          _results = [];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            a = _ref1[_i];
+            _results.push(a.url = '/area/' + a._id);
+          }
+          return _results;
+        });
+        return $scope.companies = Area.allCompanies({}, function() {
+          var c, _i, _len, _ref1, _results;
+          _ref1 = $scope.companies;
+          _results = [];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            c = _ref1[_i];
+            _results.push(c.url = '/company/' + c._id);
+          }
+          return _results;
+        });
+      }
     }
   ]);
 
@@ -488,13 +496,15 @@
           var mid;
           sales.area = this.selectedSales.area;
           sales.companies = this.selectedSales.companies;
-          mid = sales.company.manager._id;
+          mid = sales.company.manager && sales.company.manager._id;
           sales.company = sales.companies.filter(function(c) {
             return c._id === sales.company._id;
           })[0];
-          sales.company.manager = sales.company.managers.filter(function(m) {
-            return m._id === mid;
-          })[0];
+          if (mid) {
+            sales.company.manager = sales.company.managers.filter(function(m) {
+              return m._id === mid;
+            })[0];
+          }
           return this.selectedSales = angular.copy(sales);
         },
         save: function(form) {

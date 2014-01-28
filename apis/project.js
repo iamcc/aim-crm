@@ -27,6 +27,9 @@
         });
       } else {
         condition = JSON.parse((query = req.query).condition);
+        if (req.user.role === 'supporter') {
+          condition['supporter._id'] = req.user._id;
+        }
         if (condition.sOrderDate) {
           condition.orderDate = condition.orderDate || {};
           condition.orderDate.$gte = condition.sOrderDate;
@@ -37,7 +40,6 @@
           condition.orderDate.$lte = condition.eOrderDate;
           delete condition.eOrderDate;
         }
-        console.log(condition);
         num = query.num || 10;
         page = query.page || 1;
         opts = {
@@ -155,6 +157,13 @@
               status: doc.status
             });
           }
+          if (req.body.supporter) {
+            doc.comments.push({
+              content: '客服更改为：' + req.body.supporter.realname,
+              creator: req.user.realname,
+              status: doc.status
+            });
+          }
           _.extend(doc, req.body);
           return doc.save(function(err) {
             if (err) {
@@ -170,7 +179,7 @@
       delete req.body._id;
       doc = new Project(req.body);
       doc.comments.push({
-        content: '创建项目',
+        content: '创建项目, 客服：' + (doc.supporter && doc.supporter.realname || ''),
         creator: req.user.realname,
         status: doc.status
       });

@@ -9,6 +9,7 @@ method =
         return res.send 500
       res.send docs
   POST: (req, res, next)->
+    return res.send 403 if req.user.role not in ['leader', 'admin']
     async.auto {
       count: (cb)-> ProjectType.count {name: req.body.name}, cb
       save: ['count', (cb, rst)->
@@ -22,6 +23,7 @@ method =
         return res.send 500
       res.send 200
   DELETE: (req, res, next)->
+    return res.send 403 if req.user.role not in ['leader', 'admin']
     ProjectType.findById req.params._id, (err, doc)->
       return res.send 404 unless doc
       return res.send 500, '项目类型已经被使用，不能删除' if doc.projects > 0
@@ -30,7 +32,7 @@ method =
 
 module.exports = (req, res, next)->
   try
-    return res.send 403 if req.user.role not in ['leader', 'admin']
+    # return res.send 403 if req.user.role not in ['leader', 'admin']
     method[req.method] req, res, next
   catch e
     console.log e

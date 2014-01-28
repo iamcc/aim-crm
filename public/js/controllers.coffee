@@ -30,7 +30,7 @@ controller 'userCtrl', [
     getStatusLabel = (status)->
       switch status
         when '初始资料', '首次催单', '二次催单' then 'label-info'
-        when '搁置' then 'label-danger'
+        when '搁置', '毁约' then 'label-danger'
         when '录入' then 'label-warning'
         when '完成' then 'label-primary'
         when '上线' then 'label-success'
@@ -84,6 +84,9 @@ controller 'userCtrl', [
           p.statusLabel = getStatusLabel p.status
 
     $scope.showEdit = (event, project)->
+      return if $scope.userinfo.role is 'finance'
+
+
       if $(event.target).parent().hasClass 'edit' then return
       $scope.oldProject = angular.copy project
       $(event.target).find('.view').hide()
@@ -143,12 +146,13 @@ controller 'userCtrl', [
         Project.update param
 
     $scope.goPage()
-    $scope.projectTypes = ProjectType.query({}, -> t.url = '/type/'+t._id for t in $scope.projectTypes)
-    $scope.industries = Industry.query({}, -> i.url = '/industry/'+i._id for i in $scope.industries)
-    $scope.agents = Agent.query({_id: 'all'})
-    $scope.supporters = User.getSupporters()
-    $scope.areas = Area.all({}, -> a.url = '/area/'+a._id for a in $scope.areas)
-    $scope.companies = Area.allCompanies({}, -> c.url = '/company/'+c._id for c in $scope.companies)
+    if $scope.userinfo.role in ['supporter', 'leader', 'admin']
+      $scope.projectTypes = ProjectType.query({}, -> t.url = '/type/'+t._id for t in $scope.projectTypes)
+      $scope.industries = Industry.query({}, -> i.url = '/industry/'+i._id for i in $scope.industries)
+      $scope.agents = Agent.query({_id: 'all'})
+      $scope.supporters = User.getSupporters() if $scope.userinfo.role isnt 'supporter'
+      $scope.areas = Area.all({}, -> a.url = '/area/'+a._id for a in $scope.areas)
+      $scope.companies = Area.allCompanies({}, -> c.url = '/company/'+c._id for c in $scope.companies)
 ]
 # userCtrl end
 
@@ -297,9 +301,9 @@ controller 'settingCtrl', [
       selectSales: (sales)->
         sales.area = @selectedSales.area
         sales.companies = @selectedSales.companies
-        mid = sales.company.manager._id
+        mid = sales.company.manager and sales.company.manager._id
         sales.company = sales.companies.filter((c)->c._id is sales.company._id)[0]
-        sales.company.manager = sales.company.managers.filter((m)->m._id is mid)[0]
+        sales.company.manager = sales.company.managers.filter((m)->m._id is mid)[0] if mid
         @selectedSales = angular.copy sales
       save: (form)->
         return if form.$invalid

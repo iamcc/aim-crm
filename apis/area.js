@@ -63,7 +63,10 @@
       }
     },
     POST: function(req, res, next) {
-      var _id;
+      var _id, _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
       _id = req.body._id;
       delete req.body._id;
       if (_id) {
@@ -87,11 +90,8 @@
   };
 
   module.exports = function(req, res, next) {
-    var e, _ref;
+    var e;
     try {
-      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
-        return res.send(403);
-      }
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;

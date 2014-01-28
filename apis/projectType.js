@@ -19,6 +19,10 @@
       });
     },
     POST: function(req, res, next) {
+      var _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
       return async.auto({
         count: function(cb) {
           return ProjectType.count({
@@ -44,6 +48,10 @@
       });
     },
     DELETE: function(req, res, next) {
+      var _ref;
+      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
+        return res.send(403);
+      }
       return ProjectType.findById(req.params._id, function(err, doc) {
         if (!doc) {
           return res.send(404);
@@ -58,11 +66,8 @@
   };
 
   module.exports = function(req, res, next) {
-    var e, _ref;
+    var e;
     try {
-      if ((_ref = req.user.role) !== 'leader' && _ref !== 'admin') {
-        return res.send(403);
-      }
       return method[req.method](req, res, next);
     } catch (_error) {
       e = _error;
