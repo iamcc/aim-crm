@@ -12,6 +12,8 @@
     contract: {
       num: String,
       date: Date,
+      price: Number,
+      client: String,
       recvDate: Date,
       attachments: [String],
       payType: String
@@ -33,8 +35,8 @@
     ],
     invoices: [
       {
-        money: Number,
         num: String,
+        money: Number,
         memo: String,
         date: Date
       }

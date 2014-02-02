@@ -1,1 +1,168 @@
+<style>
+#addModal .col-sm-3, .col-sm-6, .col-sm-12 {
+  margin-top: 10px;
+}
+</style>
+
 <ng-include src="'partials/header.html'"></ng-include>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-3">
+        <div class="list-group">
+          <a class="list-group-item active">全部</a>
+          <a class="list-group-item">未还款</a>
+          <a class="list-group-item">已还款</a>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              财务
+              <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="add()">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              <div class="clearfix"></div>
+            </div>
+            <table class="table table-hover">
+              <tr>
+                <th>合同号</th>
+                <th>合同日期</th>
+                <th>付款方式</th>
+                <th>应收余额</th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>
+                  <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="edit()">
+                    <span class="glyphicon glyphicon-edit"></span>
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <ul class="pagination">
+              <li class="disabled"><a href="">&laquo;</a>
+              </li>
+              <li class="active"><a href="">1</a>
+              </li>
+              <li><a href="">2</a>
+              </li>
+              <li><a href="">3</a>
+              </li>
+              <li><a href="">4</a>
+              </li>
+              <li><a href="">5</a>
+              </li>
+              <li><a href="">&raquo;</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 900px;margin-left: -150px;">
+      <div class="modal-header">
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <strong>合同号：</strong>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-sm-3">
+            <strong>合同日期：</strong>
+            <input type="date" class="form-control">
+          </div>
+          <div class="col-sm-3">
+            <strong>接收合同日期：</strong>
+            <input type="date" class="form-control">
+          </div>
+          <div class="col-sm-3">
+            <strong>付款方式：</strong>
+            <select class="form-control">
+              <option value="一次性">一次性</option>
+              <option value="分批次">分批次</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <strong>客户全称：</strong>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-sm-3">
+            <strong>金额：</strong>
+            <input type="text" class="form-control" disabled>
+          </div>
+          <div class="col-sm-3">
+            <strong>应收余额：</strong>
+            <input type="text" class="form-control" disabled>
+          </div>
+          <div class="col-sm-12">
+            <strong>备注：</strong>
+            <textarea class="form-control"></textarea>
+          </div>
+          <div class="col-sm-12" style="margin-top:10px;">
+            <strong>合同附件：</strong>
+            <span ng-repeat="img in contract.attachments track by $index">
+              <img ng-src="{{img}}" class="img-thumbnail">
+              <a class="btn btn-link" style="position: absolute; margin-left:-40px;" ng-click="contract.attachments.splice($index, 1)">&times;</a>
+            </span>
+            <button class="btn btn-default" ng-click="addImg()">+</button>
+            <input type="file" style="width:0px;height: 0px;">
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <div class="panel panel-default">
+            <div class="panel-heading">关联项目
+              <button class="btn btn-primary btn-xs pull-right">+</button>
+              <div class="clearfix"></div>
+            </div>
+            <table class="table">
+              <tr>
+                <th>项目名称</th>
+                <th>客户全称</th>
+                <th>金额</th>
+                <th>销售</th>
+                <th>状态</th>
+                <th></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+          <ul class="nav nav-tabs nav-justified" ng-init="tab = 'pay'">
+            <li ng-class="{active: tab == 'pay'}"><a href="" ng-click="showTab('pay')">回款</a>
+            </li>
+            <li ng-class="{active: tab == 'invoice'}"><a href="" ng-click="showTab('invoice')">开票</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane" ng-class="{active: tab == 'pay'}">
+              回款
+            </div>
+            <div class="tab-pane" ng-class="{active: tab == 'invoice'}">
+              开票
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">保存</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -6,6 +6,8 @@ financeSchema = new Schema
   contract:
     num: String
     date: Date
+    price: Number
+    client: String
     recvDate: Date
     attachments: [String]
     payType: String
@@ -18,8 +20,8 @@ financeSchema = new Schema
     date: Date
   }]
   invoices: [{
-    money: Number
     num: String
+    money: Number
     memo: String
     date: Date
   }]

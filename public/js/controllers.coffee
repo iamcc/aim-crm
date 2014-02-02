@@ -449,6 +449,15 @@ controller 'settingCtrl', [
 controller 'financeCtrl', [
   '$scope'
   ($scope)->
-    
+    $scope.contract =
+      attachments: []
+    $scope.add = ->
+      @modalTitle = '新增合同'
+    $scope.edit = ->
+      @modalTitle = '修改合同'
+    $scope.showTab = (tab)->
+      $scope.tab = tab
+    $scope.addImg = ->
+      @contract.attachments.push 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAEoElEQVR4Xu3YzStsARyH8d+Q940FUnaykfJSyks25M/2UojI+4aFspLyrrwLt3PqiLl3mIeZK9NjdW/3e+fwnM+cOUfu7OzsJfyyQJEFcoIpspSztIBghIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKvDrwExNTb37AScnJ//5Az8/P8fKykpcXV2l//52d3h4GPv7+3F3dxf19fXR2dkZ7e3tn4b7yWN/+s39p8GvA5N1yU5eITB7e3txfX0dx8fH78Ccn5/H2tpadHR0RFdXVyS7g4ODGBwcjObm5qKy/+Sxi/oGyziqSDCXl5exvb0dQ0NDMTc39w7M5uZmnJycxMjISDQ1NaWolpaWorW1NXK5XBwdHUV/f3+0tLTE6elpbGxsRFtbW/T29r6eho/AfPXYfX19ZTzNpXvpigPz9PQUy8vL6dUjOdH5J3d+fj7u7+9jfHw8qqurI9nPzs6mH00JsARPAmdgYCDW19fTPw8PD0dNTc2nYL5z7LGxsdKd1TK+UsWB2d3dTRH09PSk2fLBzMzMRHJ/k32Uvby8xPT0dFRVVcXExET6Eba1tZX+Pdkl7/zk6vP2q9AV5rvHLuN5LtlLVxyYhYWF9EqRXRHIFSZ7ly8uLsbNzU00NjbG6OjoX7ELgSnFsUt2Zsv0QhUHJv9J5m235Kry0T1McjVJboB3dnaitrY2Hh4eoru7O71BLuYK891jl+kcl/RlKw5Mfp38q8FHT0kNDQ3pPUxydUqemlZXV+Px8TG9Qa6rq/v0HuY7xy72Ca2kZ/8LL/brwBR6Fxd6vP7Xx0f2e5jb29tIkGS/h0merJKnpOwR++LiIkWTPSWV89hfOHc/8l9+HZgfqeRBXwsIRgyogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqMAfSIzIppFTizQAAAAASUVORK5CYII='
 ]
 # financeCtrl end
