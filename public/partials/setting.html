@@ -1,30 +1,4 @@
-<nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">AIM.CRM</a>
-    </div>
-    <!-- user -->
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span> <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
-          </li>
-          <li class="divider" ng-if="['finance', 'admin'].indexOf(userinfo.role) != -1"></li>
-          <li><a href="" ng-if="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
-          </li>
-          <li class="divider" ng-if="['leader', 'admin'].indexOf(userinfo.role) != -1"></li>
-          <li ng-if="['leader', 'admin'].indexOf(userinfo.role) != -1"><a href="#/setting">设置</a> 
-          </li>
-          <li class="divider"></li>
-          <li><a href="/logout">退出</a> 
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <!-- user end -->
-  </div>
-</nav>
+<ng-include src="'partials/header.html'"></ng-include>
 
 <!-- navbar end -->
 <div class="container">

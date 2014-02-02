@@ -23,7 +23,7 @@
           <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
           </li>
           <li class="divider" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1"></li>
-          <li><a href="" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
+          <li><a href="#/finance" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
           </li>
           <li class="divider"></li>
           <li><a href="#/setting">设置</a> 
@@ -337,7 +337,8 @@
                       <button class="btn btn-default" ng-disabled="p.status != '二次催单'" ng-click="updateStatus(p, '搁置')">搁置</button>->
                       <button class="btn btn-default" ng-disabled="['初始资料', '首次催单', '二次催单', '搁置'].indexOf(p.status) == -1" ng-click="updateStatus(p, '录入')">录入</button>->
                       <button class="btn btn-default" ng-disabled="p.status != '录入'" ng-click="updateStatus(p, '完成')">完成</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '完成'" ng-click="updateStatus(p, '上线')">上线</button>
+                      <button class="btn btn-default" ng-disabled="p.status != '完成'" ng-click="updateStatus(p, '上线')">上线</button>->
+                      <button class="btn btn-default" ng-disabled="['上线', '毁约'].indexOf(p.status) != -1" ng-click="updateStatus(p, '毁约')">毁约</button>
                     </div>
                   </div>
                 </td>

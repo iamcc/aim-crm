@@ -444,3 +444,11 @@ controller 'settingCtrl', [
     $scope.selectMenu parseInt($routeParams.tab) or 0
 ]
 # settingCtrl end
+
+# financeCtrl
+controller 'financeCtrl', [
+  '$scope'
+  ($scope)->
+    
+]
+# financeCtrl end

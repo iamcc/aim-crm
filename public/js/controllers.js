@@ -705,4 +705,6 @@
     }
   ]);
 
+  controller('financeCtrl', ['$scope', function($scope) {}]);
+
 }).call(this);
