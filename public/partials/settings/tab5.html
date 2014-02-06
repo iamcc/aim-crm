@@ -1,0 +1,16 @@
+<ul class="list-group" style="width: 300px;">
+  <li class="list-group-item" ng-repeat="i in tabs[5].industries">{{i.name}}
+    <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="tabs[5].del(i)">X</button>
+  </li>
+  <li class="list-group-item">
+    <form name="industryForm">
+      <div class="alert alert-danger" ng-if="tabs[5].error">{{tabs[5].error}}</div>
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="tabs[5].newIndustry.name" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" ng-click="tabs[5].save(industryForm)">+</button>
+        </span>
+      </div>
+    </form>
+  </li>
+</ul>

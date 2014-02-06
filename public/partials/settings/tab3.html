@@ -1,0 +1,99 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    销售({{tabs[3].salesData.length}})
+    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="tabs[3].addSales()">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+  <div class="panel-body">
+    <form class="form-inline">
+      <select class="form-control" ng-model="tabs[3].selectedSales.area._id" ng-options="a._id as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
+        <option value="">区域</option>
+      </select>
+      <select class="form-control" ng-model="tabs[3].selectedSales.company._id" ng-options="c._id as c.name for c in tabs[3].selectedSales.companies" ng-change="tabs[3].changeCompany()">
+        <option value="">分公司</option>
+      </select>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <tr>
+      <th>名称</th>
+      <th>电话</th>
+      <th>所属分公司</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="s in tabs[3].salesData">
+      <td>{{s.name}}</td>
+      <td>{{s.phone}}</td>
+      <td>{{s.company.name}}</td>
+      <td>
+        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#salesModal" data-backdrop="static" ng-click="tabs[3].selectSales(s)">
+          <span class="glyphicon glyphicon-edit"></span>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <!--  <ul class="pagination">
+            <li ng-class="{disabled: !tabs[3].salesData.minPage || tabs[3].salesData.minPage <= 1}" ng-click="tabs[3].prePages(tabs[3].salesData)"><a href="">&laquo;</a>
+            </li>
+            <li ng-repeat="p in tabs[3].salesData.pageArr" ng-class="{active: p == tabs[3].salesData.curPage}" ng-click="tabs[3].goPage(tabs[3].salesData, p)"><a href="">{{p}}</a>
+            </li>
+            <li ng-class="{disabled: !tabs[3].salesData.maxPage || tabs[3].salesData.maxPage >= tabs[3].salesData.totalPage}" ng-click="tabs[3].nextPages(tabs[3].salesData)"><a href="">&raquo;</a>
+            </li>
+          </ul> -->
+</div>
+
+
+
+<!-- 添加销售 -->
+<div id="salesModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">销售管理</h4>
+      </div>
+      <form name="formSales" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label col-sm-2">名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" required ng-model="tabs[3].selectedSales.name"></input>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">电话</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="tabs[3].selectedSales.phone"></input>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">区域</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="tabs[3].selectedSales.area._id" ng-options="a._id as a.name for a in tabs[3].areaData.list" ng-change="tabs[3].changeArea()">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">分公司</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="tabs[3].selectedSales.company._id" ng-options="c._id as c.name for c in tabs[3].selectedSales.companies" ng-change="tabs[3].changeCompany()"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">经理</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="tabs[3].selectedSales.company.manager._id" ng-options="m._id as m.name for m in tabs[3].selectedSales.company.managers" ng-change="tabs[3].changeManager()"></select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary" ng-click="tabs[3].save(formSales)">保存</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

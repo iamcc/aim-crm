@@ -1,0 +1,11 @@
+<form name="form0">
+  <div class="alert alert-danger" ng-if="tabs[0].error">{{tabs[0].error}}</div>
+  <div class="alert alert-success" ng-if="tabs[0].success">{{tabs[0].success}}</div>
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="密码" required ng-model="tabs[0].pwd"></input>
+    <input type="password" class="form-control" placeholder="确认密码" required ng-model="tabs[0].pwd2"></input>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" ng-click="tabs[0].save($event, form0)">保存</button>
+  </div>
+</form>

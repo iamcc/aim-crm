@@ -1,0 +1,16 @@
+<ul class="list-group" style="width: 300px;">
+  <li class="list-group-item" ng-repeat="p in tabs[7].projectTypes">{{p.name}}
+    <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="tabs[7].del(p)">X</button>
+  </li>
+  <li class="list-group-item">
+    <form name="typeForm">
+      <div class="alert alert-danger" ng-if="tabs[7].error">{{tabs[7].error}}</div>
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="tabs[7].newType.name" required>
+        <span class="input-group-btn">
+          <button class="btn btn-primary" ng-click="tabs[7].save(typeForm)">+</button>
+        </span>
+      </div>
+    </form>
+  </li>
+</ul>

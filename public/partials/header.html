@@ -8,9 +8,9 @@
       <li class="dropdown">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span> <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
-          </li>
-          <li class="divider" ng-if="['finance', 'admin'].indexOf(userinfo.role) != -1"></li>
+          <!-- <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
+          </li> -->
+          <!-- <li class="divider" ng-if="['finance', 'admin'].indexOf(userinfo.role) != -1"></li> -->
           <li><a href="#/finance" ng-if="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
           </li>
           <li class="divider" ng-if="['leader', 'admin'].indexOf(userinfo.role) != -1"></li>

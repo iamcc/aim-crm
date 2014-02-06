@@ -1,0 +1,36 @@
+<form name="form1" style="width:300px;">
+  <div class="alert alert-danger" ng-if="tabs[1].error">{{tabs[1].error}}</div>
+  <div class="alert alert-success" ng-if="tabs[1].success">{{tabs[1].success}}</div>
+  <div class="form-group">
+    <select class="form-control" ng-model="tabs[1].user._id" ng-options="u._id as u.realname for u in tabs[1].allUsers.list" ng-change="tabs[1].selectUser()">
+      <option value="">选择用户</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="tabs[1].user.realname" placeholder="昵称" ng-disabled="!tabs[1].user._id"></input>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-primary" type="button" ng-click="tabs[1].updateRealname($event)" ng-disabled="!tabs[1].user._id">修改昵称</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" ng-if="userinfo.role == 'admin'">
+    <div class="row">
+      <div class="col-sm-8">
+        <select class="form-control" ng-model="tabs[1].user.role" ng-disabled="!tabs[1].user._id">
+          <option value="supporter">客服</option>
+          <option value="leader" ng-if="userinfo.role == 'admin'">客服主管</option>
+          <option value="finance" ng-if="userinfo.role == 'admin'">财务</option>
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-primary" type="button" ng-click="tabs[1].updateRole($event)" ng-disabled="!tabs[1].user._id">修改角色</button>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-danger btn-block" type="button" ng-click="tabs[1].resetPwd($event)" ng-disabled="!tabs[1].user._id">重置密码</button>
+  </div>
+</form>

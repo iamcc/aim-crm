@@ -1,0 +1,23 @@
+<form name="form2" style="width:300px;">
+  <div class="alert alert-danger" ng-if="tabs[2].error">{{tabs[2].error}}</div>
+  <div class="alert alert-success" ng-if="tabs[2].success">{{tabs[2].success}}</div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="用户名" ng-model="tabs[2].newUser.uname" required></input>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="昵称" ng-model="tabs[2].newUser.realname" required></input>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="密码" ng-model="tabs[2].newUser.pwd" required></input>
+  </div>
+  <div class="form-group">
+    <select type="text" class="form-control" ng-model="tabs[2].newUser.role" ng-init="tabs[2].newUser.role = 'supporter'">
+      <option value="supporter">客服</option>
+      <option value="leader" ng-if="userinfo.role == 'admin'">客服主管</option>
+      <option value="finance" ng-if="userinfo.role == 'admin'">财务</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" ng-click="tabs[2].save($event, form2)">保存</button>
+  </div>
+</form>

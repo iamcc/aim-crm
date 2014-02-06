@@ -1,0 +1,126 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    区域管理
+    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea()">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div class="clearfix"></div>
+  </div>
+  <table class="table table-hover">
+    <tr>
+      <th>区域</th>
+      <th>经理</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="area in tabs[4].areaData.list" ng-click="tabs[4].selectArea(area)">
+      <td>{{area.name}}</td>
+      <td>
+        <span ng-repeat="m in area.managers">{{m.name}},</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].editArea(area)">
+          <span class="glyphicon glyphicon-edit"></span>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ul class="pagination">
+    <li ng-class="{disabled: !tabs[4].areaData.minPage || tabs[4].areaData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].areaData)"><a href="">&laquo;</a>
+    </li>
+    <li ng-repeat="p in tabs[4].areaData.pageArr" ng-class="{active: p == tabs[4].areaData.curPage}" ng-click="tabs[4].goAreaPage(tabs[4].areaData, p)"><a href="">{{p}}</a>
+    </li>
+    <li ng-class="{disabled: !tabs[4].areaData.maxPage || tabs[4].areaData.maxPage >= tabs[4].areaData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].areaData)"><a href="">&raquo;</a>
+    </li>
+  </ul>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    分公司管理
+    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].addArea(tabs[4].selectedArea._id)">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <div class="clearfix"></div>
+  </div>
+  <table class="table table-hover">
+    <tr>
+      <th>分公司</th>
+      <th>经理</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="c in tabs[4].companyData.list">
+      <td>{{c.name}}</td>
+      <td>
+        <span ng-repeat="m in c.managers">{{m.name}},</span>
+      </td>
+      <td>
+        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#areaModal" data-backdrop="static" ng-click="tabs[4].editArea(c)">
+          <span class="glyphicon glyphicon-edit"></span>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ul class="pagination">
+    <li ng-class="{disabled: !tabs[4].companyData.minPage || tabs[4].companyData.minPage <= 1}" ng-click="tabs[4].prePages(tabs[4].companyData)"><a href="">&laquo;</a>
+    </li>
+    <li ng-repeat="p in tabs[4].companyData.pageArr" ng-class="{active: p == tabs[4].companyData.curPage}" ng-click="tabs[4].goCompanyPage(tabs[4].companyData, p)"><a href="">{{p}}</a>
+    </li>
+    <li ng-class="{disabled: !tabs[4].companyData.maxPage || tabs[4].companyData.maxPage >= tabs[4].companyData.totalPage}" ng-click="tabs[4].nextPages(tabs[4].companyData)"><a href="">&raquo;</a>
+    </li>
+  </ul>
+</div>
+
+<!-- 添加区域 -->
+<div id="areaModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">区域/分公司 管理</h4>
+      </div>
+      <form name="areaForm" class="form-horizontal">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label col-sm-2">名称</label>
+            <div class="col-sm-10">
+              <input class="form-control" ng-model="tabs[4].selectedArea.name" required></input>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">经理</label>
+            <div class="col-sm-10">
+              <ul class="list-unstyled">
+                <li ng-repeat="m in tabs[4].selectedArea.managers">
+                  {{m.name}}
+                  <button type="button" class="btn btn-default btn-xs" ng-click="tabs[4].selectedArea.managers.splice($index, 1)">x</button>
+                </li>
+              </ul>
+              <div class="input-group">
+                <!-- <input id="newManager" type="text"></input> -->
+                <typeahead id="newManager" name="newManager" value-key="name" remote="/api/sales?s=%QUERY" model="tabs[4].newManager.name" datum="tabs[4].newManager"></typeahead>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="tabs[4].addManager()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2">所属区域</label>
+            <div class="col-sm-10">
+              <select class="form-control" ng-model="tabs[4].selectedArea.parent" ng-options="a._id as a.name for a in tabs[4].allAreas">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button class="btn btn-primary" ng-click="tabs[4].save()" ng-class="{disabled: !tabs[4].selectedArea.name}">保存</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
