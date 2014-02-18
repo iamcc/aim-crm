@@ -7,9 +7,10 @@ method =
       if _id is 'all' then return Agent.find {}, (err, docs)-> res.send docs
       
       Agent.findById _id, (err, doc)->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send doc
     else
       page = (query = req.query).page or 1
@@ -26,9 +27,10 @@ method =
           Agent.find {}, null, opts, cb
       },
       (err, rst)->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send {
           totalPage: Math.ceil(rst.count/num)
           list: rst.data
@@ -39,10 +41,11 @@ method =
 
     if (_id = req.params._id)
       Agent.findByIdAndUpdate _id, req.body, (err)->
-        if err
-          console.log err
-          return res.send 500
-        res.send 200
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
+      res.send 200
     else
       async.auto {
         count: (cb)-> Agent.count {name: req.body.name}, cb
@@ -52,9 +55,10 @@ method =
         ]
       },
       (err, rst)->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send 200
 
 module.exports = (req, res, next)->

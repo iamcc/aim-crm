@@ -34,12 +34,20 @@ app.config [
 ]
 
 app.run [
-  '$rootScope', '$http'
-  ($rootScope, $http)->
+  '$rootScope', '$http', 'ProjectType', 'Industry', 'Agent', 'User', 'Area'
+  ($rootScope, $http, ProjectType, Industry, Agent, User, Area)->
     $http
       .get('/api/user/me')
       .success (data)->
         $rootScope.userinfo = data
+
+        if data.role in ['supporter', 'leader', 'admin']
+          $rootScope.projectTypes = ProjectType.query({}, -> t.url = '/type/' + t._id for t in $rootScope.projectTypes)
+          $rootScope.industries = Industry.query({}, -> i.url = '/industry/' + i._id for i in $rootScope.industries)
+          $rootScope.agents = Agent.query({_id: 'all'})
+          $rootScope.supporters = User.getSupporters() if $rootScope.userinfo.role isnt 'supporter'
+          $rootScope.areas = Area.all({}, -> a.url = '/area/' + a._id for a in $rootScope.areas)
+          $rootScope.companies = Area.allCompanies({}, -> c.url = '/company/' + c._id for c in $rootScope.companies)
 ]
 
 

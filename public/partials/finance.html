@@ -1,168 +1,257 @@
 <style>
-#addModal .col-sm-3, .col-sm-6, .col-sm-12 {
-  margin-top: 10px;
-}
+    #addModal .col-sm-3, .col-sm-6, .col-sm-12 {
+        margin-top: 10px;
+    }
 </style>
 
 <ng-include src="'partials/header.html'"></ng-include>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="col-sm-3">
-        <div class="list-group">
-          <a class="list-group-item active">全部</a>
-          <a class="list-group-item">未还款</a>
-          <a class="list-group-item">已还款</a>
-        </div>
-      </div>
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              财务
-              <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="add()">
-                <span class="glyphicon glyphicon-plus"></span>
-              </button>
-              <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    <a class="list-group-item" ng-click="showTab('all')" ng-class="{active: tab=='all'}">全部</a>
+                    <a class="list-group-item" ng-click="showTab('unpay')" ng-class="{active: tab=='unpay'}">未还款</a>
+                    <a class="list-group-item" ng-click="showTab('paied')" ng-class="{active: tab=='paied'}">已还款</a>
+                </div>
             </div>
-            <table class="table table-hover">
-              <tr>
-                <th>合同号</th>
-                <th>合同日期</th>
-                <th>付款方式</th>
-                <th>应收余额</th>
-                <th></th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                  <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="edit()">
-                    <span class="glyphicon glyphicon-edit"></span>
-                  </button>
-                </td>
-              </tr>
-            </table>
-            <ul class="pagination">
-              <li class="disabled"><a href="">&laquo;</a>
-              </li>
-              <li class="active"><a href="">1</a>
-              </li>
-              <li><a href="">2</a>
-              </li>
-              <li><a href="">3</a>
-              </li>
-              <li><a href="">4</a>
-              </li>
-              <li><a href="">5</a>
-              </li>
-              <li><a href="">&raquo;</a>
-              </li>
-            </ul>
-          </div>
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {{panelTitle}}
+                            <button class="btn btn-primary pull-right" type="button" data-toggle="modal"
+                                    data-target="#addModal" data-backdrop="static" ng-click="add()">
+                                新增
+                            </button>
+                            <div class="clearfix"></div>
+                        </div>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>合同号</th>
+                                <th>合同日期</th>
+                                <th>客户全称</th>
+                                <th>应收余额</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="f in financeData.list">
+                                <td>{{f.contract.num}}</td>
+                                <td>{{f.contract.date | date: 'yyyy-MM-dd'}}</td>
+                                <td>{{f.contract.client}}</td>
+                                <td>{{f.balance}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                            data-target="#addModal" data-backdrop="static" ng-click="edit(f._id)">
+                                        修改
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <ul class="pagination">
+                            <li ng-class="{disabled: !financeData.minPage || financeData.minPage==0}"
+                                ng-click="prePages()"><a href="">&laquo;</a>
+                            </li>
+                            <li ng-repeat="p in financeData.pageArr" ng-class="{active: p==financeData.curPage}"><a
+                                    ng-click="goPage(p)">{{p}}</a>
+                            </li>
+                            <li ng-class="{disabled: !financeData.maxPage || financeData.maxPage==financeData.totalPage}"
+                                ng-click="nextPages()"><a href="">&raquo;</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div id="addModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 900px;margin-left: -150px;">
-      <div class="modal-header">
-        <h4 class="modal-title">{{modalTitle}}</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-3">
-            <strong>合同号：</strong>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-sm-3">
-            <strong>合同日期：</strong>
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-sm-3">
-            <strong>接收合同日期：</strong>
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-sm-3">
-            <strong>付款方式：</strong>
-            <select class="form-control">
-              <option value="一次性">一次性</option>
-              <option value="分批次">分批次</option>
-            </select>
-          </div>
-          <div class="col-sm-6">
-            <strong>客户全称：</strong>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-sm-3">
-            <strong>金额：</strong>
-            <input type="text" class="form-control" disabled>
-          </div>
-          <div class="col-sm-3">
-            <strong>应收余额：</strong>
-            <input type="text" class="form-control" disabled>
-          </div>
-          <div class="col-sm-12">
-            <strong>备注：</strong>
-            <textarea class="form-control"></textarea>
-          </div>
-          <div class="col-sm-12" style="margin-top:10px;">
-            <strong>合同附件：</strong>
-            <span ng-repeat="img in contract.attachments track by $index">
-              <img ng-src="{{img}}" class="img-thumbnail">
-              <a class="btn btn-link" style="position: absolute; margin-left:-40px;" ng-click="contract.attachments.splice($index, 1)">&times;</a>
-            </span>
-            <button class="btn btn-default" ng-click="addImg()">+</button>
-            <input type="file" style="width:0px;height: 0px;">
-          </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-          <div class="panel panel-default">
-            <div class="panel-heading">关联项目
-              <button class="btn btn-primary btn-xs pull-right">+</button>
-              <div class="clearfix"></div>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 900px;margin-left: -150px;">
+            <div class="modal-header">
+                <h4 class="modal-title">{{modalTitle}}</h4>
             </div>
-            <table class="table">
-              <tr>
-                <th>项目名称</th>
-                <th>客户全称</th>
-                <th>金额</th>
-                <th>销售</th>
-                <th>状态</th>
-                <th></th>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-          <ul class="nav nav-tabs nav-justified" ng-init="tab = 'pay'">
-            <li ng-class="{active: tab == 'pay'}"><a href="" ng-click="showTab('pay')">回款</a>
-            </li>
-            <li ng-class="{active: tab == 'invoice'}"><a href="" ng-click="showTab('invoice')">开票</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane" ng-class="{active: tab == 'pay'}">
-              回款
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <strong>合同号：</strong>
+                        <input type="text" class="form-control" ng-model="contract.contract.num" disabled placeholder="系统生成">
+                    </div>
+                    <div class="col-sm-3">
+                        <strong>合同日期：</strong>
+                        <input type="date" class="form-control" ng-model="contract.contract.date">
+                    </div>
+                    <div class="col-sm-3">
+                        <strong>接收合同日期：</strong>
+                        <input type="date" class="form-control" ng-model="contract.contract.recvDate">
+                    </div>
+                    <div class="col-sm-3">
+                        <strong>付款方式：</strong>
+                        <select class="form-control" ng-model="contract.contract.payType">
+                            <option value="一次性">一次性</option>
+                            <option value="分批次">分批次</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong>客户全称：</strong>
+                        <input type="text" class="form-control" ng-model="contract.contract.client" ng-blur="getProjects(contract.contract.client)">
+                    </div>
+                    <div class="col-sm-3">
+                        <strong>金额：</strong>
+                        <input type="text" class="form-control" disabled ng-model="contract.contract.price">
+                    </div>
+                    <div class="col-sm-3">
+                        <strong>应收余额：</strong>
+                        <input type="text" class="form-control" disabled ng-model="contract.balance">
+                    </div>
+                    <div class="col-sm-12">
+                        <strong>备注：</strong>
+                        <textarea class="form-control" ng-model="contract.memo"></textarea>
+                    </div>
+                    <div class="col-sm-12" style="margin-top:10px;">
+                        <strong>合同附件：</strong>
+                        <span ng-repeat="img in contract.contract.attachments">
+                          <img ng-src="{{img}}" class="img-thumbnail" style="max-height: 140px;">
+                          <a class="btn btn-link" style="position: absolute; margin-left:-40px;"
+                             ng-click="contract.contract.attachments.splice($index, 1)">&times;</a>
+                        </span>
+                        <button class="btn btn-default" ng-click="addImg()">+</button>
+                        <input id="file" type="file" style="width: 0px; height: 0px;"
+                               onchange="angular.element(this).scope().selectImg(this.files)">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">关联项目
+                            <!--<button class="btn btn-primary btn-xs pull-right" data-toggle="modal"-->
+                                    <!--data-target="#projectModal" data-backdrop="static">+-->
+                            <!--</button>-->
+                            <!--<div class="clearfix"></div>-->
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>项目名称</th>
+                                <th>客户全称</th>
+                                <th>金额</th>
+                                <th>销售</th>
+                                <th>状态</th>
+                                <th></th>
+                            </tr>
+                            <tr ng-repeat="p in contract.projects">
+                                <td>{{p.name}}</td>
+                                <td>{{p.client}}</td>
+                                <td>{{p.price}}</td>
+                                <td>{{p.sales.name}}</td>
+                                <td>{{p.status}}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-xs" ng-click="delProject($index)">&times;</button>
+                                </td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td>-->
+                                    <!--<typeahead name="project" value-key="name"-->
+                                               <!--remote="/api/project?type=client&kw=%QUERY"-->
+                                               <!--model="project" datum="datum" callback="addProject"/>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <ul class="nav nav-tabs nav-justified" ng-init="detailTab = 'pay'">
+                        <li ng-class="{active: detailTab == 'pay'}"><a href="" ng-click="detailTab = 'pay'">回款</a>
+                        </li>
+                        <li ng-class="{active: detailTab == 'invoice'}"><a href=""
+                                                                           ng-click="detailTab = 'invoice'">开票</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" ng-class="{active: detailTab == 'pay'}">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>金额</th>
+                                    <th>备注</th>
+                                    <th>日期</th>
+                                    <th></th>
+                                </tr>
+                                <tr ng-repeat="p in contract.payments">
+                                    <td>{{p.money}}</td>
+                                    <td>{{p.memo}}</td>
+                                    <td>{{p.date | date: 'yyyy-MM-dd'}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-xs" ng-click="delPayment($index)">x</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" type="number" ng-model="payment.money"/></td>
+                                    <td><input class="form-control" type="text" ng-model="payment.memo"/></td>
+                                    <td><input class="form-control" type="date" ng-model="payment.date"/></td>
+                                    <td>
+                                        <button class="btn btn-primary" ng-click="addPayment()">新增</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane" ng-class="{active: detailTab == 'invoice'}">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>发票号</th>
+                                    <th>金额</th>
+                                    <th>备注</th>
+                                    <th>日期</th>
+                                    <th></th>
+                                </tr>
+                                <tr ng-repeat="i in contract.invoices">
+                                    <td>{{i.num}}</td>
+                                    <td>{{i.money}}</td>
+                                    <td>{{i.memo}}</td>
+                                    <td>{{i.date | date: 'yyyy-MM-dd'}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-xs" ng-click="delInvoice($index)">x</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" type="text" ng-model="invoice.num"/></td>
+                                    <td><input class="form-control" type="number" ng-model="invoice.money"/></td>
+                                    <td><input class="form-control" type="text" ng-model="invoice.memo"/></td>
+                                    <td><input class="form-control" type="date" ng-model="invoice.date"/></td>
+                                    <td>
+                                        <button class="btn btn-primary" ng-click="addInvoice()">新增</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane" ng-class="{active: tab == 'invoice'}">
-              开票
+            <div class="modal-footer">
+                <div class="alert danger" ng-if="error">{{error}}</div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="save()">保存</button>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">保存</button>
-      </div>
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<div id="projectModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">搜索项目</h4>
+            </div>
+            <div class="modal-body">
+                <typeahead name="project" value-key="name" remote="/api/project?type=client&kw=%QUERY"
+                           model="project" datum="datum"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="addProject(datum)">确认</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->

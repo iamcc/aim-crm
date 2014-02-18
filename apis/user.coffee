@@ -12,9 +12,10 @@ method =
       if _id is 'supporters'
         return User.find {role: 'supporter'}, '_id realname', (err, docs)->res.send docs
       User.findById _id, (err, doc) ->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         return res.send null if user.role is 'leader' and doc and doc.role isnt 'supporter'
         res.send doc
     else
@@ -26,6 +27,7 @@ method =
       opts =
         skip: (page - 1) * num
         limit: num
+        sort: 'id'
       async.auto {
         count: (cb) ->
           User.count condition, cb
@@ -33,9 +35,10 @@ method =
           User.find condition, null, opts, cb
       } ,
       (err, rst) ->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send {
           totalPage: Math.ceil rst.count / num
           list: rst.list
@@ -49,58 +52,66 @@ method =
     switch act
       when 'setpwd' #modify pwd
         User.findById user._id, (err, doc)->
-          if err
-            console.log err
-            return res.send 500
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           return res.send 404 if not doc
           doc.pwd = req.body.pwd
           doc.save (err2)->
-            if err2
-              console.log err2
-              return res.send 500
+#            if err2
+#              console.log err2
+#              return res.send 500
+            return next(err2) if err2
             res.send 200
       when 'resetpwd' #reset pwd
         return res.send 400 if not _id
         return res.send 403 if user.role not in ['leader', 'admin']
         User.findById _id, (err, doc)->
-          if err
-            console.log err
-            return res.send 500
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           return res.send 404 if not doc
           return res.send 400 if user.role is 'leader' and doc.role isnt 'supporter'
           doc.pwd = '123456'
           doc.save (err2)->
-            if err2
-              console.log err2
-              return res.send 500
+#            if err2
+#              console.log err2
+#              return res.send 500
+            return next(err2) if err2
             res.send 200
       when 'setrealname' #modify realname
         return res.send 400 if not _id or not (realname = req.body.realname)
         return res.send 403 if user.role not in ['leader', 'admin']
         User.findById _id, (err, u)->
-          if err
-            console.log err
-            return res.send 500
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           return res.send 404 if not u
           return res.send 400 if user.role is 'leader' and u.role isnt 'supporter'
           u.realname = req.body.realname
           u.save (err2)->
-            if err2
-              console.log err2
-              return res.send 500
+#            if err2
+#              console.log err2
+#              return res.send 500
+            return next(err2) if err2
             res.send 200
       when 'setrole' #modify role
         return res.send 403 if user.role isnt 'admin'
         User.findById _id, (err, doc)->
-          if err
-            console.log err
-            return res.send 500
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           return res.send 404 if not doc
           doc.role = req.body.role
           doc.save (err2)->
-            if err2
-              console.log err2
-              return res.send 500
+#            if err2
+#              console.log err2
+#              return res.send 500
+            return next(err2) if err2
             res.send 200
       else res.send 400
 
@@ -116,9 +127,10 @@ method =
         user.save cb
     ],
     (err, rst)->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send 200
 
   # DELETE: (req, res, next) ->

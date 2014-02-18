@@ -4,10 +4,11 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
-    Industry.find {}, null, {sort: '-_id'}, (err, docs)->
-      if err
-        console.log err
-        return res.send 500
+    Industry.find {}, null, {sort: 'name'}, (err, docs)->
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send docs
   POST: (req, res, next)->
     return res.send 403 if req.user.role not in ['leader', 'admin']
@@ -22,18 +23,20 @@ method =
       ]
     },
     (err, rst)->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send 200
   DELETE: (req, res, next)->
     return res.send 403 if req.user.role not in ['leader', 'admin']
     return res.send 400 unless (_id = req.params._id)
 
     Industry.findById _id, (err, doc)->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       return res.send 404 unless doc
       return res.send 500, '行业已被使用，不能删除' if doc and doc.projects > 0
       doc.remove()

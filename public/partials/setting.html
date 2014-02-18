@@ -13,6 +13,7 @@
         <a href="" class="list-group-item" ng-click="selectMenu(5)" ng-class="{active: selectedMenu == 5}" ng-if="['leader', 'admin'].indexOf(userinfo.role)!=-1">行业管理</a>
         <a href="" class="list-group-item" ng-click="selectMenu(6)" ng-class="{active: selectedMenu == 6}" ng-if="['leader', 'admin'].indexOf(userinfo.role)!=-1">代理商管理</a>
         <a href="" class="list-group-item" ng-click="selectMenu(7)" ng-class="{active: selectedMenu == 7}" ng-if="['leader', 'admin'].indexOf(userinfo.role)!=-1">项目类型管理</a>
+        <a href="" class="list-group-item" ng-click="selectMenu(8)" ng-class="{active: selectedMenu == 8}" ng-if="['leader', 'admin'].indexOf(userinfo.role)!=-1">客户管理</a>
       </ul>
     </div>
     <div class="col-sm-9" ng-switch="selectedMenu">
@@ -47,6 +48,10 @@
       <!-- 项目类型管理 -->
       <div class="row" ng-switch-when="7">
         <ng-include src="'partials/settings/tab7.html'"></ng-include>
+      </div>
+      <!-- 客户管理 -->
+      <div class="row" ng-switch-when="8">
+        <ng-include src="'partials/settings/tab8.html'"></ng-include>
       </div>
     </div>
   </div>

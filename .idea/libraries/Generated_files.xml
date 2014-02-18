@@ -1,0 +1,65 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/public/js/controllers.js" />
+        <item url="file://$PROJECT_DIR$/models/clientModel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app.js" />
+        <item url="file://$PROJECT_DIR$/apis/client.js" />
+        <item url="file://$PROJECT_DIR$/public/js/filters.js" />
+        <item url="file://$PROJECT_DIR$/public/js/services.js" />
+        <item url="file://$PROJECT_DIR$/public/js/directives.js" />
+        <item url="file://$PROJECT_DIR$/models/projectModel.js" />
+        <item url="file://$PROJECT_DIR$/models/financeModel.js" />
+        <item url="file://$PROJECT_DIR$/models/userModel.js" />
+        <item url="file://$PROJECT_DIR$/models/projectTypeModel.js" />
+        <item url="file://$PROJECT_DIR$/routes/index.js" />
+        <item url="file://$PROJECT_DIR$/models/areaModel.js" />
+        <item url="file://$PROJECT_DIR$/models/salesModel.js" />
+        <item url="file://$PROJECT_DIR$/models/agentModel.js" />
+        <item url="file://$PROJECT_DIR$/models/idModel.js" />
+        <item url="file://$PROJECT_DIR$/apis/projectType.js" />
+        <item url="file://$PROJECT_DIR$/apis/user.js" />
+        <item url="file://$PROJECT_DIR$/apis/finance.js" />
+        <item url="file://$PROJECT_DIR$/commons/helper.js" />
+        <item url="file://$PROJECT_DIR$/models/industryModel.js" />
+        <item url="file://$PROJECT_DIR$/apis/project.js" />
+        <item url="file://$PROJECT_DIR$/apis/industry.js" />
+        <item url="file://$PROJECT_DIR$/apis/agent.js" />
+        <item url="file://$PROJECT_DIR$/apis/sales.js" />
+        <item url="file://$PROJECT_DIR$/install.js" />
+        <item url="file://$PROJECT_DIR$/apis/area.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/models/clientModel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/controllers.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app.js" />
+      <root url="file://$PROJECT_DIR$/apis/client.js" />
+      <root url="file://$PROJECT_DIR$/public/js/filters.js" />
+      <root url="file://$PROJECT_DIR$/public/js/services.js" />
+      <root url="file://$PROJECT_DIR$/public/js/directives.js" />
+      <root url="file://$PROJECT_DIR$/models/projectModel.js" />
+      <root url="file://$PROJECT_DIR$/models/financeModel.js" />
+      <root url="file://$PROJECT_DIR$/models/userModel.js" />
+      <root url="file://$PROJECT_DIR$/routes/index.js" />
+      <root url="file://$PROJECT_DIR$/models/projectTypeModel.js" />
+      <root url="file://$PROJECT_DIR$/models/areaModel.js" />
+      <root url="file://$PROJECT_DIR$/models/salesModel.js" />
+      <root url="file://$PROJECT_DIR$/models/agentModel.js" />
+      <root url="file://$PROJECT_DIR$/models/idModel.js" />
+      <root url="file://$PROJECT_DIR$/apis/projectType.js" />
+      <root url="file://$PROJECT_DIR$/apis/user.js" />
+      <root url="file://$PROJECT_DIR$/apis/finance.js" />
+      <root url="file://$PROJECT_DIR$/commons/helper.js" />
+      <root url="file://$PROJECT_DIR$/models/industryModel.js" />
+      <root url="file://$PROJECT_DIR$/apis/project.js" />
+      <root url="file://$PROJECT_DIR$/apis/industry.js" />
+      <root url="file://$PROJECT_DIR$/apis/agent.js" />
+      <root url="file://$PROJECT_DIR$/apis/sales.js" />
+      <root url="file://$PROJECT_DIR$/install.js" />
+      <root url="file://$PROJECT_DIR$/apis/area.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

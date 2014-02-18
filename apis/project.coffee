@@ -9,10 +9,15 @@ method =
   GET: (req, res, next) ->
     if _id = req.params._id
       Project.findById _id, (err, doc) ->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send doc
+    else if req.query.type is 'client'
+      Project.find {$and:[client: new RegExp(req.query.kw), contractNum: null]}, null, {limit: 10}, (err, docs) ->
+        return next err if err
+        res.send docs
     else
       condition = JSON.parse (query = req.query).condition
       condition['supporter._id'] = req.user._id if req.user.role is 'supporter'
@@ -39,9 +44,10 @@ method =
           Project.find condition, null, opts, cb
       } ,
       (err, rst) ->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send {
           count: rst.count
           totalPage: Math.ceil rst.count / num
@@ -59,7 +65,8 @@ method =
         date: new Date()
         status: req.body.status
       Project.update {_id: _id}, {$push: {comments: comment}}, (err, num)->
-        return res.send 500 if err
+#        return res.send 500 if err
+        return next(err) if err
         res.send comment
     else
       Project.findById _id, (err, doc)->
@@ -93,7 +100,8 @@ method =
           }
         _.extend doc, req.body
         doc.save (err)->
-          return res.send 500 if err
+#          return res.send 500 if err
+          return next(err) if err
           res.send 200
   POST: (req, res, next) ->
     delete req.body._id
@@ -104,9 +112,10 @@ method =
       status: doc.status
     }
     doc.save (err, doc) ->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       if req.body.area
         Area.findByIdAndUpdate req.body.area._id, {$inc: projects: 1}, ->
       if req.body.company
@@ -117,11 +126,12 @@ method =
         ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
       res.send 200
   DELETE: (req, res, next) ->
-    res.send 400 if not (_id = req.params._id)
+    res.send 400 unless (_id = req.params._id)
     Project.findByIdAndRemove _id, (err) ->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send 200
 
 module.exports = (req, res, next) ->

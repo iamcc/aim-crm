@@ -60,6 +60,7 @@ projectSchema = new Schema
     status: String
     modify: String
   }]
+  contractNum: String
 
 # exports.Project = mongoose.model 'Project', projectSchema
 # exports.projectSchema = projectSchema

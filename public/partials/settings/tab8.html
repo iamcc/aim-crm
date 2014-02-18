@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#clientModal" data-backdrop="static" ng-click="tabs[8].add()">+</button>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>客户代码</th>
+            <th>客户全称</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="c in tabs[8].clientData.list">
+            <td>{{c.code}}</td>
+            <td>{{c.name}}</td>
+            <td><button class="btn btn-default btn-sm" ng-click="tabs[8].edit(c)" data-toggle="modal" data-target="#clientModal" data-backdrop="static">修改</button></td>
+        </tr>
+    </table>
+    <page data="tabs[8].clientData" model="tabs[8].model"></page>
+</div>
+
+<div id="clientModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">客户管理</h4>
+            </div>
+            <form name="clientForm" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="tabs[8].newClient.name" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="tabs[8].save('#clientModal', clientForm)">保存</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->

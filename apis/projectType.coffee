@@ -3,10 +3,11 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
-    ProjectType.find {}, null, {sort:'-_id'}, (err, docs)->
-      if err
-        console.log err
-        return res.send 500
+    ProjectType.find {}, null, {sort:'name'}, (err, docs)->
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send docs
   POST: (req, res, next)->
     return res.send 403 if req.user.role not in ['leader', 'admin']
@@ -18,13 +19,15 @@ method =
       ]
     },
     (err, rst)->
-      if err
-        console.log err
-        return res.send 500
+#      if err
+#        console.log err
+#        return res.send 500
+      return next(err) if err
       res.send 200
   DELETE: (req, res, next)->
     return res.send 403 if req.user.role not in ['leader', 'admin']
     ProjectType.findById req.params._id, (err, doc)->
+      return next(err) if err
       return res.send 404 unless doc
       return res.send 500, '项目类型已经被使用，不能删除' if doc.projects > 0
       doc.remove()

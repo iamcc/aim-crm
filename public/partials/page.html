@@ -1,0 +1,8 @@
+<ul class="pagination">
+    <li ng-class="{disabled: !data.minPage || data.minPage <= 1}" ng-click="prePages()"><a href="">&laquo;</a>
+    </li>
+    <li ng-repeat="p in data.pageArr" ng-class="{active: p == data.curPage}" ng-click="goPage(p)"><a href="">{{p}}</a>
+    </li>
+    <li ng-class="{disabled: !data.maxPage || data.maxPage >= data.totalPage}" ng-click="nextPages()"><a href="">&raquo;</a>
+    </li>
+</ul>

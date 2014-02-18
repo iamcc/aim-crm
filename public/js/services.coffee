@@ -83,11 +83,27 @@ angular
         $resource '/api/agent/:_id', _id: '@_id'
     ]
   )
-  .factory(
+.factory(
     'ProjectType'
     [
       '$resource'
       ($resource)->
         $resource '/api/projectType/:_id', _id: '@_id'
+    ]
+  )
+.factory(
+    'Finance'
+    [
+      '$resource'
+      ($resource)->
+        $resource '/api/finance/:_id', _id: '@_id',
+    ]
+  )
+.factory(
+    'Client'
+    [
+      '$resource'
+      ($resource)->
+        $resource '/api/client/:_id', _id: '@_id',
     ]
   )

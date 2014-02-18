@@ -8,15 +8,17 @@ method =
     else
       if (query = req.query).s
         Sales.find name: new RegExp(req.query.s, 'i'), null, {limit: 10}, (err, docs)->
-          if err
-            console.log err
-            return res.send 500
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           res.send docs
       else if query.company
-        Sales.find 'company._id': query.company, null, {sort: '-_id'}, (err, docs)->
-          if err
-            console.log err
-            return res.send 500
+        Sales.find {'company._id': query.company}, null, {sort: 'name'}, (err, docs)->
+#          if err
+#            console.log err
+#            return res.send 500
+          return next(err) if err
           res.send docs
 
   # PUT: (req, res, next)->
@@ -26,15 +28,17 @@ method =
 
     if _id
       Sales.findByIdAndUpdate _id, req.body, (err)->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send 200
     else
       Sales.create req.body, (err)->
-        if err
-          console.log err
-          return res.send 500
+#        if err
+#          console.log err
+#          return res.send 500
+        return next(err) if err
         res.send 200
 
   # DELETE: (req, res, next)->

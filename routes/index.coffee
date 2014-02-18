@@ -5,6 +5,13 @@ module.exports = (app)->
     return res.send 401 if not (req.user = req.session.user)
     next()
 
+  app.get '/install', (req, res, next) ->
+    try
+      require("../install") req, res, next
+    catch e
+      console.log e
+      res.send 404
+
   app.post '/login', (req, res)->
     {uname, pwd} = req.body
 
