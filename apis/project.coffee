@@ -2,6 +2,7 @@ Area = require '../models/areaModel'
 Industry = require '../models/industryModel'
 Project = require '../models/projectModel'
 ProjectType = require '../models/projectTypeModel'
+ClientType = require '../models/clientModel'
 _ = require 'underscore'
 async = require 'async'
 
@@ -15,7 +16,7 @@ method =
         return next(err) if err
         res.send doc
     else if req.query.type is 'client'
-      Project.find {$and:[client: new RegExp(req.query.kw), contractNum: null]}, null, {limit: 10}, (err, docs) ->
+      Project.find {$and:['client._id': req.query.kw, contractNum: null]}, null, {limit: 10}, (err, docs) ->
         return next err if err
         res.send docs
     else
@@ -124,6 +125,7 @@ method =
         Industry.findByIdAndUpdate req.body.industry._id, {$inc: projects: 1}, ->
       if req.body.type
         ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
+
       res.send 200
   DELETE: (req, res, next) ->
     res.send 400 unless (_id = req.params._id)

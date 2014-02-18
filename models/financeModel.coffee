@@ -8,7 +8,11 @@ financeSchema = new Schema
     num: String
     date: Date
     price: Number
-    client: String
+    client: {
+      _id: ObjectId
+      code: String
+      name: String
+    }
     recvDate: Date
     attachments: [String]
     payType: String
@@ -33,13 +37,14 @@ financeSchema = new Schema
   }]
 
 financeSchema.pre 'validate', (next)->
+  return next() unless @isNew
   self = @
   prefix = 'HT'
   ID.getID prefix, (err, doc) ->
     return next err if err
     self.contract.num = String(doc.count)
     while self.contract.num.length < 6
-      self.contract.num = '0' + self.code
+      self.contract.num = '0' + self.contract.num
     self.contract.num = prefix + self.contract.num
     next()
 

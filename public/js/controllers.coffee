@@ -113,6 +113,8 @@ controller 'userCtrl', [
     $scope.saveProject = ->
       p = JSON.parse angular.toJson @newProject
       return alert '请选择销售' if not p.sales or not p.sales._id
+      return alert '请填写客户全称' if not p.client or not p.client._id
+
       p.company = p.sales.company
       p.area = $scope.areas.filter((a)->
         a._id is p.company.parent)[0]
@@ -588,22 +590,17 @@ controller 'financeCtrl', [
         type: $scope.tab
       $scope.financeData = Finance.get params, (data) -> initPage data
 
-    $scope.getProjects = (client) ->
-      Project.query {type: 'client', kw: client}, (data) ->
-        return unless data.length
-        client = data[0].client
-        for p in data
-          if p.client isnt client
-            return
-        $scope.contract.contract.client = client
+    $scope.getProjects = ->
+      return if not $scope.contract.contract.client or not $scope.contract.contract.client._id
+      Project.query {type: 'client', kw: $scope.contract.contract.client._id}, (data) ->
         for p in data
           $scope.addProject p
 
     $scope.addProject = (project) ->
-      return alert '项目不属于同一个客户' if @contract.contract.client and @contract.contract.client isnt project.client
-      return alert '项目已经存在' if @contract.projects.filter((p)-> p._id is project._id).length > 0
+#      return alert '项目不属于同一个客户' if @contract.contract.client and @contract.contract.client isnt project.client
+#      return alert '项目已经存在' if @contract.projects.filter((p)-> p._id is project._id).length > 0
 
-      @contract.contract.client = project.client unless @contract.contract.client
+#      @contract.contract.client = project.client unless @contract.contract.client
       @contract.projects.push angular.copy project
 #      $('#projectModal').modal 'hide'
       sumPrice $scope.contract

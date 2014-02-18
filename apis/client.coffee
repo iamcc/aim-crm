@@ -6,8 +6,12 @@ method =
     if req.params._id
       res.send 404
     else
-      helper.getPage Client, req.query, (err, data) ->
-        res.send data
+      if req.query.s
+        Client.find {'name': new RegExp(req.query.s, 'i')}, null, {limit: 10}, (err, docs) ->
+          res.send docs
+      else
+        helper.getPage Client, req.query, (err, data) ->
+          res.send data
   POST: (req, res, next) ->
     delete req.body._id
     if req.params._id

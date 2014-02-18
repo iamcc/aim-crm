@@ -209,6 +209,9 @@
         if (!p.sales || !p.sales._id) {
           return alert('请选择销售');
         }
+        if (!p.client || !p.client._id) {
+          return alert('请填写客户全称');
+        }
         p.company = p.sales.company;
         p.area = $scope.areas.filter(function(a) {
           return a._id === p.company.parent;
@@ -781,43 +784,24 @@
           return initPage(data);
         });
       };
-      $scope.getProjects = function(client) {
+      $scope.getProjects = function() {
+        if (!$scope.contract.contract.client || !$scope.contract.contract.client._id) {
+          return;
+        }
         return Project.query({
           type: 'client',
-          kw: client
+          kw: $scope.contract.contract.client._id
         }, function(data) {
-          var p, _i, _j, _len, _len1, _results;
-          if (!data.length) {
-            return;
-          }
-          client = data[0].client;
+          var p, _i, _len, _results;
+          _results = [];
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             p = data[_i];
-            if (p.client !== client) {
-              return;
-            }
-          }
-          $scope.contract.contract.client = client;
-          _results = [];
-          for (_j = 0, _len1 = data.length; _j < _len1; _j++) {
-            p = data[_j];
             _results.push($scope.addProject(p));
           }
           return _results;
         });
       };
       $scope.addProject = function(project) {
-        if (this.contract.contract.client && this.contract.contract.client !== project.client) {
-          return alert('项目不属于同一个客户');
-        }
-        if (this.contract.projects.filter(function(p) {
-          return p._id === project._id;
-        }).length > 0) {
-          return alert('项目已经存在');
-        }
-        if (!this.contract.contract.client) {
-          this.contract.contract.client = project.client;
-        }
         this.contract.projects.push(angular.copy(project));
         return sumPrice($scope.contract);
       };

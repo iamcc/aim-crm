@@ -32,7 +32,10 @@ projectSchema = new Schema
     name: String
   price: Number
   buyYear: Number
-  client: String
+  client:
+    _id: ObjectId
+    code: String
+    name: String
   orderDate: Date
   mae:
     account: String

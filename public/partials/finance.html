@@ -37,7 +37,7 @@
                             <tr ng-repeat="f in financeData.list">
                                 <td>{{f.contract.num}}</td>
                                 <td>{{f.contract.date | date: 'yyyy-MM-dd'}}</td>
-                                <td>{{f.contract.client}}</td>
+                                <td>{{f.contract.client.name}}</td>
                                 <td>{{f.balance}}</td>
                                 <td>
                                     <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
@@ -94,7 +94,8 @@
                     </div>
                     <div class="col-sm-6">
                         <strong>客户全称：</strong>
-                        <input type="text" class="form-control" ng-model="contract.contract.client" ng-blur="getProjects(contract.contract.client)">
+                        <!--<input type="text" class="form-control" ng-model="contract.contract.client" ng-blur="getProjects(contract.contract.client)">-->
+                        <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY" model="contract.contract.client.name" datum="contract.contract.client" ng-blur="getProjects()"></typeahead>
                     </div>
                     <div class="col-sm-3">
                         <strong>金额：</strong>
@@ -139,7 +140,7 @@
                             </tr>
                             <tr ng-repeat="p in contract.projects">
                                 <td>{{p.name}}</td>
-                                <td>{{p.client}}</td>
+                                <td>{{p.client.name}}</td>
                                 <td>{{p.price}}</td>
                                 <td>{{p.sales.name}}</td>
                                 <td>{{p.status}}</td>

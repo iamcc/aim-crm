@@ -36,11 +36,11 @@ method =
         Finance.findById req.params._id, (err, doc) ->
           return next err if err
           return res.send 404 unless doc
-          oldPids = (p for p in doc.projects) #原项目ID
+          oldPids = (p.toString() for p in doc.projects) #原项目ID
           _.extend doc, req.body
           newPids = [] #新项目ID
           for pid in doc.projects #更新项目的合同号
-            newPids.push pid
+            newPids.push pid.toString()
             Project.update _id: pid, {contractNum: doc.contract.num}, (err, doc) ->
               console.log err, doc
 

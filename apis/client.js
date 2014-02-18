@@ -11,9 +11,19 @@
       if (req.params._id) {
         return res.send(404);
       } else {
-        return helper.getPage(Client, req.query, function(err, data) {
-          return res.send(data);
-        });
+        if (req.query.s) {
+          return Client.find({
+            'name': new RegExp(req.query.s, 'i')
+          }, null, {
+            limit: 10
+          }, function(err, docs) {
+            return res.send(docs);
+          });
+        } else {
+          return helper.getPage(Client, req.query, function(err, data) {
+            return res.send(data);
+          });
+        }
       }
     },
     POST: function(req, res, next) {

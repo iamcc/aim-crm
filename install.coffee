@@ -10,16 +10,25 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
+#    Client.find {}, (err, docs) ->
+#      for c in docs
+#        Project.update {'client.code': c.code}, {'client._id': c._id}, {multi: true}, (err, num) ->
+#          console.log err, num
+#    return res.send 200
+
     Project.find().distinct 'client', (err, docs) ->
       q = async.queue(
         (task, cb) -> task cb
-        10
+        1
       )
       for c in docs
         if c isnt null and c.trim() isnt '' and c.trim() isnt 'null'
-          q.push (cb) ->
+          ((c) -> q.push (cb) ->
             Client.create {name: c}, (err, doc) ->
-              console.log err, doc
+              Project.update {client: c}, {client: doc}, {multi: true}, (err, num) ->
+                console.log err, num
+                cb()
+          )(c)
 
     return res.send 200
 

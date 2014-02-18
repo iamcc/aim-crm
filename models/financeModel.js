@@ -15,7 +15,11 @@
       num: String,
       date: Date,
       price: Number,
-      client: String,
+      client: {
+        _id: ObjectId,
+        code: String,
+        name: String
+      },
       recvDate: Date,
       attachments: [String],
       payType: String
@@ -62,6 +66,9 @@
 
   financeSchema.pre('validate', function(next) {
     var prefix, self;
+    if (!this.isNew) {
+      return next();
+    }
     self = this;
     prefix = 'HT';
     return ID.getID(prefix, function(err, doc) {
@@ -70,7 +77,7 @@
       }
       self.contract.num = String(doc.count);
       while (self.contract.num.length < 6) {
-        self.contract.num = '0' + self.code;
+        self.contract.num = '0' + self.contract.num;
       }
       self.contract.num = prefix + self.contract.num;
       return next();

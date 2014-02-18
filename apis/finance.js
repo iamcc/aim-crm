@@ -78,7 +78,7 @@
               _results = [];
               for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 p = _ref[_i];
-                _results.push(p);
+                _results.push(p.toString());
               }
               return _results;
             })();
@@ -87,7 +87,7 @@
             _ref = doc.projects;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               pid = _ref[_i];
-              newPids.push(pid);
+              newPids.push(pid.toString());
               Project.update({
                 _id: pid
               }, {

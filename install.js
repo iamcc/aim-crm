@@ -27,18 +27,29 @@
         var c, q, _i, _len, _results;
         q = async.queue(function(task, cb) {
           return task(cb);
-        }, 10);
+        }, 1);
         _results = [];
         for (_i = 0, _len = docs.length; _i < _len; _i++) {
           c = docs[_i];
           if (c !== null && c.trim() !== '' && c.trim() !== 'null') {
-            _results.push(q.push(function(cb) {
-              return Client.create({
-                name: c
-              }, function(err, doc) {
-                return console.log(err, doc);
+            _results.push((function(c) {
+              return q.push(function(cb) {
+                return Client.create({
+                  name: c
+                }, function(err, doc) {
+                  return Project.update({
+                    client: c
+                  }, {
+                    client: doc
+                  }, {
+                    multi: true
+                  }, function(err, num) {
+                    console.log(err, num);
+                    return cb();
+                  });
+                });
               });
-            }));
+            })(c));
           } else {
             _results.push(void 0);
           }
