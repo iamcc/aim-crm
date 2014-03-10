@@ -55,67 +55,66 @@
     POST: function(req, res, next) {
       var newDoc, uploadFolder;
       delete req.body._id;
-      if (req.params._id) {
-        if (req.query.act === 'upload') {
-          uploadFolder = __dirname + '/../public/uploads/' + req.params._id + '/';
-          if (!fs.existsSync(uploadFolder)) {
-            fs.mkdirSync(uploadFolder);
+      if (req.query.act === 'upload') {
+        uploadFolder = __dirname + '/../public/uploads/' + req.params._id + '/';
+        console.log(uploadFolder, req.files.file.path);
+        if (!fs.existsSync(uploadFolder)) {
+          fs.mkdirSync(uploadFolder);
+        }
+        fs.renameSync(req.files.file.path, uploadFolder + req.files.file.name);
+        return res.send('/uploads/' + req.params._id + '/' + req.files.file.name);
+      } else if (req.params._id) {
+        return Finance.findById(req.params._id, function(err, doc) {
+          var newPids, oldPids, p, pid, _i, _j, _len, _len1, _ref;
+          if (err) {
+            return next(err);
           }
-          fs.renameSync(req.files.file.path, uploadFolder + req.files.file.name);
-          return res.send('/uploads/' + req.params._id + '/' + req.files.file.name);
-        } else {
-          return Finance.findById(req.params._id, function(err, doc) {
-            var newPids, oldPids, p, pid, _i, _j, _len, _len1, _ref;
-            if (err) {
-              return next(err);
-            }
-            if (!doc) {
-              return res.send(404);
-            }
-            oldPids = (function() {
-              var _i, _len, _ref, _results;
-              _ref = doc.projects;
-              _results = [];
-              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                p = _ref[_i];
-                _results.push(p.toString());
-              }
-              return _results;
-            })();
-            _.extend(doc, req.body);
-            newPids = [];
+          if (!doc) {
+            return res.send(404);
+          }
+          oldPids = (function() {
+            var _i, _len, _ref, _results;
             _ref = doc.projects;
+            _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              pid = _ref[_i];
-              newPids.push(pid.toString());
+              p = _ref[_i];
+              _results.push(p.toString());
+            }
+            return _results;
+          })();
+          _.extend(doc, req.body);
+          newPids = [];
+          _ref = doc.projects;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            pid = _ref[_i];
+            newPids.push(pid.toString());
+            Project.update({
+              _id: pid
+            }, {
+              contractNum: doc.contract.num
+            }, function(err, doc) {
+              return console.log(err, doc);
+            });
+          }
+          for (_j = 0, _len1 = oldPids.length; _j < _len1; _j++) {
+            pid = oldPids[_j];
+            if (__indexOf.call(newPids, pid) < 0) {
               Project.update({
                 _id: pid
               }, {
-                contractNum: doc.contract.num
+                contractNum: null
               }, function(err, doc) {
                 return console.log(err, doc);
               });
             }
-            for (_j = 0, _len1 = oldPids.length; _j < _len1; _j++) {
-              pid = oldPids[_j];
-              if (__indexOf.call(newPids, pid) < 0) {
-                Project.update({
-                  _id: pid
-                }, {
-                  contractNum: null
-                }, function(err, doc) {
-                  return console.log(err, doc);
-                });
-              }
+          }
+          return doc.save(function(err) {
+            if (err) {
+              return next(err);
             }
-            return doc.save(function(err) {
-              if (err) {
-                return next(err);
-              }
-              return res.send(200);
-            });
+            return res.send(200);
           });
-        }
+        });
       } else {
         newDoc = new Finance(req.body);
         return newDoc.save(function(err) {

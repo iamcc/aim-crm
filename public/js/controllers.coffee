@@ -548,9 +548,10 @@ controller 'financeCtrl', [
 
     $scope.add = ->
       @contract =
-        contract: {}
+        contract: {
+          attachments: []
+        }
         projects: []
-        attachments: []
         payments: []
         invoices: []
       @modalTitle = '新增合同'

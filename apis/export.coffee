@@ -1,4 +1,5 @@
 Project = require '../models/projectModel'
+moment = require 'moment'
 
 method =
   GET: (req, res, next) ->
@@ -19,7 +20,7 @@ method =
     Project.find condition, null, opts, (err, docs) ->
       return next err if err
       res.attachment 'export.xls'
-      res.render 'export', data: docs
+      res.render 'export', {data: docs, moment: moment}
 
 module.exports = (req, res, next) ->
   try

@@ -745,9 +745,10 @@
       };
       $scope.add = function() {
         this.contract = {
-          contract: {},
+          contract: {
+            attachments: []
+          },
           projects: [],
-          attachments: [],
           payments: [],
           invoices: []
         };

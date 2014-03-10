@@ -21,6 +21,6 @@ html
                     td= p.sales.name
                     td= p.company.name
                     td= p.area.name
-                    td= p.orderDate
-                    td= p.online.date
+                    td= moment(p.orderDate).format('YYYY-MM-DD')
+                    td= moment(p.online.date).format('YYYY-MM-DD')
                     td= p.status

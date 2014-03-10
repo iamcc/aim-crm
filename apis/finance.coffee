@@ -26,32 +26,34 @@ method =
   POST: (req, res, next) ->
     delete req.body._id
 
-    if req.params._id
-      if req.query.act is 'upload'
-        uploadFolder = __dirname + '/../public/uploads/' + req.params._id + '/'
-        fs.mkdirSync uploadFolder unless fs.existsSync uploadFolder
-        fs.renameSync req.files.file.path, uploadFolder + req.files.file.name
-        res.send '/uploads/' + req.params._id + '/' + req.files.file.name
-      else
-        Finance.findById req.params._id, (err, doc) ->
-          return next err if err
-          return res.send 404 unless doc
-          oldPids = (p.toString() for p in doc.projects) #原项目ID
-          _.extend doc, req.body
-          newPids = [] #新项目ID
-          for pid in doc.projects #更新项目的合同号
-            newPids.push pid.toString()
-            Project.update _id: pid, {contractNum: doc.contract.num}, (err, doc) ->
+    if req.query.act is 'upload'
+      uploadFolder = __dirname + '/../public/uploads/' + req.params._id + '/'
+
+      console.log(uploadFolder, req.files.file.path)
+
+      fs.mkdirSync uploadFolder unless fs.existsSync uploadFolder
+      fs.renameSync req.files.file.path, uploadFolder + req.files.file.name
+      res.send '/uploads/' + req.params._id + '/' + req.files.file.name
+    else if req.params._id
+      Finance.findById req.params._id, (err, doc) ->
+        return next err if err
+        return res.send 404 unless doc
+        oldPids = (p.toString() for p in doc.projects) #原项目ID
+        _.extend doc, req.body
+        newPids = [] #新项目ID
+        for pid in doc.projects #更新项目的合同号
+          newPids.push pid.toString()
+          Project.update _id: pid, {contractNum: doc.contract.num}, (err, doc) ->
+            console.log err, doc
+
+        for pid in oldPids #恢复被剔除项目的合同号
+          if pid not in newPids
+            Project.update _id: pid, {contractNum: null}, (err, doc) ->
               console.log err, doc
 
-          for pid in oldPids #恢复被剔除项目的合同号
-            if pid not in newPids
-              Project.update _id: pid, {contractNum: null}, (err, doc) ->
-                console.log err, doc
-
-          doc.save (err) ->
-            return next err if err
-            res.send 200
+        doc.save (err) ->
+          return next err if err
+          res.send 200
     else
       newDoc = new Finance(req.body)
       newDoc.save (err) ->
