@@ -1,4 +1,5 @@
 Client = require '../models/clientModel'
+Project = require '../models/projectModel'
 helper = require '../commons/helper'
 
 method =
@@ -17,6 +18,8 @@ method =
     if req.params._id
       Client.findByIdAndUpdate req.params._id, req.body, (err, doc) ->
         return next err if err
+        Project.update {'client._id': doc._id}, {'client.name': doc.name}, {multi: true}, (err, num) ->
+          console.log err if err
         res.send 200
     else
       Client.create req.body, (err) ->
