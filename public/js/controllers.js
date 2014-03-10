@@ -267,6 +267,33 @@
           return Project.update(param);
         }
       };
+      $scope["export"] = function() {
+        var k, param, self, v, _ref;
+        self = this;
+        _ref = $scope.condition;
+        for (k in _ref) {
+          v = _ref[k];
+          if (!v) {
+            delete $scope.condition[k];
+          }
+        }
+        param = {
+          condition: $scope.condition || {}
+        };
+        if ($routeParams.area) {
+          param.condition['area._id'] = $routeParams.area;
+        }
+        if ($routeParams.company) {
+          param.condition['company._id'] = $routeParams.company;
+        }
+        if ($routeParams.industry) {
+          param.condition['industry._id'] = $routeParams.industry;
+        }
+        if ($routeParams.type) {
+          param.condition['type._id'] = $routeParams.type;
+        }
+        window.open('/api/export?condition=' + JSON.stringify(param.condition));
+      };
       return $scope.goPage();
     }
   ]);

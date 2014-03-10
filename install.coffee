@@ -10,6 +10,20 @@ async = require 'async'
 
 method =
   GET: (req, res, next)->
+    return res.send 404
+
+#    User.create {
+#      uname: 'admin'
+#      pwd: '1'
+#      realname: '超级管理员'
+#      role: 'admin'
+#    }
+#    , (err, user) ->
+#      console.log(err)
+#      console.log(user)
+#    return res.send 200
+
+
 #    Client.find {}, (err, docs) ->
 #      for c in docs
 #        Project.update {'client.code': c.code}, {'client._id': c._id}, {multi: true}, (err, num) ->

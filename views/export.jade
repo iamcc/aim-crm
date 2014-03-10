@@ -1,0 +1,26 @@
+//
+   Created by CC on 3/8/14.
+html
+    head
+        meta(http-equiv="content-type", content="application/xhtml+xml; charset=UTF-8")
+    body
+        table
+            tr
+                th 项目
+                th 客户
+                th 销售
+                th 分公司
+                th 区域
+                th 下单日期
+                th 上线日期
+                th 状态
+            each p in data
+                tr
+                    td= p.name
+                    td= p.client.name
+                    td= p.sales.name
+                    td= p.company.name
+                    td= p.area.name
+                    td= p.orderDate
+                    td= p.online.date
+                    td= p.status

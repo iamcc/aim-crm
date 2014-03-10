@@ -156,6 +156,19 @@ controller 'userCtrl', [
       else if $scope.oldProject[field] isnt project[field]
         Project.update param
 
+    $scope.export = ->
+      self = @
+      for k, v of $scope.condition
+        delete $scope.condition[k] unless v
+      param = {condition: $scope.condition or {}}
+      if $routeParams.area then param.condition['area._id'] = $routeParams.area
+      if $routeParams.company then param.condition['company._id'] = $routeParams.company
+      if $routeParams.industry then param.condition['industry._id'] = $routeParams.industry
+      if $routeParams.type then param.condition['type._id'] = $routeParams.type
+
+      window.open '/api/export?condition=' + JSON.stringify(param.condition)
+      return
+
     $scope.goPage()
 
 #    if $scope.userinfo.role in ['supporter', 'leader', 'admin']

@@ -1,188 +1,205 @@
 <nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">AIM.CRM</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li ng-class="{active: curCountItem == 'area'}"><a href="" ng-click="showCount('area')">区域 <b class="caret"></b></a>
-      </li>
-      <li ng-class="{active: curCountItem == 'company'}"><a href="" ng-click="showCount('company')">分公司 <b class="caret"></b></a>
-      </li>
-      <li ng-class="{active: curCountItem == 'industry'}"><a href="" ng-click="showCount('industry')">行业 <b class="caret"></b></a>
-      </li>
-      <li ng-class="{active: curCountItem == 'type'}"><a href="" ng-click="showCount('type')">项目类型 <b class="caret"></b></a>
-      </li>
-      <li ng-class="{active: isShowFilter}"><a href="" ng-click="showFilter()">筛选 <b class="caret"></b></a>
-      </li>
-    </ul>
-    <!-- user -->
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span> <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <!-- <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a> 
-          </li> -->
-          <!-- <li class="divider" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1"></li> -->
-          <li><a href="#/finance" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a> 
-          </li>
-          <li class="divider"></li>
-          <li><a href="#/setting">设置</a> 
-          </li>
-          <li class="divider"></li>
-          <li><a href="/logout">退出</a> 
-          </li>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">AIM.CRM</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li ng-class="{active: curCountItem == 'area'}"><a href="" ng-click="showCount('area')">区域 <b
+                    class="caret"></b></a>
+            </li>
+            <li ng-class="{active: curCountItem == 'company'}"><a href="" ng-click="showCount('company')">分公司 <b
+                    class="caret"></b></a>
+            </li>
+            <li ng-class="{active: curCountItem == 'industry'}"><a href="" ng-click="showCount('industry')">行业 <b
+                    class="caret"></b></a>
+            </li>
+            <li ng-class="{active: curCountItem == 'type'}"><a href="" ng-click="showCount('type')">项目类型 <b
+                    class="caret"></b></a>
+            </li>
+            <li ng-class="{active: isShowFilter}"><a href="" ng-click="showFilter()">筛选 <b class="caret"></b></a>
+            </li>
         </ul>
-      </li>
-    </ul>
-    <!-- user end -->
-  </div>
+        <!-- user -->
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">{{userinfo.realname}} <span class="badge">{{num}}</span>
+                    <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <!-- <li><a href="">通知 <span class="badge pull-right">{{num}}</span></a>
+                    </li> -->
+                    <!-- <li class="divider" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1"></li> -->
+                    <li><a href="#/finance" ng-show="['finance', 'admin'].indexOf(userinfo.role) != -1">财务</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#/setting">设置</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="/logout">退出</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- user end -->
+    </div>
 </nav>
 
 <!-- navbar end -->
 
 <!-- container -->
 <div class="container">
-  <!-- count -->
-  <div class="well well-sm count" ng-show="isShowCount">
+<!-- count -->
+<div class="well well-sm count" ng-show="isShowCount">
     <ul>
-      <li ng-repeat="c in counts" ng-click="goUrl(c.url)">
-        {{c.name}}
-        <span class="badge">{{c.projects}}</span>
-      </li>
+        <li ng-repeat="c in counts" ng-click="goUrl(c.url)">
+            {{c.name}}
+            <span class="badge">{{c.projects}}</span>
+        </li>
     </ul>
     <div class="clearfix"></div>
-  </div>
-  <!-- count end -->
+</div>
+<!-- count end -->
 
-  <!-- filter -->
-  <div class="well well-sm filter" ng-show="isShowFilter">
+<!-- filter -->
+<div class="well well-sm filter" ng-show="isShowFilter">
     <form class="form-inline">
-      <div class="form-group">
-        <select class="form-control" ng-model="condition['agent._id']" ng-options="a._id as a.name for a in agents">
-          <option value="">代理商</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="condition['type._id']" ng-options="t._id as t.name for t in projectTypes">
-          <option value="">项目类型</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="condition['industry._id']" ng-options="i._id as i.name for i in industries">
-          <option value="">行业</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="condition.status">
-          <option value="">状态</option>
-          <option value="新建">新建</option>
-          <option value="初始资料">初始资料</option>
-          <option value="首次催单">首次催单</option>
-          <option value="二次催单">二次催单</option>
-          <option value="搁置">搁置</option>
-          <option value="录入">录入</option>
-          <option value="完成">完成</option>
-          <option value="上线">上线</option>
-          <option value="毁约">毁约</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="condition['wx.wxType']">
-          <option value="">微信类型</option>
-          <option value="订阅号">订阅号</option>
-          <option value="服务号">服务号</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control" ng-model="condition['supporter._id']" ng-options="s._id as s.realname for s in supporters">
-          <option value="">客服</option>
-        </select>
-      </div>
-      <br>
-      <br>
-      <div class="form-group">下单时间：</div>
-      <div class="form-group">
-        <input type="date" class="form-control" ng-model="condition.sOrderDate">
-      </div>
-      <div class="form-group">-</div>
-      <div class="form-group">
-        <input type="date" class="form-control" ng-model="condition.eOrderDate">
-      </div>
-      <br>
-      <br>
-      <button type="button" class="btn btn-default" type="button" ng-click="condition = {}">重置</button>
-      <button type="button" class="btn btn-primary" type="button" ng-click="goPage()">筛选</button>
-    </form>
-  </div>
-  <!-- filter end -->
+        <div class="form-group">
+            <select class="form-control" ng-model="condition['agent._id']" ng-options="a._id as a.name for a in agents">
+                <option value="">代理商</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="condition['type._id']"
+                    ng-options="t._id as t.name for t in projectTypes">
+                <option value="">项目类型</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="condition['industry._id']"
+                    ng-options="i._id as i.name for i in industries">
+                <option value="">行业</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="condition.status">
+                <option value="">状态</option>
+                <option value="新建">新建</option>
+                <option value="初始资料">初始资料</option>
+                <option value="首次催单">首次催单</option>
+                <option value="二次催单">二次催单</option>
+                <option value="搁置">搁置</option>
+                <option value="录入">录入</option>
+                <option value="完成">完成</option>
+                <option value="上线">上线</option>
+                <option value="毁约">毁约</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="condition['wx.wxType']">
+                <option value="">微信类型</option>
+                <option value="订阅号">订阅号</option>
+                <option value="服务号">服务号</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="condition['supporter._id']"
+                    ng-options="s._id as s.realname for s in supporters">
+                <option value="">客服</option>
+            </select>
+        </div>
+        <br>
+        <br>
 
-  <!-- project panel -->
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      项目
-      <span class="badge">{{projectData.count}}</span>
-      <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal" data-backdrop="static" ng-click="newProject = null" ng-show="['leader', 'admin'].indexOf(userinfo.role) != -1">
+        <div class="form-group">下单时间：</div>
+        <div class="form-group">
+            <input type="date" class="form-control" ng-model="condition.sOrderDate">
+        </div>
+        <div class="form-group">-</div>
+        <div class="form-group">
+            <input type="date" class="form-control" ng-model="condition.eOrderDate">
+        </div>
+        <br>
+        <br>
+        <button type="button" class="btn btn-default" type="button" ng-click="condition = {}">重置</button>
+        <button type="button" class="btn btn-primary" type="button" ng-click="goPage()">筛选</button>
+        <button type="button" class="btn btn-success" type="button" ng-click="export()">导出</button>
+    </form>
+</div>
+<!-- filter end -->
+
+<!-- project panel -->
+<div class="panel panel-default">
+<div class="panel-heading">
+    项目
+    <span class="badge">{{projectData.count}}</span>
+    <button class="btn btn-primary btn-xs pull-right" type="button" data-toggle="modal" data-target="#addModal"
+            data-backdrop="static" ng-click="newProject = null"
+            ng-show="['leader', 'admin'].indexOf(userinfo.role) != -1">
         <span class="glyphicon glyphicon-plus"></span>
-      </button>
-      <div class="clearfix"></div>
-    </div>
-    <table class="table table-hover">
-      <tr>
-        <th>#</th>
-        <th>项目名</th>
-        <th>项目类型</th>
-        <th>分公司</th>
-        <th>销售</th>
-        <th>行业</th>
-        <th>当前状态</th>
-        <th>客服</th>
-        <th>标签</th>
-        <th></th>
-      </tr>
-      <tr ng-repeat-start="p in projectData.list">
-        <td>
-          <button class="btn btn-xs" ng-click="p.isShowMore = !p.isShowMore">
-            <span class="glyphicon" ng-class="{'glyphicon-chevron-up': !p.isShowMore, 'glyphicon-chevron-down': p.isShowMore}"></span>
-          </button>
-        </td>
-        <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.name}}</span>
+    </button>
+    <div class="clearfix"></div>
+</div>
+<table class="table table-hover">
+<tr>
+    <th>#</th>
+    <th>项目名</th>
+    <th>项目类型</th>
+    <th>分公司</th>
+    <th>销售</th>
+    <th>行业</th>
+    <th>当前状态</th>
+    <th>客服</th>
+    <th>标签</th>
+    <th></th>
+</tr>
+<tr ng-repeat-start="p in projectData.list">
+    <td>
+        <button class="btn btn-xs" ng-click="p.isShowMore = !p.isShowMore">
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-chevron-up': !p.isShowMore, 'glyphicon-chevron-down': p.isShowMore}"></span>
+        </button>
+    </td>
+    <td ng-click="showEdit($event, p)">
+        <span class="view">{{p.name}}</span>
           <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.name" ng-blur="update($event, p, 'name')">
           </span>
-        </td>
-        <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.type.name}}</span>
+    </td>
+    <td ng-click="showEdit($event, p)">
+        <span class="view">{{p.type.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.type" ng-options="t as t.name for t in projectTypes" ng-blur="update($event, p, 'type')">
+            <select class="form-control" ng-model="p.type" ng-options="t as t.name for t in projectTypes"
+                    ng-blur="update($event, p, 'type')">
             </select>
           </span>
-        </td>
-        <td>{{p.company.name}}</td>
-        <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.sales.name}}</span>
+    </td>
+    <td>{{p.company.name}}</td>
+    <td ng-click="showEdit($event, p)">
+        <span class="view">{{p.sales.name}}</span>
           <span class="edit" style="display:none;">
-            <typeahead name="sales" value-key="name" remote="/api/sales?s=%QUERY" model="p.sales.name" datum="p.sales" ng-blur="update($event, p, 'sales')"></typeahead>
+            <typeahead name="sales" value-key="name" remote="/api/sales?s=%QUERY" model="p.sales.name" datum="p.sales"
+                       ng-blur="update($event, p, 'sales')"></typeahead>
           </span>
-        </td>
-        <td ng-click="showEdit($event, p)">
-          <span class="view">{{p.industry.name}}</span>
+    </td>
+    <td ng-click="showEdit($event, p)">
+        <span class="view">{{p.industry.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.industry" ng-options="i as i.name for i in industries" ng-blur="update($event, p, 'industry')">
+            <select class="form-control" ng-model="p.industry" ng-options="i as i.name for i in industries"
+                    ng-blur="update($event, p, 'industry')">
             </select>
           </span>
-        </td>
-        <td>
-          <div class="label {{p.statusLabel}}">{{p.status}}</div>
-        </td>
-        <td ng-click="userinfo.role != 'supporter' && showEdit($event, p)">
-          <span class="view">{{p.supporter.realname}}</span>
+    </td>
+    <td>
+        <div class="label {{p.statusLabel}}">{{p.status}}</div>
+    </td>
+    <td ng-click="userinfo.role != 'supporter' && showEdit($event, p)">
+        <span class="view">{{p.supporter.realname}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.supporter" ng-options="s as s.realname for s in supporters" ng-blur="update($event, p, 'supporter')">
+            <select class="form-control" ng-model="p.supporter" ng-options="s as s.realname for s in supporters"
+                    ng-blur="update($event, p, 'supporter')">
             </select>
           </span>
-        </td>
-        <td ng-click="showEdit($event, p)">
+    </td>
+    <td ng-click="showEdit($event, p)">
           <span class="view">
             <span ng-repeat="tag in p.tags">
               <span class="label label-default">{{tag}}</span>
@@ -191,327 +208,384 @@
           <span class="edit" style="display:none;">
             <input type="text" class="form-control" ng-model="p.tags" ng-list ng-blur="update($event, p, 'tags')">
           </span>
-        </td>
-        <td>
-          <button class="btn btn-xs" type="button" data-toggle="modal" data-target="#commentModal" data-backdrop="static" ng-click="addComment(p)">
+    </td>
+    <td>
+        <button class="btn btn-xs" type="button" data-toggle="modal" data-target="#commentModal" data-backdrop="static"
+                ng-click="addComment(p)">
             <span class="glyphicon glyphicon-comment"></span>
-          </button>
-        </td>
-      </tr>
-      <tr ng-repeat-end ng-show="p.isShowMore">
-        <td colspan="10">
-          <div class="well well sm">
+        </button>
+    </td>
+</tr>
+<tr ng-repeat-end ng-show="p.isShowMore">
+    <td colspan="10">
+        <div class="well well sm">
             <table class="table table-hover">
-              <tr>
-                <th>代理商</th>
-                <th>价钱</th>
-                <th>区域</th>
-                <th>经理</th>
-                <th>购买/年</th>
-                <th>客户全称</th>
-              </tr>
-              <tr>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.agent.name}}</span>
+                <tr>
+                    <th>代理商</th>
+                    <th>价钱</th>
+                    <th>区域</th>
+                    <th>经理</th>
+                    <th>购买/年</th>
+                    <th>客户全称</th>
+                </tr>
+                <tr>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.agent.name}}</span>
                   <span class="edit" style="display:none;">
-                    <select class="form-control" ng-model="p.agent" ng-options="a as a.name for a in agents" ng-blur="update($event, p, 'agent')">
+                    <select class="form-control" ng-model="p.agent" ng-options="a as a.name for a in agents"
+                            ng-blur="update($event, p, 'agent')">
                     </select>
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.price}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.price}}</span>
                   <span class="edit" style="display:none;">
                     <input type="number" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">
                   </span>
-                </td>
-                <td>{{p.area.name}}</td>
-                <td>{{p.company.manager.name}}</td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.buyYear}}</span>
+                    </td>
+                    <td>{{p.area.name}}</td>
+                    <td>{{p.company.manager.name}}</td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.buyYear}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.buyYear" ng-blur="update($event, p, 'buyYear')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.client.name}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.client.name}}</span>
                   <span class="edit" style="display:none;">
-                    <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY" model="p.client.name" datum="p.client" ng-blur="update($event, p, 'client')"></typeahead>
+                    <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY" model="p.client.name"
+                               datum="p.client" ng-blur="update($event, p, 'client')"></typeahead>
                   </span>
-                </td>
-              </tr>
-              <tr>
-                <th>后台账号</th>
-                <th>密码</th>
-                <th>后台创建者</th>
-                <th>微信账号</th>
-                <th>密码</th>
-                <th>微信类型</th>
-              </tr>
-              <tr>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.mae.account}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>后台账号</th>
+                    <th>密码</th>
+                    <th>后台创建者</th>
+                    <th>微信账号</th>
+                    <th>密码</th>
+                    <th>微信类型</th>
+                </tr>
+                <tr>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.mae.account}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.mae.account" ng-blur="update($event, p, 'mae')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.mae.pwd}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.mae.pwd}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.mae.pwd" ng-blur="update($event, p, 'mae')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.mae.creator.realname}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.mae.creator.realname}}</span>
                   <span class="edit" style="display:none;">
                     <select class="form-control" ng-model="p.mae.creator.realname" ng-blur="update($event, p, 'mae')">
-                      <option value="CC">CC</option>
-                      <option value="DC">DC</option>
+                        <option value="CC">CC</option>
+                        <option value="DC">DC</option>
                     </select>
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wx.account}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.wx.account}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.wx.account" ng-blur="update($event, p, 'wx')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wx.pwd}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.wx.pwd}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.wx.pwd" ng-blur="update($event, p, 'wx')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.wx.wxType}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.wx.wxType}}</span>
                   <span class="edit" style="display:none;">
                     <select class="form-control" ng-model="p.wx.wxType" ng-blur="update($event, p, 'wx')">
-                      <option value="订阅号">订阅号</option>
-                      <option value="服务号">服务号</option>
+                        <option value="订阅号">订阅号</option>
+                        <option value="服务号">服务号</option>
                     </select>
                   </span>
-                </td>
-              </tr>
-              <tr>
-                <th>下单日期</th>
-                <th>EC企业ID</th>
-                <th>发送EC盒子日期</th>
-                <th>上线日期</th>
-                <th>上线审核者</th>
-                <th colspan="3">备注</th>
-              </tr>
-              <tr>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.orderDate | date:'yyyy-MM-dd'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>下单日期</th>
+                    <th>EC企业ID</th>
+                    <th>发送EC盒子日期</th>
+                    <th>上线日期</th>
+                    <th>上线审核者</th>
+                    <th colspan="3">备注</th>
+                </tr>
+                <tr>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.orderDate | date:'yyyy-MM-dd'}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="date" class="form-control" ng-model="p.orderDate" ng-blur="update($event, p, 'orderDate')">
+                    <input type="date" class="form-control" ng-model="p.orderDate"
+                           ng-blur="update($event, p, 'orderDate')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.ec.id}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.ec.id}}</span>
                   <span class="edit" style="display:none;">
                     <input type="text" class="form-control" ng-model="p.ec.id" ng-blur="update($event, p, 'ec')">
                   </span>
-                </td>
-                <td ng-click="showEdit($event, p)">
-                  <span class="view">{{p.ec.sendBoxDate | date:'yyyy-MM-dd'}}</span>
+                    </td>
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.ec.sendBoxDate | date:'yyyy-MM-dd'}}</span>
                   <span class="edit" style="display:none;">
-                    <input type="date" class="form-control" ng-model="p.ec.sendBoxDate" ng-blur="update($event, p, 'ec')">
+                    <input type="date" class="form-control" ng-model="p.ec.sendBoxDate"
+                           ng-blur="update($event, p, 'ec')">
                   </span>
-                </td>
-                <td>{{p.online.date | date:'yyyy-MM-dd'}}</td>
-                <td>{{p.online.reviewer.realname}}</td>
-                <td ng-click="showEdit($event, p)" colspan="3">
-                  <span class="view" ng-bind-html="p.memo | wrap"></span>
+                    </td>
+                    <td>{{p.online.date | date:'yyyy-MM-dd'}}</td>
+                    <td>{{p.online.reviewer.realname}}</td>
+                    <td ng-click="showEdit($event, p)" colspan="3">
+                        <span class="view" ng-bind-html="p.memo | wrap"></span>
                   <span class="edit" style="display:none;">
                     <textarea class="form-control" ng-model="p.memo" ng-blur="update($event, p, 'memo')"></textarea>
                   </span>
-                </td>
-              </tr>
-              <tr ng-hide="userinfo.role == 'finance'">
-                <td colspan="6">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <button class="btn btn-default" ng-disabled="p.status != '新建'" ng-click="updateStatus(p, '初始资料')">初始资料</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '初始资料'" ng-click="updateStatus(p, '首次催单')">首次催单</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '首次催单'" ng-click="updateStatus(p, '二次催单')">二次催单</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '二次催单'" ng-click="updateStatus(p, '搁置')">搁置</button>->
-                      <button class="btn btn-default" ng-disabled="['初始资料', '首次催单', '二次催单', '搁置'].indexOf(p.status) == -1" ng-click="updateStatus(p, '录入')">录入</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '录入'" ng-click="updateStatus(p, '完成')">完成</button>->
-                      <button class="btn btn-default" ng-disabled="p.status != '完成'" ng-click="updateStatus(p, '上线')">上线</button>->
-                      <button class="btn btn-default" ng-disabled="['上线', '毁约'].indexOf(p.status) != -1" ng-click="updateStatus(p, '毁约')">毁约</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+                    </td>
+                </tr>
+                <tr ng-hide="userinfo.role == 'finance'">
+                    <td colspan="6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-default" ng-disabled="p.status != '新建'"
+                                        ng-click="updateStatus(p, '初始资料')">初始资料
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="p.status != '初始资料'"
+                                        ng-click="updateStatus(p, '首次催单')">首次催单
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="p.status != '首次催单'"
+                                        ng-click="updateStatus(p, '二次催单')">二次催单
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="p.status != '二次催单'"
+                                        ng-click="updateStatus(p, '搁置')">搁置
+                                </button>
+                                ->
+                                <button class="btn btn-default"
+                                        ng-disabled="['初始资料', '首次催单', '二次催单', '搁置'].indexOf(p.status) == -1"
+                                        ng-click="updateStatus(p, '录入')">录入
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="p.status != '录入'"
+                                        ng-click="updateStatus(p, '完成')">完成
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="p.status != '完成'"
+                                        ng-click="updateStatus(p, '上线')">上线
+                                </button>
+                                ->
+                                <button class="btn btn-default" ng-disabled="['上线', '毁约'].indexOf(p.status) != -1"
+                                        ng-click="updateStatus(p, '毁约')">毁约
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </table>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <ul class="pagination">
-      <li ng-click="prePages()" ng-class="{disabled: projectData.minPage == 1}"><a href="">&laquo;</a>
-      </li>
-      <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a href="">{{p}}</a>
-      </li>
-      <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage >= projectData.totalPage}"><a href="">&raquo;</a>
-      </li>
-    </ul>
-  </div>
-  <!-- project panel end -->
+        </div>
+    </td>
+</tr>
+</table>
+<ul class="pagination">
+    <li ng-click="prePages()" ng-class="{disabled: projectData.minPage == 1}"><a href="">&laquo;</a>
+    </li>
+    <li ng-click="goPage(p)" ng-repeat="p in projectData.pageArr" ng-class="{active: p == projectData.curPage}"><a
+            href="">{{p}}</a>
+    </li>
+    <li ng-click="nextPages()" ng-class="{disabled: projectData.maxPage >= projectData.totalPage}"><a
+            href="">&raquo;</a>
+    </li>
+</ul>
+</div>
+<!-- project panel end -->
 </div>
 
 <!-- container end -->
 
 <!-- add project modal -->
 <div id="addModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
-        <h4 class="modal-title">添加项目</h4>
-      </div>
-      <form name="projectForm" class="form-horizontal">
-        <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label col-sm-2">项目名</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.name" required>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h4 class="modal-title">添加项目</h4>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">项目类型</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.type" ng-options="t as t.name for t in projectTypes" required>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">销售</label>
-            <div class="col-sm-10">
-              <typeahead name="sales" value-key="name" remote="/api/sales?s=%QUERY" model="newProject.sales.name" datum="newProject.sales"></typeahead>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">行业</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.industry" ng-options="i as i.name for i in industries">
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">客户全称</label>
-            <div class="col-sm-10">
-              <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY" model="newProject.client.name" datum="newProject.client"></typeahead>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">下单日期</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" ng-model="newProject.orderDate">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">价格</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" ng-model="newProject.price">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">购买/年</label>
-            <div class="col-sm-10">
-              <input type="number" class="form-control" ng-model="newProject.buyYear">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">代理商</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.agent" ng-options="a as a.name for a in agents">
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">后台账号</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.mae.account">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">后台密码</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.mae.pwd">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">后台创建者</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.mae.creator.realname">
-                <option value="CC">CC</option>
-                <option value="DC">DC</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">微信账号</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.wx.account">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">微信密码</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.wx.pwd">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">微信类型</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.wx.wxType">
-                <option value="订阅号">订阅号</option>
-                <option value="服务号">服务号</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">EC企业ID</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.ec.id">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">发送盒子时间</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" ng-model="newProject.ec.sendBoxDate">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">标签</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="newProject.tags" ng-list>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">客服</label>
-            <div class="col-sm-10">
-              <select class="form-control" ng-model="newProject.supporter" ng-options="s as s.realname for s in supporters">
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2">备注</label>
-            <div class="col-sm-10">
-              <textarea cols="30" rows="10" class="form-control" ng-model="newProject.memo"></textarea>
-            </div>
-          </div>
+            <form name="projectForm" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">项目名</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">项目类型</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.type"
+                                    ng-options="t as t.name for t in projectTypes" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">销售</label>
+
+                        <div class="col-sm-10">
+                            <typeahead name="sales" value-key="name" remote="/api/sales?s=%QUERY"
+                                       model="newProject.sales.name" datum="newProject.sales"></typeahead>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">行业</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.industry"
+                                    ng-options="i as i.name for i in industries">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">客户全称</label>
+
+                        <div class="col-sm-10">
+                            <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY"
+                                       model="newProject.client.name" datum="newProject.client"></typeahead>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">下单日期</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" ng-model="newProject.orderDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">价格</label>
+
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" ng-model="newProject.price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">购买/年</label>
+
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" ng-model="newProject.buyYear">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">代理商</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.agent"
+                                    ng-options="a as a.name for a in agents">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台账号</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.mae.account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.mae.pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台创建者</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.mae.creator.realname">
+                                <option value="CC">CC</option>
+                                <option value="DC">DC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信账号</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.wx.account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.wx.pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信类型</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.wx.wxType">
+                                <option value="订阅号">订阅号</option>
+                                <option value="服务号">服务号</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">EC企业ID</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.ec.id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">发送盒子时间</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" ng-model="newProject.ec.sendBoxDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">标签</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="newProject.tags" ng-list>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">客服</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="newProject.supporter"
+                                    ng-options="s as s.realname for s in supporters">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">备注</label>
+
+                        <div class="col-sm-10">
+                            <textarea cols="30" rows="10" class="form-control" ng-model="newProject.memo"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="saveProject(projectForm)">保存</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button class="btn btn-primary" ng-click="saveProject(projectForm)">保存</button>
-        </div>
-      </form>
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 <!-- end add project modal -->
@@ -519,38 +593,38 @@
 
 <!-- comment modal -->
 <div id="commentModal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">项目追踪</h4>
-      </div>
-      <form name="commentForm">
-        <div class="modal-body">
-          <table class="table">
-            <tr>
-              <th>信息</th>
-              <th>提交者</th>
-              <th>时间</th>
-              <th>当时状态</th>
-            </tr>
-            <tr ng-repeat="c in comments">
-              <td>{{c.content}}</td>
-              <td>{{c.creator}}</td>
-              <td>{{c.date | date:'yyyy-MM-dd'}}</td>
-              <td>{{c.status}}</td>
-            </tr>
-          </table>
-          <textarea class="form-control" placeholder="跟踪信息" required ng-model="newComment.content"></textarea>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">项目追踪</h4>
+            </div>
+            <form name="commentForm">
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>信息</th>
+                            <th>提交者</th>
+                            <th>时间</th>
+                            <th>当时状态</th>
+                        </tr>
+                        <tr ng-repeat="c in comments">
+                            <td>{{c.content}}</td>
+                            <td>{{c.creator}}</td>
+                            <td>{{c.date | date:'yyyy-MM-dd'}}</td>
+                            <td>{{c.status}}</td>
+                        </tr>
+                    </table>
+                    <textarea class="form-control" placeholder="跟踪信息" required ng-model="newComment.content"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="saveComment(commentForm)">保存</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button class="btn btn-primary" ng-click="saveComment(commentForm)">保存</button>
-        </div>
-      </form>
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 <!-- end comment modal

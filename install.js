@@ -23,6 +23,7 @@
   method = {
     GET: function(req, res, next) {
       var q;
+      return res.send(404);
       Project.find().distinct('client', function(err, docs) {
         var c, q, _i, _len, _results;
         q = async.queue(function(task, cb) {
