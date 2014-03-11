@@ -19,6 +19,11 @@
             <li ng-class="{active: isShowFilter}"><a href="" ng-click="showFilter()">筛选 <b class="caret"></b></a>
             </li>
         </ul>
+        <form class="navbar-form navbar-left">
+            <div class="form-group">
+                <input class="form-control" placeholder="搜索" ng-model="keyword" ng-keypress="pressSearch($event)">
+            </div>
+        </form>
         <!-- user -->
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

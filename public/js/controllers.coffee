@@ -37,7 +37,8 @@ controller 'userCtrl', [
         when '录入' then 'label-warning'
         when '完成' then 'label-primary'
         when '上线' then 'label-success'
-        else 'label-default'
+        else
+          'label-default'
 
     $scope.showCount = (item)->
       $scope.isShowFilter = false
@@ -64,19 +65,26 @@ controller 'userCtrl', [
 
     $scope.condition = {}
 
-    $scope.prePages = -> prePages @projectData
+    $scope.prePages = ->
+      prePages @projectData
 
-    $scope.nextPages = -> nextPages @projectData
+    $scope.nextPages = ->
+      nextPages @projectData
 
     $scope.goPage = (page)->
       self = @
-      for k, v of $scope.condition
-        delete $scope.condition[k] unless v
-      param = {condition: $scope.condition or {}}
-      if $routeParams.area then param.condition['area._id'] = $routeParams.area
-      if $routeParams.company then param.condition['company._id'] = $routeParams.company
-      if $routeParams.industry then param.condition['industry._id'] = $routeParams.industry
-      if $routeParams.type then param.condition['type._id'] = $routeParams.type
+      if $scope.keyword
+        param =
+          type: 'search'
+          keyword: $scope.keyword
+      else
+        for k, v of $scope.condition
+          delete $scope.condition[k] unless v
+        param = {condition: $scope.condition or {}}
+        if $routeParams.area then param.condition['area._id'] = $routeParams.area
+        if $routeParams.company then param.condition['company._id'] = $routeParams.company
+        if $routeParams.industry then param.condition['industry._id'] = $routeParams.industry
+        if $routeParams.type then param.condition['type._id'] = $routeParams.type
       if page
         param.page = page
         Project.get param, (data)->
@@ -169,6 +177,10 @@ controller 'userCtrl', [
       window.open '/api/export?condition=' + JSON.stringify(param.condition)
       return
 
+    $scope.pressSearch = (e) ->
+      if e.keyCode is 13
+        $scope.goPage()
+
     $scope.goPage()
 
 #    if $scope.userinfo.role in ['supporter', 'leader', 'admin']
@@ -203,14 +215,16 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', '$routeParams', '$location', '$route'
+  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', '$routeParams',
+  '$location', '$route'
   ($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
     lastRoute = $route.current
 
-    $scope.$on '$locationChangeSuccess', -> $route.current = lastRoute if $route.current.$$route.controller is 'settingCtrl'
+    $scope.$on '$locationChangeSuccess', ->
+      $route.current = lastRoute if $route.current.$$route.controller is 'settingCtrl'
 
     # 修改密码
     $tabs[0] =
@@ -483,7 +497,8 @@ controller 'settingCtrl', [
       load: ->
         @clientData = Client.get ->
           setTimeout(
-            -> $rootScope.$broadcast 'page:init'
+            ->
+              $rootScope.$broadcast 'page:init'
             500
           )
       add: ->
@@ -511,10 +526,13 @@ controller 'settingCtrl', [
         when 2
           console.log
         when 3 #销售管理
-          $tabs[3].areaData = Area.get {num: 100}, (data)-> initPage data
+          $tabs[3].areaData = Area.get {num: 100}, (data)->
+            initPage data
         when 4 #区域管理
-          $tabs[4].areaData = Area.get {}, (data)-> initPage data
-          Area.get {num: 100}, (data)-> $tabs[4].allAreas = data.list
+          $tabs[4].areaData = Area.get {}, (data)->
+            initPage data
+          Area.get {num: 100}, (data)->
+            $tabs[4].allAreas = data.list
         when 5
           $tabs[5].industries = Industry.query()
         when 6
@@ -548,9 +566,8 @@ controller 'financeCtrl', [
 
     $scope.add = ->
       @contract =
-        contract: {
+        contract:
           attachments: []
-        }
         projects: []
         payments: []
         invoices: []
@@ -581,28 +598,32 @@ controller 'financeCtrl', [
     $scope.addImg = ->
       $('#file').click()
       return
-#      @contract.attachments.push 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAEoElEQVR4Xu3YzStsARyH8d+Q940FUnaykfJSyks25M/2UojI+4aFspLyrrwLt3PqiLl3mIeZK9NjdW/3e+fwnM+cOUfu7OzsJfyyQJEFcoIpspSztIBghIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKvDrwExNTb37AScnJ//5Az8/P8fKykpcXV2l//52d3h4GPv7+3F3dxf19fXR2dkZ7e3tn4b7yWN/+s39p8GvA5N1yU5eITB7e3txfX0dx8fH78Ccn5/H2tpadHR0RFdXVyS7g4ODGBwcjObm5qKy/+Sxi/oGyziqSDCXl5exvb0dQ0NDMTc39w7M5uZmnJycxMjISDQ1NaWolpaWorW1NXK5XBwdHUV/f3+0tLTE6elpbGxsRFtbW/T29r6eho/AfPXYfX19ZTzNpXvpigPz9PQUy8vL6dUjOdH5J3d+fj7u7+9jfHw8qqurI9nPzs6mH00JsARPAmdgYCDW19fTPw8PD0dNTc2nYL5z7LGxsdKd1TK+UsWB2d3dTRH09PSk2fLBzMzMRHJ/k32Uvby8xPT0dFRVVcXExET6Eba1tZX+Pdkl7/zk6vP2q9AV5rvHLuN5LtlLVxyYhYWF9EqRXRHIFSZ7ly8uLsbNzU00NjbG6OjoX7ELgSnFsUt2Zsv0QhUHJv9J5m235Kry0T1McjVJboB3dnaitrY2Hh4eoru7O71BLuYK891jl+kcl/RlKw5Mfp38q8FHT0kNDQ3pPUxydUqemlZXV+Px8TG9Qa6rq/v0HuY7xy72Ca2kZ/8LL/brwBR6Fxd6vP7Xx0f2e5jb29tIkGS/h0merJKnpOwR++LiIkWTPSWV89hfOHc/8l9+HZgfqeRBXwsIRgyogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqMAfSIzIppFTizQAAAAASUVORK5CYII='
+    #      @contract.attachments.push 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAEoElEQVR4Xu3YzStsARyH8d+Q940FUnaykfJSyks25M/2UojI+4aFspLyrrwLt3PqiLl3mIeZK9NjdW/3e+fwnM+cOUfu7OzsJfyyQJEFcoIpspSztIBghIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKvDrwExNTb37AScnJ//5Az8/P8fKykpcXV2l//52d3h4GPv7+3F3dxf19fXR2dkZ7e3tn4b7yWN/+s39p8GvA5N1yU5eITB7e3txfX0dx8fH78Ccn5/H2tpadHR0RFdXVyS7g4ODGBwcjObm5qKy/+Sxi/oGyziqSDCXl5exvb0dQ0NDMTc39w7M5uZmnJycxMjISDQ1NaWolpaWorW1NXK5XBwdHUV/f3+0tLTE6elpbGxsRFtbW/T29r6eho/AfPXYfX19ZTzNpXvpigPz9PQUy8vL6dUjOdH5J3d+fj7u7+9jfHw8qqurI9nPzs6mH00JsARPAmdgYCDW19fTPw8PD0dNTc2nYL5z7LGxsdKd1TK+UsWB2d3dTRH09PSk2fLBzMzMRHJ/k32Uvby8xPT0dFRVVcXExET6Eba1tZX+Pdkl7/zk6vP2q9AV5rvHLuN5LtlLVxyYhYWF9EqRXRHIFSZ7ly8uLsbNzU00NjbG6OjoX7ELgSnFsUt2Zsv0QhUHJv9J5m235Kry0T1McjVJboB3dnaitrY2Hh4eoru7O71BLuYK891jl+kcl/RlKw5Mfp38q8FHT0kNDQ3pPUxydUqemlZXV+Px8TG9Qa6rq/v0HuY7xy72Ca2kZ/8LL/brwBR6Fxd6vP7Xx0f2e5jb29tIkGS/h0merJKnpOwR++LiIkWTPSWV89hfOHc/8l9+HZgfqeRBXwsIRgyogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqIBgUC7HgtEAKiAYlMuxYDSACggG5XIsGA2gAoJBuRwLRgOogGBQLseC0QAqIBiUy7FgNIAKCAblciwYDaACgkG5HAtGA6iAYFAux4LRACogGJTLsWA0gAoIBuVyLBgNoAKCQbkcC0YDqMAfSIzIppFTizQAAAAASUVORK5CYII='
 
     $scope.selectImg = (files) ->
       formData = new FormData
       formData.append('file', files[0])
 
       $http.post("/api/finance/#{@contract._id}?act=upload", formData, {
-        headers: 'Content-Type': undefined
+        headers:
+          'Content-Type': undefined
         transformRequest: angular.identity
       }).success((resp) ->
         $scope.contract.contract.attachments.push resp
       )
 
-    $scope.prePages = -> prePages @financeData
+    $scope.prePages = ->
+      prePages @financeData
 
-    $scope.nextPages = -> nextPages @financeData
+    $scope.nextPages = ->
+      nextPages @financeData
 
     $scope.goPage = (page) ->
       params =
-        page: page or ($scope.financeData and  $scope.financeData.curPage) or 1
+        page: page or ($scope.financeData and $scope.financeData.curPage) or 1
         type: $scope.tab
-      $scope.financeData = Finance.get params, (data) -> initPage data
+      $scope.financeData = Finance.get params, (data) ->
+        initPage data
 
     $scope.getProjects = ->
       return if not $scope.contract.contract.client or not $scope.contract.contract.client._id
@@ -616,7 +637,7 @@ controller 'financeCtrl', [
 
 #      @contract.contract.client = project.client unless @contract.contract.client
       @contract.projects.push angular.copy project
-#      $('#projectModal').modal 'hide'
+      #      $('#projectModal').modal 'hide'
       sumPrice $scope.contract
 
     $scope.delProject = (i) ->

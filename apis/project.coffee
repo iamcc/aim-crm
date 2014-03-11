@@ -5,6 +5,7 @@ ProjectType = require '../models/projectTypeModel'
 ClientType = require '../models/clientModel'
 _ = require 'underscore'
 async = require 'async'
+helper = require '../commons/helper'
 
 method =
   GET: (req, res, next) ->
@@ -19,6 +20,17 @@ method =
       Project.find {$and:['client._id': req.query.kw, contractNum: null]}, null, {limit: 10}, (err, docs) ->
         return next err if err
         res.send docs
+    else if req.query.type is 'search'
+      keyword = new RegExp(req.query.keyword)
+      req.query.condition =
+        $or: [
+          {name: keyword}
+          {tags: keyword}
+        ]
+
+      helper.getPage Project, req.query, (err, data) ->
+        return next(err) if err
+        res.send data
     else
       condition = JSON.parse (query = req.query).condition
       condition['supporter._id'] = req.user._id if req.user.role is 'supporter'
