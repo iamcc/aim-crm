@@ -68,7 +68,7 @@
   ]);
 
   app.run([
-    '$rootScope', '$http', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', function($rootScope, $http, ProjectType, Industry, Agent, User, Area) {
+    '$rootScope', '$http', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'View', function($rootScope, $http, ProjectType, Industry, Agent, User, Area, View) {
       return $http.get('/api/user/me').success(function(data) {
         var _ref;
         $rootScope.userinfo = data;
@@ -109,7 +109,7 @@
             }
             return _results;
           });
-          return $rootScope.companies = Area.allCompanies({}, function() {
+          $rootScope.companies = Area.allCompanies({}, function() {
             var c, _i, _len, _ref1, _results;
             _ref1 = $rootScope.companies;
             _results = [];
@@ -118,6 +118,9 @@
               _results.push(c.url = '/company/' + c._id);
             }
             return _results;
+          });
+          return $rootScope.views = View.query({
+            _id: 'all'
           });
         }
       });

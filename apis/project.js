@@ -52,6 +52,10 @@
               name: keyword
             }, {
               tags: keyword
+            }, {
+              'sales.name': keyword
+            }, {
+              'view.name': keyword
             }
           ]
         };
@@ -182,6 +186,10 @@
             }, function() {});
           }
           if (req.body.status) {
+            if (req.body.status === '初始资料') {
+              doc.deadline = new Date();
+              doc.deadline.setHours(doc.deadline.getHours() + 24 * 3);
+            }
             if (req.body.status === '上线') {
               doc.online.date = new Date();
               doc.online.reviewer = req.user;

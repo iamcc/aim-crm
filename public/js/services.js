@@ -121,6 +121,12 @@
         _id: '@_id'
       });
     }
+  ]).factory('View', [
+    '$resource', function($resource) {
+      return $resource('/api/view/:_id', {
+        _id: '@_id'
+      });
+    }
   ]);
 
 }).call(this);

@@ -49,11 +49,18 @@
           return res.send(200);
         });
       } else {
-        return Client.create(req.body, function(err) {
-          if (err) {
-            return next(err);
+        return Client.findOne({
+          name: req.body.name
+        }, function(err, doc) {
+          if (doc) {
+            return res.send(400, '客户已经存在');
           }
-          return res.send(200);
+          return Client.create(req.body, function(err) {
+            if (err) {
+              return next(err);
+            }
+            return res.send(200);
+          });
         });
       }
     }

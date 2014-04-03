@@ -26,6 +26,8 @@ method =
         $or: [
           {name: keyword}
           {tags: keyword}
+          {'sales.name': keyword}
+          {'view.name': keyword}
         ]
 
       helper.getPage Project, req.query, (err, data) ->
@@ -97,6 +99,9 @@ method =
           ProjectType.findByIdAndUpdate req.body.type._id, {$inc: projects: 1}, ->
           ProjectType.findByIdAndUpdate doc.type._id, {$inc: projects: -1}, ->
         if(req.body.status)
+          if req.body.status is '初始资料'
+            doc.deadline = new Date()
+            doc.deadline.setHours(doc.deadline.getHours() + 24*3)
           if req.body.status is '上线'
             doc.online.date = new Date()
             doc.online.reviewer = req.user

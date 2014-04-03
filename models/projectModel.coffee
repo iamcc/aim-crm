@@ -22,7 +22,7 @@ projectSchema = new Schema
   industry:
     _id: ObjectId
     name: String
-  status: type: String, default: '新建', enum: '新建 初始资料 首次催单 二次催单 搁置 录入 完成 上线 毁约'.split(' ')
+  status: type: String, default: '新建', enum: '新建 首次催单 二次催单 初始资料 搁置 录入 完成 一次修改 上线 毁约'.split(' ')
   supporter:
     _id: ObjectId
     realname: String
@@ -64,6 +64,10 @@ projectSchema = new Schema
     modify: String
   }]
   contractNum: String
+  view:
+    _id: ObjectId
+    name: String
+  deadline: Date
 
 # exports.Project = mongoose.model 'Project', projectSchema
 # exports.projectSchema = projectSchema

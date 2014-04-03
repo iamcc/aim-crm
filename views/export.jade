@@ -8,19 +8,25 @@ html
             tr
                 th 项目
                 th 客户
+                th 模板
+                th 标签
                 th 销售
                 th 分公司
                 th 区域
                 th 下单日期
                 th 上线日期
                 th 状态
+                th 备注
             each p in data
                 tr
                     td= p.name
                     td= p.client.name
+                    td= p.view.name
+                    td= p.tags
                     td= p.sales.name
                     td= p.company.name
                     td= p.area.name
                     td= moment(p.orderDate).format('YYYY-MM-DD')
                     td= moment(p.online.date).format('YYYY-MM-DD')
                     td= p.status
+                    td= p.memo

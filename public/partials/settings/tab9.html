@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#viewModal" data-backdrop="static"
+                ng-click="tabs[9].add()">+
+        </button>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>模板名称</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="v in tabs[9].viewData.list">
+            <td>{{v.name}}</td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="tabs[9].edit(v)" data-toggle="modal"
+                        data-target="#viewModal" data-backdrop="static">修改
+                </button>
+            </td>
+        </tr>
+    </table>
+    <page data="tabs[9].viewData" model="tabs[9].model"></page>
+</div>
+
+<div id="viewModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">模板管理</h4>
+            </div>
+            <form name="viewForm" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">名称</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="tabs[9].newView.name" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="tabs[9].save('#viewModal', viewForm)">保存</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -37,7 +37,7 @@
     status: {
       type: String,
       "default": '新建',
-      "enum": '新建 初始资料 首次催单 二次催单 搁置 录入 完成 上线 毁约'.split(' ')
+      "enum": '新建 首次催单 二次催单 初始资料 搁置 录入 完成 一次修改 上线 毁约'.split(' ')
     },
     supporter: {
       _id: ObjectId,
@@ -93,7 +93,12 @@
         modify: String
       }
     ],
-    contractNum: String
+    contractNum: String,
+    view: {
+      _id: ObjectId,
+      name: String
+    },
+    deadline: Date
   });
 
   module.exports = mongoose.model('Project', projectSchema);

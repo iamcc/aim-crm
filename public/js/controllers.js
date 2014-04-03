@@ -79,6 +79,7 @@
           case '录入':
             return 'label-warning';
           case '完成':
+          case '一次修改':
             return 'label-primary';
           case '上线':
             return 'label-success';
@@ -163,7 +164,8 @@
             _results = [];
             for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
               p = _ref1[_i];
-              _results.push(p.statusLabel = getStatusLabel(p.status));
+              p.statusLabel = getStatusLabel(p.status);
+              _results.push(p.deadline = new Date(p.deadline) < new Date());
             }
             return _results;
           });
@@ -175,7 +177,8 @@
             _results = [];
             for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
               p = _ref1[_i];
-              _results.push(p.statusLabel = getStatusLabel(p.status));
+              p.statusLabel = getStatusLabel(p.status);
+              _results.push(p.deadline = new Date(p.deadline) < new Date());
             }
             return _results;
           });
@@ -335,7 +338,7 @@
   ]);
 
   controller('settingCtrl', [
-    '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', '$routeParams', '$location', '$route', function($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, $routeParams, $location, $route) {
+    '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', '$routeParams', '$location', '$route', function($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, $routeParams, $location, $route) {
       var $tabs, $userinfo, lastRoute;
       User.checkLogin();
       $tabs = $scope.tabs = [];
@@ -687,6 +690,33 @@
           }
           Client.save(this.newClient, function() {
             return $tabs[8].load();
+          }, function(err) {
+            return alert(err.data);
+          });
+          $(e).modal('hide');
+        }
+      };
+      $tabs[9] = {
+        model: View,
+        load: function() {
+          return this.viewData = View.get(function() {
+            return setTimeout(function() {
+              return $rootScope.$broadcast('page:init');
+            }, 500);
+          });
+        },
+        add: function() {
+          return this.newView = {};
+        },
+        edit: function(v) {
+          return this.newView = angular.copy(v);
+        },
+        save: function(e, form) {
+          if (form.$invalid) {
+            return;
+          }
+          View.save(this.newView, function() {
+            return $tabs[9].load();
           });
           $(e).modal('hide');
         }
@@ -723,9 +753,9 @@
           case 6:
             return $tabs[6].goPage();
           case 7:
-            return $tabs[7].load();
           case 8:
-            return $tabs[8].load();
+          case 9:
+            return $tabs[id].load();
         }
       };
       return $scope.selectMenu(parseInt($routeParams.tab) || 0);

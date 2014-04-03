@@ -34,8 +34,8 @@ app.config [
 ]
 
 app.run [
-  '$rootScope', '$http', 'ProjectType', 'Industry', 'Agent', 'User', 'Area'
-  ($rootScope, $http, ProjectType, Industry, Agent, User, Area)->
+  '$rootScope', '$http', 'ProjectType', 'Industry', 'Agent', 'User', 'Area', 'View'
+  ($rootScope, $http, ProjectType, Industry, Agent, User, Area, View)->
     $http
       .get('/api/user/me')
       .success (data)->
@@ -48,6 +48,7 @@ app.run [
           $rootScope.supporters = User.getSupporters() if $rootScope.userinfo.role isnt 'supporter'
           $rootScope.areas = Area.all({}, -> a.url = '/area/' + a._id for a in $rootScope.areas)
           $rootScope.companies = Area.allCompanies({}, -> c.url = '/company/' + c._id for c in $rootScope.companies)
+          $rootScope.views = View.query({_id: 'all'})
 ]
 
 

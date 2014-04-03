@@ -35,7 +35,7 @@ controller 'userCtrl', [
         when '初始资料', '首次催单', '二次催单' then 'label-info'
         when '搁置', '毁约' then 'label-danger'
         when '录入' then 'label-warning'
-        when '完成' then 'label-primary'
+        when '完成', '一次修改' then 'label-primary'
         when '上线' then 'label-success'
         else
           'label-default'
@@ -92,10 +92,12 @@ controller 'userCtrl', [
           self.projectData.list = data.list
           for p in data.list
             p.statusLabel = getStatusLabel p.status
+            p.deadline = new Date(p.deadline) < new Date()
       else self.projectData = Project.get param, (data)->
         initPage data
         for p in data.list
           p.statusLabel = getStatusLabel p.status
+          p.deadline = new Date(p.deadline) < new Date()
 
     $scope.showEdit = (event, project)->
       return if $scope.userinfo.role is 'finance'
@@ -215,9 +217,9 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', '$routeParams',
+  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', '$routeParams',
   '$location', '$route'
-  ($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, $routeParams, $location, $route)->
+  ($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
@@ -510,6 +512,30 @@ controller 'settingCtrl', [
 
         Client.save @newClient, ->
           $tabs[8].load()
+        , (err) ->
+          alert(err.data)
+
+        $(e).modal 'hide'
+        return
+
+    $tabs[9] =
+      model: View
+      load: ->
+        @viewData = View.get ->
+          setTimeout(
+            ->
+              $rootScope.$broadcast 'page:init'
+            500
+          )
+      add: ->
+        @newView = {}
+      edit: (v) ->
+        @newView = angular.copy v
+      save: (e, form) ->
+        return if form.$invalid
+
+        View.save @newView, ->
+          $tabs[9].load()
 
         $(e).modal 'hide'
         return
@@ -537,10 +563,8 @@ controller 'settingCtrl', [
           $tabs[5].industries = Industry.query()
         when 6
           $tabs[6].goPage()
-        when 7
-          $tabs[7].load()
-        when 8
-          $tabs[8].load()
+        when 7,8,9
+          $tabs[id].load()
 
     $scope.selectMenu parseInt($routeParams.tab) or 0
 ]

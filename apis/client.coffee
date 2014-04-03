@@ -22,9 +22,12 @@ method =
           console.log err if err
         res.send 200
     else
-      Client.create req.body, (err) ->
-        return next err if err
-        res.send 200
+      Client.findOne {name: req.body.name}, (err, doc) ->
+        return res.send 400, '客户已经存在' if doc
+
+        Client.create req.body, (err) ->
+          return next err if err
+          res.send 200
 
 module.exports = (req, res, next) ->
   try
