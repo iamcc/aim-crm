@@ -328,7 +328,7 @@
           pwd: $scope.pwd
         }, function(data) {
           $rootScope.userinfo = data;
-          return $location.path('/');
+          return location.href = '/';
         }, function(err) {
           $btn.button('reset');
           return $scope.isError = true;
@@ -697,25 +697,50 @@
         }
       };
       $tabs[9] = {
-        model: View,
         load: function() {
-          return this.viewData = View.get(function() {
-            return setTimeout(function() {
-              return $rootScope.$broadcast('page:init');
-            }, 500);
-          });
+          return this.viewData = View.query();
         },
-        add: function() {
-          return this.newView = {};
+        selectCatalog: function(c) {
+          return this.selectedCatalog = angular.copy(c);
         },
-        edit: function(v) {
-          return this.newView = angular.copy(v);
+        addCatalog: function() {
+          return this.selectedCatalog = {
+            names: []
+          };
+        },
+        editCatalog: function(c) {
+          this.selectedView = null;
+          return this.selectedCatalog = angular.copy(c);
+        },
+        addView: function() {
+          return this.selectedView = {};
+        },
+        editView: function(v, index) {
+          this.selectedView = {
+            name: v,
+            index: index
+          };
+          return console.log(this.selectedView);
         },
         save: function(e, form) {
+          var idx;
           if (form.$invalid) {
             return;
           }
-          View.save(this.newView, function() {
+          if (!this.selectedCatalog) {
+            return alert('请选择分类');
+          }
+          if (this.selectedView && this.selectedView.name) {
+            if (this.selectedCatalog.names.indexOf(this.selectedView.name) !== -1) {
+              return alert('模板已经存在');
+            }
+            if ((idx = this.selectedView.index) >= 0) {
+              this.selectedCatalog.names[idx] = this.selectedView.name;
+            } else {
+              this.selectedCatalog.names.push(this.selectedView.name);
+            }
+          }
+          View.save(this.selectedCatalog, function() {
             return $tabs[9].load();
           });
           $(e).modal('hide');

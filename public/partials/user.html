@@ -186,9 +186,9 @@
           </span>
     </td>
     <td ng-click="showEdit($event, p)">
-        <span class="view">{{p.view.name}}</span>
+        <span class="view">{{p.view.catalog + '-' + p.view.name}}</span>
           <span class="edit" style="display:none;">
-            <select class="form-control" ng-model="p.view" ng-options="v as v.name for v in views"
+            <select class="form-control" ng-model="p.view" ng-options="v as v.name group by v.catalog for v in views"
                     ng-blur="update($event, p, 'view')">
             </select>
           </span>

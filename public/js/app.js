@@ -119,8 +119,21 @@
             }
             return _results;
           });
-          return $rootScope.views = View.query({
-            _id: 'all'
+          $rootScope.views = [];
+          return View.query({}, function(views) {
+            var c, v, _i, _j, _len, _len1, _ref1;
+            for (_i = 0, _len = views.length; _i < _len; _i++) {
+              c = views[_i];
+              _ref1 = c.names;
+              for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                v = _ref1[_j];
+                $rootScope.views.push({
+                  catalog: c.catalog,
+                  name: v
+                });
+              }
+            }
+            return console.log($rootScope.views);
           });
         }
       });

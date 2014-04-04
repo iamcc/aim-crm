@@ -1,7 +1,29 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#viewModal" data-backdrop="static"
-                ng-click="tabs[9].add()">+
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#catalogModal" data-backdrop="static"
+                ng-click="tabs[9].addCatalog()">+
+        </button>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th>模板分类名称</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="v in tabs[9].viewData" ng-click="tabs[9].selectCatalog(v)">
+            <td>{{v.catalog}}</td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="tabs[9].editCatalog(v)" data-toggle="modal"
+                        data-target="#catalogModal" data-backdrop="static">修改
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#viewModal" data-backdrop="static" data-ng-click="tabs[9].addView()">+
         </button>
         <div class="clearfix"></div>
     </div>
@@ -10,17 +32,43 @@
             <th>模板名称</th>
             <th></th>
         </tr>
-        <tr ng-repeat="v in tabs[9].viewData.list">
-            <td>{{v.name}}</td>
+        <tr ng-repeat="v in tabs[9].selectedCatalog.names">
+            <td>{{v}}</td>
             <td>
-                <button class="btn btn-default btn-sm" ng-click="tabs[9].edit(v)" data-toggle="modal"
+                <button class="btn btn-default btn-sm" ng-click="tabs[9].editView(v, $index)" data-toggle="modal"
                         data-target="#viewModal" data-backdrop="static">修改
                 </button>
             </td>
         </tr>
     </table>
-    <page data="tabs[9].viewData" model="tabs[9].model"></page>
 </div>
+
+<div id="catalogModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">模板分类管理</h4>
+            </div>
+            <form name="catalogForm" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">名称</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="tabs[9].selectedCatalog.catalog" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="tabs[9].save('#catalogModal', catalogForm)">保存</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div id="viewModal" class="modal fade">
     <div class="modal-dialog">
@@ -34,7 +82,7 @@
                         <label class="control-label col-sm-2">名称</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" ng-model="tabs[9].newView.name" required>
+                            <input type="text" class="form-control" ng-model="tabs[9].selectedView.name" required>
                         </div>
                     </div>
                 </div>

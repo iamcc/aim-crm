@@ -3,7 +3,7 @@ Schema = mongoose.Schema
 ObjectId = Schema.Types.ObjectId
 
 viewSchema = new Schema
-  name: String
-  projects: type: Number, default: 0
+  catalog: String
+  names: [String]
 
 module.exports = mongoose.model 'View', viewSchema

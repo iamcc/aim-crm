@@ -48,7 +48,12 @@ app.run [
           $rootScope.supporters = User.getSupporters() if $rootScope.userinfo.role isnt 'supporter'
           $rootScope.areas = Area.all({}, -> a.url = '/area/' + a._id for a in $rootScope.areas)
           $rootScope.companies = Area.allCompanies({}, -> c.url = '/company/' + c._id for c in $rootScope.companies)
-          $rootScope.views = View.query({_id: 'all'})
+          $rootScope.views = []
+          View.query {}, (views) ->
+            for c in views
+              for v in c.names
+                $rootScope.views.push {catalog: c.catalog, name: v}
+            console.log $rootScope.views
 ]
 
 

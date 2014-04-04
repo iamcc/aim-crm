@@ -208,7 +208,7 @@ controller 'loginCtrl', [
       User.login {uname: $scope.uname, pwd: $scope.pwd},
       (data)->
         $rootScope.userinfo = data
-        $location.path '/'
+        location.href = '/'
       , (err)->
         $btn.button 'reset'
         $scope.isError = true
@@ -519,22 +519,33 @@ controller 'settingCtrl', [
         return
 
     $tabs[9] =
-      model: View
       load: ->
-        @viewData = View.get ->
-          setTimeout(
-            ->
-              $rootScope.$broadcast 'page:init'
-            500
-          )
-      add: ->
-        @newView = {}
-      edit: (v) ->
-        @newView = angular.copy v
+        @viewData = View.query()
+      selectCatalog: (c) ->
+        @selectedCatalog = angular.copy c
+      addCatalog: ->
+        @selectedCatalog = {names: []}
+      editCatalog: (c) ->
+        @selectedView = null
+        @selectedCatalog = angular.copy c
+      addView: ->
+        @selectedView = {}
+      editView: (v, index) ->
+        @selectedView = {name: v, index: index}
+        console.log @selectedView
       save: (e, form) ->
         return if form.$invalid
+        return alert '请选择分类' if not @selectedCatalog
 
-        View.save @newView, ->
+        if @selectedView and @selectedView.name
+          return alert '模板已经存在' if @selectedCatalog.names.indexOf(@selectedView.name) != -1
+
+          if (idx = @selectedView.index) >= 0
+            @selectedCatalog.names[idx] = @selectedView.name
+          else
+            @selectedCatalog.names.push @selectedView.name
+
+        View.save @selectedCatalog, ->
           $tabs[9].load()
 
         $(e).modal 'hide'

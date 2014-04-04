@@ -95,7 +95,7 @@
     ],
     contractNum: String,
     view: {
-      _id: ObjectId,
+      catalog: String,
       name: String
     },
     deadline: Date
