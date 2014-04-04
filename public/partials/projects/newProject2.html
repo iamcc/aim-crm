@@ -1,0 +1,37 @@
+<div id="productsModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h4 class="modal-title">选择产品</h4>
+            </div>
+            <form name="productForm" class="form-horizontal">
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>产品名称</th>
+                            <th>产品单位</th>
+                            <th>产品数量</th>
+                        </tr>
+                        <tr data-ng-repeat="p in $parent.newProject.agent.products">
+                            <td>{{ p.name }}</td>
+                            <td>{{ p.unit }}</td>
+                            <td><input class="form-control" type="number" data-ng-model="p.num"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="showProject()" data-ng-hide="$parent.isEditProduct">
+                        上一步
+                    </button>
+                    <button class="btn btn-primary" ng-click="saveProject(productForm)">保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

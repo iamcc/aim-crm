@@ -121,6 +121,15 @@ controller 'userCtrl', [
         $scope.newComment.content = ''
 
     $scope.saveProject = ->
+      if @isEditProduct
+        Project.update {
+          _id: @newProject._id
+          agent: @newProject.agent
+        }
+        @newProject = null
+        $('#productsModal').modal 'hide'
+        return
+
       p = JSON.parse angular.toJson @newProject
       return alert '请选择销售' if not p.sales or not p.sales._id
       return alert '请填写客户全称' if not p.client or not p.client._id
@@ -131,6 +140,7 @@ controller 'userCtrl', [
       Project.save p,
       ->
         $('#addModal').modal 'hide'
+        $('#productsModal').modal 'hide'
         $scope.newProject = null
         $scope.goPage()
       , (err)->
@@ -183,6 +193,24 @@ controller 'userCtrl', [
       if e.keyCode is 13
         $scope.goPage()
 
+    $scope.showProject = ->
+      $('#addModal').modal 'show'
+      $('#productsModal').modal 'hide'
+
+      return
+
+    $scope.showProducts = (form) ->
+      return if form.$invalid
+
+      $('#addModal').modal 'hide'
+      $('#productsModal').modal 'show'
+
+      return
+
+    $scope.editProducts = (p) ->
+      $scope.isEditProduct = true
+      $scope.newProject = p
+
     $scope.goPage()
 
 #    if $scope.userinfo.role in ['supporter', 'leader', 'admin']
@@ -217,9 +245,9 @@ controller 'loginCtrl', [
 
 # settingCtrl
 controller 'settingCtrl', [
-  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', '$routeParams',
+  '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', 'Product', '$routeParams',
   '$location', '$route'
-  ($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, $routeParams, $location, $route)->
+  ($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, Product, $routeParams, $location, $route)->
     User.checkLogin()
     $tabs = $scope.tabs = []
     $userinfo = $scope.userinfo
@@ -551,6 +579,24 @@ controller 'settingCtrl', [
         $(e).modal 'hide'
         return
 
+    $tabs[10] =
+      load: ->
+        @productData = Product.query()
+      add: ->
+        @product = {}
+      edit: (p) ->
+        @product = angular.copy p
+      save: (e, form) ->
+        return if form.$invalid
+
+        Product.save @product, ->
+          $tabs[10].load()
+        , (err) ->
+          alert(err.data)
+
+        $(e).modal 'hide'
+        return
+
     $scope.selectMenu = (id)->
       $location.path '/setting/' + id
       $scope.selectedMenu = id
@@ -574,7 +620,7 @@ controller 'settingCtrl', [
           $tabs[5].industries = Industry.query()
         when 6
           $tabs[6].goPage()
-        when 7,8,9
+        when 7,8,9,10
           $tabs[id].load()
 
     $scope.selectMenu parseInt($routeParams.tab) or 0

@@ -1,0 +1,188 @@
+<div id="addModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                <h4 class="modal-title">添加项目</h4>
+            </div>
+            <form name="projectForm" class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">项目名</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">项目类型</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.type"
+                                    ng-options="t as t.name for t in projectTypes" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">模板</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.view"
+                                    ng-options="v as v.name group by v.catalog for v in views" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">销售</label>
+
+                        <div class="col-sm-10">
+                            <typeahead name="sales" value-key="name" remote="/api/sales?s=%QUERY"
+                                       model="$parent.newProject.sales.name" datum="$parent.newProject.sales"></typeahead>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">行业</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.industry"
+                                    ng-options="i as i.name for i in industries">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">客户全称</label>
+
+                        <div class="col-sm-10">
+                            <typeahead name="client" value-key="name" remote="/api/client?s=%QUERY"
+                                       model="$parent.newProject.client.name" datum="$parent.newProject.client"></typeahead>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">下单日期</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" ng-model="$parent.newProject.orderDate">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label col-sm-2">价格</label>-->
+
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="text" class="form-control" ng-model="$parent.newProject.price" readonly>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">购买/年</label>
+
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" ng-model="$parent.newProject.buyYear">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">代理商</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.agent"
+                                    ng-options="a as a.name for a in agents">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台账号</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.mae.account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.mae.pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">后台创建者</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.mae.creator.realname">
+                                <option value="CC">CC</option>
+                                <option value="DC">DC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信账号</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.wx.account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信密码</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.wx.pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">微信类型</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.wx.wxType">
+                                <option value="订阅号">订阅号</option>
+                                <option value="服务号">服务号</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">EC企业ID</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.ec.id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">发送盒子时间</label>
+
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" ng-model="$parent.newProject.ec.sendBoxDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">标签</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="$parent.newProject.tags" ng-list>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">客服</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" ng-model="$parent.newProject.supporter"
+                                    ng-options="s as s.realname for s in supporters">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">备注</label>
+
+                        <div class="col-sm-10">
+                            <textarea cols="30" rows="10" class="form-control" ng-model="$parent.newProject.memo"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="saveProject(projectForm)" data-ng-hide="$parent.newProject.agent">保存</button>
+                    <button class="btn btn-primary" ng-click="showProducts(projectForm)" data-ng-show="$parent.newProject.agent">下一步</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

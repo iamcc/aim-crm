@@ -30,6 +30,13 @@ projectSchema = new Schema
   agent:
     _id: ObjectId
     name: String
+    products: [{
+      _id: ObjectId
+      name: String
+      unit: String
+      price: Number
+      num: Number
+    }]
   price: Number
   buyYear: Number
   client:

@@ -127,6 +127,12 @@
         _id: '@_id'
       });
     }
+  ]).factory('Product', [
+    '$resource', function($resource) {
+      return $resource('/api/product/:_id', {
+        _id: '@_id'
+      });
+    }
   ]);
 
 }).call(this);

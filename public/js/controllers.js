@@ -215,6 +215,15 @@
       };
       $scope.saveProject = function() {
         var p;
+        if (this.isEditProduct) {
+          Project.update({
+            _id: this.newProject._id,
+            agent: this.newProject.agent
+          });
+          this.newProject = null;
+          $('#productsModal').modal('hide');
+          return;
+        }
         p = JSON.parse(angular.toJson(this.newProject));
         if (!p.sales || !p.sales._id) {
           return alert('请选择销售');
@@ -228,6 +237,7 @@
         })[0];
         return Project.save(p, function() {
           $('#addModal').modal('hide');
+          $('#productsModal').modal('hide');
           $scope.newProject = null;
           return $scope.goPage();
         }, function(err) {
@@ -309,6 +319,21 @@
           return $scope.goPage();
         }
       };
+      $scope.showProject = function() {
+        $('#addModal').modal('show');
+        $('#productsModal').modal('hide');
+      };
+      $scope.showProducts = function(form) {
+        if (form.$invalid) {
+          return;
+        }
+        $('#addModal').modal('hide');
+        $('#productsModal').modal('show');
+      };
+      $scope.editProducts = function(p) {
+        $scope.isEditProduct = true;
+        return $scope.newProject = p;
+      };
       return $scope.goPage();
     }
   ]);
@@ -338,7 +363,7 @@
   ]);
 
   controller('settingCtrl', [
-    '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', '$routeParams', '$location', '$route', function($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, $routeParams, $location, $route) {
+    '$rootScope', '$scope', 'User', 'Area', 'Sales', 'Industry', 'Agent', 'ProjectType', 'Client', 'View', 'Product', '$routeParams', '$location', '$route', function($rootScope, $scope, User, Area, Sales, Industry, Agent, ProjectType, Client, View, Product, $routeParams, $location, $route) {
       var $tabs, $userinfo, lastRoute;
       User.checkLogin();
       $tabs = $scope.tabs = [];
@@ -746,6 +771,28 @@
           $(e).modal('hide');
         }
       };
+      $tabs[10] = {
+        load: function() {
+          return this.productData = Product.query();
+        },
+        add: function() {
+          return this.product = {};
+        },
+        edit: function(p) {
+          return this.product = angular.copy(p);
+        },
+        save: function(e, form) {
+          if (form.$invalid) {
+            return;
+          }
+          Product.save(this.product, function() {
+            return $tabs[10].load();
+          }, function(err) {
+            return alert(err.data);
+          });
+          $(e).modal('hide');
+        }
+      };
       $scope.selectMenu = function(id) {
         $location.path('/setting/' + id);
         $scope.selectedMenu = id;
@@ -780,6 +827,7 @@
           case 7:
           case 8:
           case 9:
+          case 10:
             return $tabs[id].load();
         }
       };

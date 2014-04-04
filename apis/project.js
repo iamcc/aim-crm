@@ -134,6 +134,7 @@
         });
       } else {
         return Project.findById(_id, function(err, doc) {
+          var p, _i, _len, _ref;
           if (!doc) {
             return res.send(404);
           }
@@ -207,6 +208,14 @@
               status: doc.status
             });
           }
+          if (req.body.agent) {
+            req.body.price = 0;
+            _ref = req.body.agent.products;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              p = _ref[_i];
+              req.body.price += p.price * (p.num || 0);
+            }
+          }
           _.extend(doc, req.body);
           return doc.save(function(err) {
             if (err) {
@@ -218,8 +227,16 @@
       }
     },
     POST: function(req, res, next) {
-      var doc;
+      var doc, p, _i, _len, _ref;
       delete req.body._id;
+      if (req.body.agent) {
+        req.body.price = 0;
+        _ref = req.body.agent.products;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          p = _ref[_i];
+          req.body.price += p.price * (p.num || 0);
+        }
+      }
       doc = new Project(req.body);
       doc.comments.push({
         content: '创建项目, 客服：' + (doc.supporter && doc.supporter.realname || ''),

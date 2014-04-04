@@ -1,4 +1,5 @@
 Agent = require '../models/agentModel'
+Product = require '../models/productModel'
 async = require 'async'
 
 method =
@@ -7,9 +8,6 @@ method =
       if _id is 'all' then return Agent.find {}, (err, docs)-> res.send docs
       
       Agent.findById _id, (err, doc)->
-#        if err
-#          console.log err
-#          return res.send 500
         return next(err) if err
         res.send doc
     else
@@ -27,9 +25,6 @@ method =
           Agent.find {}, null, opts, cb
       },
       (err, rst)->
-#        if err
-#          console.log err
-#          return res.send 500
         return next(err) if err
         res.send {
           totalPage: Math.ceil(rst.count/num)
@@ -40,30 +35,34 @@ method =
     delete req.body._id
 
     if (_id = req.params._id)
-      Agent.findByIdAndUpdate _id, req.body, (err)->
-#        if err
-#          console.log err
-#          return res.send 500
-        return next(err) if err
-      res.send 200
+      Agent.count {name: req.body.name}, (err, count) ->
+        return next err if err
+        return res.send 500, '代理商已经存在' if count > 1
+
+        Agent.findByIdAndUpdate _id, req.body, (err2)->
+          return next(err2) if err2
+          res.send 200
     else
       async.auto {
         count: (cb)-> Agent.count {name: req.body.name}, cb
-        save: ['count', (cb, rst)->
+        products: (cb) -> Product.find {}, cb
+        save: ['count', 'products', (cb, rst)->
           return res.send 500, '代理商已经存在' if rst.count > 0
+
+          for product in rst.products
+            product.price *= 0.3
+
+          req.body.products = rst.products
+
           Agent.create req.body, cb
         ]
       },
       (err, rst)->
-#        if err
-#          console.log err
-#          return res.send 500
         return next(err) if err
         res.send 200
 
 module.exports = (req, res, next)->
   try
-    # return res.send 403 if req.user.role not in ['leader', 'admin']
     method[req.method] req, res, next
   catch e
     console.log e

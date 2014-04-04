@@ -53,7 +53,6 @@ app.run [
             for c in views
               for v in c.names
                 $rootScope.views.push {catalog: c.catalog, name: v}
-            console.log $rootScope.views
 ]
 
 

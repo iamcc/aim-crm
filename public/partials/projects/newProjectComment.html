@@ -1,0 +1,35 @@
+<div id="commentModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">项目追踪</h4>
+            </div>
+            <form name="commentForm">
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>信息</th>
+                            <th>提交者</th>
+                            <th>时间</th>
+                            <th>当时状态</th>
+                        </tr>
+                        <tr ng-repeat="c in comments">
+                            <td>{{c.content}}</td>
+                            <td>{{c.creator}}</td>
+                            <td>{{c.date | date:'yyyy-MM-dd'}}</td>
+                            <td>{{c.status}}</td>
+                        </tr>
+                    </table>
+                    <textarea class="form-control" placeholder="跟踪信息" required ng-model="newComment.content"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" ng-click="saveComment(commentForm)">保存</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

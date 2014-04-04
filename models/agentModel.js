@@ -15,7 +15,15 @@
     projects: {
       type: Number,
       "default": 0
-    }
+    },
+    products: [
+      {
+        _id: ObjectId,
+        name: String,
+        unit: String,
+        price: Number
+      }
+    ]
   });
 
   module.exports = mongoose.model('Agent', agentSchema);

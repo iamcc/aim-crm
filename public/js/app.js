@@ -121,19 +121,25 @@
           });
           $rootScope.views = [];
           return View.query({}, function(views) {
-            var c, v, _i, _j, _len, _len1, _ref1;
+            var c, v, _i, _len, _results;
+            _results = [];
             for (_i = 0, _len = views.length; _i < _len; _i++) {
               c = views[_i];
-              _ref1 = c.names;
-              for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-                v = _ref1[_j];
-                $rootScope.views.push({
-                  catalog: c.catalog,
-                  name: v
-                });
-              }
+              _results.push((function() {
+                var _j, _len1, _ref1, _results1;
+                _ref1 = c.names;
+                _results1 = [];
+                for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                  v = _ref1[_j];
+                  _results1.push($rootScope.views.push({
+                    catalog: c.catalog,
+                    name: v
+                  }));
+                }
+                return _results1;
+              })());
             }
-            return console.log($rootScope.views);
+            return _results;
           });
         }
       });

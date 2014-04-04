@@ -116,6 +116,10 @@ method =
             creator: req.user.realname
             status: doc.status
           }
+        if req.body.agent
+          req.body.price = 0
+          for p in req.body.agent.products
+            req.body.price += p.price * (p.num or 0)
         _.extend doc, req.body
         doc.save (err)->
 #          return res.send 500 if err
@@ -123,6 +127,11 @@ method =
           res.send 200
   POST: (req, res, next) ->
     delete req.body._id
+    if req.body.agent
+      req.body.price = 0
+      for p in req.body.agent.products
+        req.body.price += p.price * (p.num or 0)
+
     doc = new Project req.body
     doc.comments.push {
       content: '创建项目, 客服：'+(doc.supporter and doc.supporter.realname or '')

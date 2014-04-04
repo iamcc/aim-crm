@@ -7,7 +7,11 @@ agentSchema = new Schema
   people: String
   phone: String
   projects: type: Number, default: 0
+  products: [{
+    _id: ObjectId
+    name: String
+    unit: String
+    price: Number
+  }]
   
-# exports.Agent = mongoose.model 'Agent', agentSchema
-# exports.agentSchema = agentSchema
 module.exports = mongoose.model 'Agent', agentSchema

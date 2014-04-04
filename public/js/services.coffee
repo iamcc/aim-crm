@@ -115,3 +115,11 @@ angular
         $resource '/api/view/:_id', _id: '@_id',
     ]
   )
+.factory(
+    'Product'
+    [
+      '$resource'
+      ($resource)->
+        $resource '/api/product/:_id', _id: '@_id',
+    ]
+  )
