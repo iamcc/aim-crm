@@ -92,12 +92,12 @@ controller 'userCtrl', [
           self.projectData.list = data.list
           for p in data.list
             p.statusLabel = getStatusLabel p.status
-            p.deadline = new Date(p.deadline) < new Date()
+            p.deadline = p.status is '初始资料' and new Date(p.deadline) < new Date()
       else self.projectData = Project.get param, (data)->
         initPage data
         for p in data.list
           p.statusLabel = getStatusLabel p.status
-          p.deadline = new Date(p.deadline) < new Date()
+          p.deadline = p.status is '初始资料' and new Date(p.deadline) < new Date()
 
     $scope.showEdit = (event, project)->
       return if $scope.userinfo.role is 'finance'

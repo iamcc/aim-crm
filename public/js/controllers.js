@@ -165,7 +165,7 @@
             for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
               p = _ref1[_i];
               p.statusLabel = getStatusLabel(p.status);
-              _results.push(p.deadline = new Date(p.deadline) < new Date());
+              _results.push(p.deadline = p.status === '初始资料' && new Date(p.deadline) < new Date());
             }
             return _results;
           });
@@ -178,7 +178,7 @@
             for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
               p = _ref1[_i];
               p.statusLabel = getStatusLabel(p.status);
-              _results.push(p.deadline = new Date(p.deadline) < new Date());
+              _results.push(p.deadline = p.status === '初始资料' && new Date(p.deadline) < new Date());
             }
             return _results;
           });
