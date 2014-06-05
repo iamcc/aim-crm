@@ -209,6 +209,16 @@ controller 'userCtrl', [
 
     $scope.editProducts = (p) ->
       $scope.isEditProduct = true
+
+      pids = p.agent.products.map (p) -> p._id
+
+      for agent in $scope.agents
+        if agent._id is p.agent._id
+          for product in agent.products
+            if product._id not in pids
+              p.agent.products.push product
+          break
+
       $scope.newProject = p
 
     $scope.goPage()

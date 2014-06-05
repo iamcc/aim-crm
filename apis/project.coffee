@@ -116,6 +116,7 @@ method =
             creator: req.user.realname
             status: doc.status
           }
+          doc.assignDate = new Date
         if req.body.agent
           req.body.price = 0
           for p in req.body.agent.products
@@ -127,10 +128,10 @@ method =
           res.send 200
   POST: (req, res, next) ->
     delete req.body._id
-    if req.body.agent
-      req.body.price = 0
-      for p in req.body.agent.products
-        req.body.price += p.price * (p.num or 0)
+    # if req.body.agent
+    #   req.body.price = 0
+    #   for p in req.body.agent.products
+    #     req.body.price += p.price * (p.num or 0)
 
     doc = new Project req.body
     doc.comments.push {
@@ -138,6 +139,7 @@ method =
       creator: req.user.realname
       status: doc.status
     }
+    doc.assignDate = new Date if doc.supporter
     doc.save (err, doc) ->
 #      if err
 #        console.log err

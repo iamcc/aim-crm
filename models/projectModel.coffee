@@ -74,7 +74,8 @@ projectSchema = new Schema
   view:
     catalog: String
     name: String
-  deadline: Date
+  deadline   : Date
+  assignDate : Date
 
 # exports.Project = mongoose.model 'Project', projectSchema
 # exports.projectSchema = projectSchema

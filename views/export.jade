@@ -7,26 +7,50 @@ html
         table
             tr
                 th 项目
+                th 类型
+                th 代理商
                 th 客户
+                th 价钱
+                th 购买/年
+                th 行业
                 th 模板
                 th 标签
                 th 销售
+                th 经理
                 th 分公司
                 th 区域
                 th 下单日期
+                th 分单日期
                 th 上线日期
                 th 状态
+                th 客服
+                th ECID
+                th 发送EC盒子日期
                 th 备注
+                each p in products
+                    th= p.name
             each p in data
                 tr
                     td= p.name
+                    td= p.type.name
+                    td= p.agent.name
                     td= p.client.name
+                    td= p.price
+                    td= p.buyYear
+                    td= p.industry.name
                     td= p.view.name
                     td= p.tags
                     td= p.sales.name
+                    td= p.company.manager.name
                     td= p.company.name
                     td= p.area.name
                     td= moment(p.orderDate).format('YYYY-MM-DD')
+                    td= p.assignDate && moment(p.assignDate).format('YYYY-MM-DD') || ''
                     td= moment(p.online.date).format('YYYY-MM-DD')
                     td= p.status
+                    td= p.supporter.realname
+                    td= p.ec.id
+                    td= moment(p.ec.sendBoxDate).format('YYYY-MM-DD')
                     td= p.memo
+                    each pp in p.products
+                        td= pp.num

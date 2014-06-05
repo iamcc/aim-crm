@@ -264,13 +264,13 @@
                     </select>
                   </span>
                     </td>
-                    <td>{{p.price}}</td>
-                    <!--<td ng-click="showEdit($event, p)">-->
-                        <!--<span class="view">{{p.price}}</span>-->
-                  <!--<span class="edit" style="display:none;">-->
-                    <!--<input type="number" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">-->
-                  <!--</span>-->
-                    <!--</td>-->
+                    <!-- <td>{{p.price}}</td> -->
+                    <td ng-click="showEdit($event, p)">
+                        <span class="view">{{p.price}}</span>
+                          <span class="edit" style="display:none;">
+                            <input type="number" class="form-control" ng-model="p.price" ng-blur="update($event, p, 'price')">
+                          </span>
+                    </td>
                     <td>{{p.area.name}}</td>
                     <td>{{p.company.manager.name}}</td>
                     <td ng-click="showEdit($event, p)">

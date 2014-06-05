@@ -1,4 +1,5 @@
 Project = require '../models/projectModel'
+Product = require '../models/productModel'
 moment = require 'moment'
 
 method =
@@ -19,8 +20,18 @@ method =
 
     Project.find condition, null, opts, (err, docs) ->
       return next err if err
-      res.attachment 'export.xls'
-      res.render 'export', {data: docs, moment: moment}
+
+      Product.find {}, (err, products) ->
+        for p in docs
+          p.products = JSON.parse JSON.stringify products
+
+          for pp in p.agent.products
+            for ppp in p.products
+              if pp._id.toString() is ppp._id.toString()
+                ppp.num = pp.num + pp.unit if pp.num
+
+        res.attachment 'export.xls'
+        res.render 'export', {data: docs, products: products, moment: moment}
 
 module.exports = (req, res, next) ->
   try
