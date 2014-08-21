@@ -13,6 +13,7 @@
   <div class="form-group">
     <select type="text" class="form-control" ng-model="tabs[2].newUser.role" ng-init="tabs[2].newUser.role = 'supporter'">
       <option value="supporter">客服</option>
+      <option value="market" ng-if="userinfo.role == 'admin'">市场</option>
       <option value="leader" ng-if="userinfo.role == 'admin'">客服主管</option>
       <option value="finance" ng-if="userinfo.role == 'admin'">财务</option>
     </select>

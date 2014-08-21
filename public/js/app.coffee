@@ -41,7 +41,7 @@ app.run [
       .success (data)->
         $rootScope.userinfo = data
 
-        if data.role in ['supporter', 'leader', 'admin']
+        if data.role in ['supporter', 'market', 'leader', 'admin']
           $rootScope.projectTypes = ProjectType.query({}, -> t.url = '/type/' + t._id for t in $rootScope.projectTypes)
           $rootScope.industries = Industry.query({}, -> i.url = '/industry/' + i._id for i in $rootScope.industries)
           $rootScope.agents = Agent.query({_id: 'all'})

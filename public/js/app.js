@@ -71,7 +71,7 @@ app.run([
     return $http.get('/api/user/me').success(function(data) {
       var _ref;
       $rootScope.userinfo = data;
-      if ((_ref = data.role) === 'supporter' || _ref === 'leader' || _ref === 'admin') {
+      if ((_ref = data.role) === 'supporter' || _ref === 'market' || _ref === 'leader' || _ref === 'admin') {
         $rootScope.projectTypes = ProjectType.query({}, function() {
           var t, _i, _len, _ref1, _results;
           _ref1 = $rootScope.projectTypes;
@@ -146,5 +146,3 @@ app.run([
 ]);
 
 angular.bootstrap(document, ['app']);
-
-//# sourceMappingURL=app.map

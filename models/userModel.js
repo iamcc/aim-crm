@@ -15,7 +15,7 @@ userSchema = new Schema({
   realname: String,
   role: {
     type: String,
-    "enum": 'supporter leader finance admin'.split(' '),
+    "enum": 'supporter market leader finance admin'.split(' '),
     "default": 'supporter'
   }
 });
@@ -53,5 +53,3 @@ userSchema.statics.login = function(uname, pwd, fn) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-
-//# sourceMappingURL=userModel.map

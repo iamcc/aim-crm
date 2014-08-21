@@ -9,7 +9,7 @@ userSchema = new Schema
   realname: String
   role:
     type: String
-    enum: 'supporter leader finance admin'.split(' ')
+    enum: 'supporter market leader finance admin'.split(' ')
     default: 'supporter'
 
 md5 = (str)->crypto.createHash('md5').update(str).digest('hex')
